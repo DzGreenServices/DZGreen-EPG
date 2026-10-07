@@ -30,57 +30,33 @@ HEADERS = {
 }
 
 MONTHS = {
-    "يناير": 1,
-    "فبراير": 2,
-    "مارس": 3,
-    "أبريل": 4,
-    "ابريل": 4,
-    "مايو": 5,
-    "يونيو": 6,
-    "يوليو": 7,
-    "أغسطس": 8,
-    "اغسطس": 8,
-    "سبتمبر": 9,
-    "أكتوبر": 10,
-    "اكتوبر": 10,
-    "نوفمبر": 11,
-    "ديسمبر": 12,
-    "January": 1,
-    "February": 2,
-    "March": 3,
-    "April": 4,
-    "May": 5,
-    "June": 6,
-    "July": 7,
-    "August": 8,
-    "September": 9,
-    "October": 10,
-    "November": 11,
-    "December": 12,
+    "يناير": 1, "فبراير": 2, "مارس": 3, "أبريل": 4, "ابريل": 4,
+    "مايو": 5, "يونيو": 6, "يوليو": 7, "أغسطس": 8, "اغسطس": 8,
+    "سبتمبر": 9, "أكتوبر": 10, "اكتوبر": 10, "نوفمبر": 11, "ديسمبر": 12,
+    "January": 1, "February": 2, "March": 3, "April": 4, "May": 5,
+    "June": 6, "July": 7, "August": 8, "September": 9, "October": 10,
+    "November": 11, "December": 12,
 }
 
+# These are technical quality markers, NOT channel identity.
 QUALITY_WORDS = {
     "4k", "8k", "2k", "uhd", "fhd", "hd", "sd",
     "hdr", "hevc", "h265", "h264", "x265", "x264",
-    "vip", "premium", "backup", "test", "plus"
+    "vip", "premium", "backup", "test"
 }
 
-REMOVE_WORDS = {
-    "channel", "channels"
-}
-
-DATE_WEEKDAYS = {
-    "monday", "tuesday", "wednesday", "thursday",
-    "friday", "saturday", "sunday",
-    "الاثنين", "الثلاثاء", "الأربعاء", "الاربعاء",
-    "الخميس", "الجمعة", "السبت", "الأحد", "الاحد"
-}
-
-# Safe aliases for known ElCinema naming differences/truncations.
-NAME_ALIASES = {
-    "al kahera wal n": "al kahera wal nas",
-    "kahera wal n": "kahera wal nas",
-    "mbc masr": "mbc egypt",
+# Safe spelling aliases. They do not erase meaningful channel numbers or "plus".
+ALIASES = {
+    "alkass": "al kass",
+    "alkas": "al kass",
+    "beinsports": "bein sports",
+    "beinxtra": "bein xtra",
+    "beinsportsxtra": "bein sports xtra",
+    "osnyahala": "osn ya hala",
+    "osnyahalatv": "osn ya hala",
+    "osnyahalacinima": "osn ya hala afl am",
+    "cinima": "cinema",
+    "masr": "masr",
 }
 
 
@@ -99,9 +75,14 @@ def strip_diacritics(text):
 
 
 def normalize_name(text):
-    text = strip_diacritics(
-        clean_text(text)
-    ).lower()
+    """
+    Identity normalization:
+    - removes only technical quality markers (4K/HD/etc.)
+    - preserves meaningful words and numbers
+    - preserves '+' as the semantic word 'plus'
+    - turns MBC2 into MBC 2
+    """
+    text = strip_diacritics(clean_text(text)).lower()
 
     text = (
         text.replace("أ", "ا")
@@ -112,41 +93,98 @@ def normalize_name(text):
         .replace("ـ", "")
     )
 
-    text = text.replace("&", " and ")
+    # Plus is meaningful for channel identity.
     text = text.replace("+", " plus ")
+
+    # Separate letters/numbers: MBC2 -> MBC 2.
+    text = re.sub(r"([a-zA-Z])(\d)", r"\1 \2", text)
+    text = re.sub(r"(\d)([a-zA-Z])", r"\1 \2", text)
+
+    # Normalize punctuation and separators.
     text = re.sub(r"[’'`]", "", text)
-    text = re.sub(
-        r"[^0-9a-zA-Z\u0600-\u06FF]+",
-        " ",
-        text
-    )
+    text = re.sub(r"[^0-9a-zA-Z\u0600-\u06FF]+", " ", text)
 
     tokens = []
-
     for token in text.split():
+        # Quality markers are removable.
         if token in QUALITY_WORDS:
             continue
 
-        if token in REMOVE_WORDS:
-            continue
-
+        # A literal "plus" is KEPT because it changes MBC Drama
+        # into MBC Drama Plus.
         tokens.append(token)
 
-    result = " ".join(tokens).strip()
+    normalized = " ".join(tokens)
 
-    # "MBC2" -> "MBC 2" equivalence is handled by compact_key.
-    return NAME_ALIASES.get(
-        result,
-        result
-    )
+    # Compact spelling aliases.
+    compact = normalized.replace(" ", "")
+    if compact in ALIASES:
+        normalized = ALIASES[compact]
+
+    return normalized.strip()
 
 
 def compact_key(text):
-    return re.sub(
-        r"\s+",
-        "",
-        normalize_name(text)
+    return re.sub(r"\s+", "", normalize_name(text))
+
+
+def parse_date(text):
+    text = clean_text(text)
+    match = re.search(r"(\d{1,2})\s+([^\s]+)", text)
+    if not match:
+        return None
+
+    day = int(match.group(1))
+    month = MONTHS.get(match.group(2))
+    if not month:
+        return None
+
+    now = datetime.now()
+
+    try:
+        result = datetime(now.year, month, day)
+    except ValueError:
+        return None
+
+    if result < now - timedelta(days=180):
+        result = result.replace(year=now.year + 1)
+
+    return result
+
+
+def parse_time(text):
+    match = re.search(
+        r"(\d{1,2}):(\d{2})\s*(AM|PM)",
+        clean_text(text),
+        re.I
     )
+    if not match:
+        return None
+
+    hour = int(match.group(1))
+    minute = int(match.group(2))
+    meridiem = match.group(3).upper()
+
+    if meridiem == "AM":
+        if hour == 12:
+            hour = 0
+    elif hour != 12:
+        hour += 12
+
+    return hour, minute
+
+
+def parse_duration(text):
+    text = clean_text(text)
+
+    match = re.search(r"(\d+)\s*(?:minutes|min)", text, re.I)
+    if not match:
+        match = re.search(r"(\d+)", text)
+
+    if not match:
+        return None
+
+    return int(match.group(1))
 
 
 def create_session():
@@ -158,10 +196,7 @@ def create_session():
 def get_page(session, url, retries=3):
     for attempt in range(1, retries + 1):
         try:
-            response = session.get(
-                url,
-                timeout=30
-            )
+            response = session.get(url, timeout=30)
 
             if response.status_code == 200:
                 return response
@@ -190,9 +225,7 @@ def get_page(session, url, retries=3):
 
 
 def load_user_channels():
-    if not os.path.exists(
-        M3U_CHANNELS_FILE
-    ):
+    if not os.path.exists(M3U_CHANNELS_FILE):
         raise RuntimeError(
             f"الملف {M3U_CHANNELS_FILE} غير موجود."
         )
@@ -204,20 +237,11 @@ def load_user_channels():
     ) as file:
         data = json.load(file)
 
-    channels = data.get(
-        "channels",
-        []
-    )
-
     grouped = {}
 
-    for item in channels:
-        tvg_id = clean_text(
-            item.get("tvg-id", "")
-        )
-        name = clean_text(
-            item.get("name", "")
-        )
+    for item in data.get("channels", []):
+        tvg_id = clean_text(item.get("tvg-id", ""))
+        name = clean_text(item.get("name", ""))
 
         if not tvg_id or not name:
             continue
@@ -230,20 +254,11 @@ def load_user_channels():
             }
 
         if name not in grouped[tvg_id]["names"]:
-            grouped[tvg_id]["names"].append(
-                name
-            )
+            grouped[tvg_id]["names"].append(name)
 
-    result = list(
-        grouped.values()
-    )
+    result = list(grouped.values())
 
-    print()
-    print(
-        "M3U tvg-id الفريدة:",
-        len(result)
-    )
-
+    print("M3U tvg-id الفريدة:", len(result))
     return result
 
 
@@ -253,27 +268,17 @@ def discover_elcinema_channels(session):
     print("اكتشاف قنوات ElCinema")
     print("===================================")
 
-    response = get_page(
-        session,
-        GUIDE_URL
-    )
+    response = get_page(session, GUIDE_URL)
 
     if not response:
         raise RuntimeError(
             "تعذر الوصول إلى دليل ElCinema."
         )
 
-    soup = BeautifulSoup(
-        response.text,
-        "html.parser"
-    )
-
+    soup = BeautifulSoup(response.text, "html.parser")
     channels = {}
 
-    for link in soup.find_all(
-        "a",
-        href=True
-    ):
+    for link in soup.find_all("a", href=True):
         href = link["href"].strip()
 
         match = re.search(
@@ -286,7 +291,6 @@ def discover_elcinema_channels(session):
 
         channel_id = match.group(1)
 
-        # Prefer full accessible attributes over truncated visible text.
         name = (
             link.get("title")
             or link.get("aria-label")
@@ -316,10 +320,7 @@ def discover_elcinema_channels(session):
         channels[channel_id] = {
             "id": channel_id,
             "name": name,
-            "url": urljoin(
-                BASE_URL,
-                href
-            )
+            "url": urljoin(BASE_URL, href)
         }
 
     print(
@@ -327,127 +328,106 @@ def discover_elcinema_channels(session):
         len(channels)
     )
 
-    return list(
-        channels.values()
-    )
+    return list(channels.values())
 
 
-def build_user_indexes(user_channels):
+def build_indexes(user_channels):
     exact = {}
     compact = {}
 
     for channel in user_channels:
-        keys = set()
-
         for name in channel["names"]:
             normalized = normalize_name(name)
+            compact_name = compact_key(name)
 
             if normalized:
-                keys.add(normalized)
+                exact.setdefault(
+                    normalized, []
+                ).append(channel)
 
-            compact_value = compact_key(name)
-
-            if compact_value:
-                keys.add(
-                    "__COMPACT__" + compact_value
-                )
-
-        for key in keys:
-            target = (
-                exact
-                if not key.startswith("__COMPACT__")
-                else compact
-            )
-
-            actual_key = (
-                key
-                if not key.startswith("__COMPACT__")
-                else key.replace(
-                    "__COMPACT__",
-                    "",
-                    1
-                )
-            )
-
-            target.setdefault(
-                actual_key,
-                []
-            ).append(channel)
+            if compact_name:
+                compact.setdefault(
+                    compact_name, []
+                ).append(channel)
 
     return exact, compact
 
 
-def find_user_matches(source_name, exact, compact):
-    source_normalized = normalize_name(
-        source_name
-    )
+def unique_channels(items):
+    result = []
+    seen = set()
 
-    direct = exact.get(
-        source_normalized,
-        []
-    )
+    for item in items:
+        if item["tvg_id"] in seen:
+            continue
 
-    if direct:
-        return direct, "EXACT"
+        seen.add(item["tvg_id"])
+        result.append(item)
 
-    source_compact = compact_key(
-        source_name
-    )
-
-    compact_matches = compact.get(
-        source_compact,
-        []
-    )
-
-    if compact_matches:
-        return compact_matches, "COMPACT"
-
-    return [], ""
+    return result
 
 
-def build_matches(
-    user_channels,
-    elcinema_channels
-):
-    print()
-    print("===================================")
-    print("مطابقة آمنة")
-    print("===================================")
-
-    exact_index, compact_index = build_user_indexes(
-        user_channels
-    )
+def build_matches(user_channels, elcinema_channels):
+    """
+    Important rule:
+    One user tvg-id can map to ONE ElCinema channel only.
+    One ElCinema channel may feed multiple user tvg-id variants
+    (for example HD and 4K versions).
+    """
+    exact_index, compact_index = build_indexes(user_channels)
 
     matches = []
-    matched_tvg_ids = set()
+    used_pairs = set()
+    used_user_source = set()
 
     for source in elcinema_channels:
-        user_matches, method = find_user_matches(
-            source["name"],
-            exact_index,
-            compact_index
-        )
+        source_name = source["name"]
+        normalized = normalize_name(source_name)
+        compact = compact_key(source_name)
 
-        for user_channel in user_matches:
-            tvg_id = user_channel["tvg_id"]
+        candidates = []
 
-            unique_key = (
+        for channel in exact_index.get(normalized, []):
+            candidates.append(
+                (channel, "EXACT")
+            )
+
+        if not candidates:
+            for channel in compact_index.get(compact, []):
+                candidates.append(
+                    (channel, "COMPACT")
+                )
+
+        # Deduplicate candidates by tvg-id.
+        candidate_map = {}
+        for channel, method in candidates:
+            candidate_map[channel["tvg_id"]] = (
+                channel,
+                method
+            )
+
+        for tvg_id, (channel, method) in candidate_map.items():
+            pair = (
                 tvg_id,
                 source["id"]
             )
 
-            if unique_key in matched_tvg_ids:
+            if pair in used_pairs:
                 continue
 
-            matched_tvg_ids.add(
-                unique_key
-            )
+            # This is the critical protection:
+            # same tvg-id cannot be assigned to two source channels.
+            if tvg_id in used_user_source:
+                continue
+
+            used_pairs.add(pair)
+            used_user_source.add(tvg_id)
 
             matches.append({
                 "tvg_id": tvg_id,
-                "user_name": user_channel["name"],
+                "user_name": channel["name"],
                 "all_user_names": " | ".join(
-                    user_channel["names"]
+                    channel["names"]
                 ),
                 "elcinema_id": source["id"],
                 "elcinema_name": source["name"],
@@ -455,52 +435,55 @@ def build_matches(
                 "url": source["url"]
             })
 
-    source_ids = {
-        item["elcinema_id"]
+    matched_tvg_ids = {
+        item["tvg_id"]
         for item in matches
     }
 
-    user_tvg_ids = {
-        item["tvg_id"]
+    matched_source_ids = {
+        item["elcinema_id"]
         for item in matches
     }
 
     unmatched_user = [
         {
-            "tvg_id": item["tvg_id"],
-            "user_name": item["name"]
+            "tvg_id": channel["tvg_id"],
+            "user_name": channel["name"]
         }
-        for item in user_channels
-        if item["tvg_id"] not in user_tvg_ids
+        for channel in user_channels
+        if channel["tvg_id"] not in matched_tvg_ids
     ]
 
     unmatched_source = [
         {
-            "elcinema_id": item["id"],
-            "elcinema_name": item["name"],
-            "url": item["url"]
+            "elcinema_id": channel["id"],
+            "elcinema_name": channel["name"],
+            "url": channel["url"]
         }
-        for item in elcinema_channels
-        if item["id"] not in source_ids
+        for channel in elcinema_channels
+        if channel["id"] not in matched_source_ids
     ]
 
+    print()
+    print("===================================")
+    print("مطابقة القنوات")
+    print("===================================")
     print(
         "مطابقات آمنة:",
         len(matches)
     )
     print(
-        "قنوات ElCinema التي لم نجد لها tvg-id:",
+        "ElCinema بدون tvg-id مطابق:",
         len(unmatched_source)
     )
     print(
-        "tvg-id في M3U بدون ElCinema:",
+        "tvg-id بدون ElCinema:",
         len(unmatched_user)
     )
 
     print()
-    print("بعض المطابقات:")
-
-    for item in matches[:40]:
+    print("المطابقات:")
+    for item in matches:
         print(
             item["tvg_id"],
             "|",
@@ -525,10 +508,7 @@ def save_mapping_report(
         newline="",
         encoding="utf-8-sig"
     ) as file:
-
-        writer = csv.writer(
-            file
-        )
+        writer = csv.writer(file)
 
         writer.writerow([
             "type",
@@ -579,211 +559,117 @@ def save_mapping_report(
     )
 
 
-def parse_date(date_text):
-    date_text = clean_text(
-        date_text
-    )
+def extract_logo(soup):
+    for image in soup.find_all("img"):
+        src = image.get("src")
 
-    match = re.search(
-        r"(\d{1,2})\s+([^\s]+)",
-        date_text
-    )
-
-    if not match:
-        return None
-
-    day = int(
-        match.group(1)
-    )
-
-    month_name = match.group(2)
-
-    month = MONTHS.get(
-        month_name
-    )
-
-    if not month:
-        return None
-
-    now = datetime.now()
-    year = now.year
-
-    try:
-        result = datetime(
-            year,
-            month,
-            day
-        )
-    except ValueError:
-        return None
-
-    if result < now - timedelta(
-        days=180
-    ):
-        result = result.replace(
-            year=year + 1
-        )
-
-    return result
-
-
-def parse_time(time_text):
-    time_text = clean_text(
-        time_text
-    )
-
-    match = re.search(
-        r"(\d{1,2}):(\d{2})\s*(AM|PM)",
-        time_text,
-        re.IGNORECASE
-    )
-
-    if not match:
-        return None
-
-    hour = int(
-        match.group(1)
-    )
-
-    minute = int(
-        match.group(2)
-    )
-
-    meridiem = match.group(3).upper()
-
-    if meridiem == "AM":
-        if hour == 12:
-            hour = 0
-    else:
-        if hour != 12:
-            hour += 12
-
-    return hour, minute
-
-
-def parse_duration(duration_text):
-    duration_text = clean_text(
-        duration_text
-    )
-
-    match = re.search(
-        r"(\d+)\s*(?:minutes|min)",
-        duration_text,
-        re.IGNORECASE
-    )
-
-    if not match:
-        match = re.search(
-            r"(\d+)",
-            duration_text
-        )
-
-    if not match:
-        return None
-
-    return int(
-        match.group(1)
-    )
-
-
-def is_date_text(text):
-    text = clean_text(
-        text
-    )
-
-    if not text:
-        return False
-
-    pattern = (
-        r"^(?:(?:"
-        r"Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|"
-        r"الاثنين|الثلاثاء|الأربعاء|الاربعاء|الخميس|الجمعة|السبت|الأحد|الاحد"
-        r")\s+)?"
-        r"\d{1,2}\s+[^\s]+$"
-    )
-
-    return bool(
-        re.match(
-            pattern,
-            text,
-            re.IGNORECASE
-        )
-    )
-
-
-def find_program_container(title_link):
-    # Walk upward and choose the nearest ancestor that contains
-    # both a start time and a duration.
-    current = title_link
-
-    for _ in range(8):
-        if not current:
-            break
-
-        text = clean_text(
-            current.get_text(
-                " ",
-                strip=True
-            )
-        )
-
-        has_time = re.search(
-            r"\d{1,2}:\d{2}\s*(?:AM|PM)",
-            text,
-            re.IGNORECASE
-        )
-
-        has_duration = re.search(
-            r"\b\d+\s*(?:minutes|min)\b",
-            text,
-            re.IGNORECASE
-        )
-
-        if has_time and has_duration:
-            return current
-
-        current = current.parent
-
-    return title_link.parent
-
-
-def find_previous_date(node):
-    candidates = node.find_all_previous(
-        [
-            "h1", "h2", "h3", "h4", "h5",
-            "h6", "div", "section", "p"
-        ],
-        limit=80
-    )
-
-    for candidate in candidates:
-        text = clean_text(
-            candidate.get_text(
-                " ",
-                strip=True
-            )
-        )
-
-        if is_date_text(text):
-            parsed = parse_date(
-                text
+        if src and "/tvguide/" in src:
+            return urljoin(
+                BASE_URL,
+                src
             )
 
-            if parsed:
-                return parsed
-
-    return None
+    return ""
 
 
-def extract_programs_legacy(
-    soup,
+def parse_program_block(
+    program,
+    current_date,
     channel_id
 ):
+    title = ""
+
+    title_link = program.select_one(
+        "a[href^='/work/']"
+    )
+
+    if title_link:
+        title = clean_text(
+            title_link.get_text(
+                " ",
+                strip=True
+            )
+        )
+    else:
+        title_item = program.select_one(
+            "ul.unstyled.no-margin li:first-child"
+        )
+
+        if title_item:
+            title = clean_text(
+                title_item.get_text(
+                    " ",
+                    strip=True
+                )
+            )
+
+    if not title:
+        return None
+
+    time_item = program.select_one(
+        "ul.unstyled.text-center li:first-child"
+    )
+
+    if not time_item:
+        items = program.select(
+            "ul.unstyled.no-margin li"
+        )
+
+        if len(items) >= 2:
+            time_item = items[1]
+
+    if not time_item:
+        return None
+
+    duration_item = program.select_one(
+        "span.subheader"
+    )
+
+    if not duration_item:
+        return None
+
+    time_value = parse_time(
+        time_item.get_text(
+            " ",
+            strip=True
+        )
+    )
+
+    duration = parse_duration(
+        duration_item.get_text(
+            " ",
+            strip=True
+        )
+    )
+
+    if not time_value or not duration:
+        return None
+
+    hour, minute = time_value
+
+    start = current_date.replace(
+        hour=hour,
+        minute=minute,
+        second=0,
+        microsecond=0
+    )
+
+    stop = start + timedelta(
+        minutes=duration
+    )
+
+    return {
+        "channel_id": channel_id,
+        "title": title,
+        "start": start,
+        "stop": stop
+    }
+
+
+def extract_programs(soup, channel_id):
     programs_output = []
 
-    dates = soup.select(
-        "div.dates"
-    )
+    dates = soup.select("div.dates")
 
     for date_node in dates:
         current_date = parse_date(
@@ -812,69 +698,97 @@ def extract_programs_legacy(
         previous_start = None
 
         for program in programs:
-            title = ""
-
-            title_link = program.select_one(
-                "a[href^='/work/']"
+            item = parse_program_block(
+                program,
+                current_date,
+                channel_id
             )
 
-            if title_link:
-                title = clean_text(
-                    title_link.get_text(
-                        " ",
-                        strip=True
-                    )
-                )
-            else:
-                title_item = program.select_one(
-                    "ul.unstyled.no-margin li:first-child"
-                )
+            if not item:
+                continue
 
-                if title_item:
-                    title = clean_text(
-                        title_item.get_text(
-                            " ",
-                            strip=True
-                        )
-                    )
+            start = item["start"]
+
+            if previous_start and start < previous_start:
+                item["start"] += timedelta(days=1)
+                item["stop"] += timedelta(days=1)
+
+            previous_start = item["start"]
+            programs_output.append(item)
+
+    # Fallback parser for pages with a slightly different layout.
+    if not programs_output:
+        for title_link in soup.select(
+            "a[href^='/work/']"
+        ):
+            title = clean_text(
+                title_link.get_text(
+                    " ",
+                    strip=True
+                )
+            )
 
             if not title:
                 continue
 
-            time_item = program.select_one(
-                "ul.unstyled.text-center li:first-child"
-            )
+            parent = title_link
+            for _ in range(8):
+                parent = parent.parent
+                if not parent:
+                    break
 
-            if not time_item:
-                items = program.select(
-                    "ul.unstyled.no-margin li"
+                text = clean_text(
+                    parent.get_text(
+                        " ",
+                        strip=True
+                    )
                 )
 
-                if len(items) >= 2:
-                    time_item = items[1]
+                time_match = re.search(
+                    r"(\d{1,2}:\d{2}\s*(?:AM|PM))",
+                    text,
+                    re.I
+                )
 
-            if not time_item:
+                duration_match = re.search(
+                    r"(\d+)\s*(?:minutes|min)",
+                    text,
+                    re.I
+                )
+
+                if time_match and duration_match:
+                    break
+
+            if not parent:
+                continue
+
+            current_date = None
+            for previous in title_link.find_all_previous(
+                ["div", "h1", "h2", "h3", "h4", "h5", "h6"],
+                limit=80
+            ):
+                possible = clean_text(
+                    previous.get_text(
+                        " ",
+                        strip=True
+                    )
+                )
+
+                current_date = parse_date(
+                    possible
+                )
+
+                if current_date:
+                    break
+
+            if not current_date:
                 continue
 
             time_value = parse_time(
-                time_item.get_text(
-                    " ",
-                    strip=True
-                )
+                time_match.group(1)
             )
-
-            duration_item = program.select_one(
-                "span.subheader"
-            )
-
-            if not duration_item:
-                continue
-
             duration = parse_duration(
-                duration_item.get_text(
-                    " ",
-                    strip=True
-                )
+                duration_match.group(1)
             )
 
             if not time_value or not duration:
@@ -889,16 +803,9 @@ def extract_programs_legacy(
                 microsecond=0
             )
 
-            if previous_start and start < previous_start:
-                start += timedelta(
-                    days=1
-                )
-
             stop = start + timedelta(
                 minutes=duration
             )
-
-            previous_start = start
 
             programs_output.append({
                 "channel_id": channel_id,
@@ -907,175 +814,25 @@ def extract_programs_legacy(
                 "stop": stop
             })
 
-    return programs_output
-
-
-def extract_programs_generic(
-    soup,
-    channel_id
-):
-    programs_output = []
-
-    seen = set()
-
-    title_links = soup.select(
-        "a[href^='/work/']"
-    )
-
-    for title_link in title_links:
-        title = clean_text(
-            title_link.get_text(
-                " ",
-                strip=True
-            )
-        )
-
-        if not title:
-            continue
-
-        container = find_program_container(
-            title_link
-        )
-
-        container_text = clean_text(
-            container.get_text(
-                " ",
-                strip=True
-            )
-        )
-
-        time_match = re.search(
-            r"(\d{1,2}:\d{2}\s*(?:AM|PM))",
-            container_text,
-            re.IGNORECASE
-        )
-
-        duration_match = re.search(
-            r"(\d+\s*(?:minutes|min))",
-            container_text,
-            re.IGNORECASE
-        )
-
-        if not time_match or not duration_match:
-            continue
-
-        current_date = find_previous_date(
-            title_link
-        )
-
-        if not current_date:
-            continue
-
-        time_value = parse_time(
-            time_match.group(1)
-        )
-
-        duration = parse_duration(
-            duration_match.group(1)
-        )
-
-        if not time_value or not duration:
-            continue
-
-        hour, minute = time_value
-
-        start = current_date.replace(
-            hour=hour,
-            minute=minute,
-            second=0,
-            microsecond=0
-        )
-
-        stop = start + timedelta(
-            minutes=duration
-        )
-
+    # Remove duplicates.
+    unique = {}
+    for item in programs_output:
         key = (
-            start,
-            stop,
-            title.lower()
+            item["start"],
+            item["stop"],
+            item["title"].strip().lower()
         )
+        unique[key] = item
 
-        if key in seen:
-            continue
-
-        seen.add(key)
-
-        programs_output.append({
-            "channel_id": channel_id,
-            "title": title,
-            "start": start,
-            "stop": stop
-        })
-
-    programs_output.sort(
+    result = list(unique.values())
+    result.sort(
         key=lambda item: item["start"]
     )
 
-    # Correct midnight rollover.
-    corrected = []
-    previous_start = None
-
-    for item in programs_output:
-        start = item["start"]
-        stop = item["stop"]
-
-        if previous_start and start < previous_start:
-            start += timedelta(
-                days=1
-            )
-            stop += timedelta(
-                days=1
-            )
-
-        previous_start = start
-
-        item["start"] = start
-        item["stop"] = stop
-
-        corrected.append(item)
-
-    return corrected
+    return result
 
 
-def extract_programs(
-    soup,
-    channel_id
-):
-    legacy = extract_programs_legacy(
-        soup,
-        channel_id
-    )
-
-    if legacy:
-        return legacy
-
-    # Some ElCinema channel pages use a newer layout.
-    return extract_programs_generic(
-        soup,
-        channel_id
-    )
-
-
-def extract_logo(soup):
-    for image in soup.find_all(
-        "img"
-    ):
-        src = image.get("src")
-
-        if not src:
-            continue
-
-        if "/tvguide/" in src:
-            return urljoin(
-                BASE_URL,
-                src
-            )
-
-    return ""
-
-
-def process_elcinema_channel(
+def process_channel(
     session,
     channel
 ):
@@ -1095,18 +852,12 @@ def process_elcinema_channel(
         "html.parser"
     )
 
-    logo = extract_logo(
-        soup
-    )
-
-    programs = extract_programs(
-        soup,
-        channel["id"]
-    )
-
     return {
-        "logo": logo,
-        "programs": programs
+        "logo": extract_logo(soup),
+        "programs": extract_programs(
+            soup,
+            channel["id"]
+        )
     }
 
 
@@ -1114,15 +865,12 @@ def create_xml(
     matches,
     source_results
 ):
-    tv = ET.Element(
-        "tv"
-    )
+    tv = ET.Element("tv")
 
     total_programs = 0
     channels_with_programs = 0
 
-    # One source channel can feed multiple user tvg-id variants
-    # such as HD / FHD / 4K when they have the same normalized name.
+    # Same ElCinema source can safely feed multiple user tvg-id variants.
     grouped = {}
 
     for match in matches:
@@ -1152,9 +900,7 @@ def create_xml(
 
         for match in source_matches:
             channels_with_programs += 1
-            total_programs += len(
-                programs
-            )
+            total_programs += len(programs)
 
             channel_element = ET.SubElement(
                 tv,
@@ -1166,10 +912,7 @@ def create_xml(
                 channel_element,
                 "display-name"
             )
-
-            display_name.text = match[
-                "user_name"
-            ]
+            display_name.text = match["user_name"]
 
             if logo:
                 ET.SubElement(
@@ -1196,13 +939,12 @@ def create_xml(
                     "title",
                     lang="ar"
                 )
-
                 title.text = item["title"]
 
     if total_programs == 0:
         raise RuntimeError(
             "لم يتم استخراج أي برنامج. "
-            "لن يتم استبدال ملف XML الحالي."
+            "لن يتم استبدال XML."
         )
 
     ET.indent(
@@ -1210,22 +952,16 @@ def create_xml(
         space="  "
     )
 
-    temporary_file = (
-        OUTPUT_FILE + ".tmp"
-    )
+    temporary = OUTPUT_FILE + ".tmp"
 
-    tree = ET.ElementTree(
-        tv
-    )
-
-    tree.write(
-        temporary_file,
+    ET.ElementTree(tv).write(
+        temporary,
         encoding="utf-8",
         xml_declaration=True
     )
 
     os.replace(
-        temporary_file,
+        temporary,
         OUTPUT_FILE
     )
 
@@ -1258,10 +994,7 @@ def main():
     session = create_session()
 
     user_channels = load_user_channels()
-
-    elcinema_channels = discover_elcinema_channels(
-        session
-    )
+    elcinema_channels = discover_elcinema_channels(session)
 
     matches, unmatched_user, unmatched_source = build_matches(
         user_channels,
@@ -1276,15 +1009,13 @@ def main():
 
     if not matches:
         raise RuntimeError(
-            "لم يتم العثور على أي مطابقة آمنة."
+            "لا توجد مطابقة آمنة."
         )
 
-    source_results = {}
-
-    unique_sources = {}
+    source_channels = {}
 
     for match in matches:
-        unique_sources[
+        source_channels[
             match["elcinema_id"]
         ] = {
             "id": match["elcinema_id"],
@@ -1294,19 +1025,21 @@ def main():
 
     print()
     print(
-        "تحميل قنوات ElCinema المطابقة:",
-        len(unique_sources)
+        "قنوات ElCinema التي سيتم تحميلها:",
+        len(source_channels)
     )
 
+    source_results = {}
+
     for index, channel in enumerate(
-        unique_sources.values(),
+        source_channels.values(),
         start=1
     ):
         print(
             "[",
             index,
             "/",
-            len(unique_sources),
+            len(source_channels),
             "]",
             channel["name"],
             "|",
@@ -1316,17 +1049,15 @@ def main():
         try:
             source_results[
                 channel["id"]
-            ] = process_elcinema_channel(
+            ] = process_channel(
                 session,
                 channel
             )
-
         except Exception as error:
             print(
-                "خطأ:",
+                "خطأ في القناة:",
                 error
             )
-
             source_results[
                 channel["id"]
             ] = {
