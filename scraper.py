@@ -6,7 +6,6 @@ import time
 import unicodedata
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
-from difflib import SequenceMatcher
 from urllib.parse import urljoin
 
 import requests
@@ -61,40 +60,27 @@ MONTHS = {
 }
 
 QUALITY_WORDS = {
-    "4k", "8k", "uhd", "fhd", "hd", "sd", "hdr",
-    "hevc", "h265", "h264", "x265", "x264",
-    "vip", "plus", "premium", "backup", "test"
+    "4k", "8k", "2k", "uhd", "fhd", "hd", "sd",
+    "hdr", "hevc", "h265", "h264", "x265", "x264",
+    "vip", "premium", "backup", "test", "plus"
 }
 
-CATEGORY_PREFIXES = {
-    "sport", "sports", "kids", "kid", "movies", "movie",
-    "news", "music", "documentary", "docs",
-    "ar", "en", "fr", "de", "es", "it", "tr",
-    "ca", "sa", "uk", "us"
+REMOVE_WORDS = {
+    "channel", "channels"
 }
 
-WORD_ALIASES = {
-    "masr": "egypt",
-    "masr1": "egypt1",
-    "masr2": "egypt2",
-    "alharam": "alharam",
-    "alkahera": "alkahera",
-    "kahera": "kahera",
-    "alaraby": "al araby",
-    "alraby": "al araby",
-    "alkass": "al kass",
-    "alkas": "al kass",
-    "bein": "bein",
-    "beinsports": "bein sports",
-    "beinxtra": "bein xtra",
+DATE_WEEKDAYS = {
+    "monday", "tuesday", "wednesday", "thursday",
+    "friday", "saturday", "sunday",
+    "الاثنين", "الثلاثاء", "الأربعاء", "الاربعاء",
+    "الخميس", "الجمعة", "السبت", "الأحد", "الاحد"
 }
 
-COUNTRY_WORDS = {
-    "morocco", "maroc", "marocain", "moroccan",
-    "egypt", "egyptian",
-    "saudi", "saudia", "qatar", "qatari",
-    "uae", "emirates", "jordan", "tunisia",
-    "algeria", "algerian", "iraq", "iraqi"
+# Safe aliases for known ElCinema naming differences/truncations.
+NAME_ALIASES = {
+    "al kahera wal n": "al kahera wal nas",
+    "kahera wal n": "kahera wal nas",
+    "mbc masr": "mbc egypt",
 }
 
 
@@ -106,33 +92,17 @@ def clean_text(text):
 
 def strip_diacritics(text):
     text = unicodedata.normalize("NFKD", text)
-    return "".join(ch for ch in text if not unicodedata.combining(ch))
+    return "".join(
+        ch for ch in text
+        if not unicodedata.combining(ch)
+    )
 
 
 def normalize_name(text):
-    text = strip_diacritics(clean_text(text)).lower()
+    text = strip_diacritics(
+        clean_text(text)
+    ).lower()
 
-    # Keep the part after a category/language prefix when clearly present.
-    if "|" in text:
-        parts = [clean_text(p) for p in text.split("|") if clean_text(p)]
-        if parts:
-            text = parts[-1]
-
-    # Remove common "Category: " prefixes only at the beginning.
-    text = re.sub(
-        r"^(sport|sports|kids?|movies?|news|music|documentary|docs)\s*:\s*",
-        "",
-        text,
-        flags=re.IGNORECASE
-    )
-    text = re.sub(
-        r"^(ar|en|fr|de|es|it|tr)\s*:\s*",
-        "",
-        text,
-        flags=re.IGNORECASE
-    )
-
-    # Arabic letter normalization.
     text = (
         text.replace("أ", "ا")
         .replace("إ", "ا")
@@ -145,66 +115,38 @@ def normalize_name(text):
     text = text.replace("&", " and ")
     text = text.replace("+", " plus ")
     text = re.sub(r"[’'`]", "", text)
-    text = re.sub(r"[^0-9a-zA-Z\u0600-\u06FF]+", " ", text)
+    text = re.sub(
+        r"[^0-9a-zA-Z\u0600-\u06FF]+",
+        " ",
+        text
+    )
 
     tokens = []
+
     for token in text.split():
         if token in QUALITY_WORDS:
             continue
-        if token in COUNTRY_WORDS and len(text.split()) > 2:
+
+        if token in REMOVE_WORDS:
             continue
 
-        replacement = WORD_ALIASES.get(token)
-        if replacement:
-            tokens.extend(replacement.split())
-        else:
-            tokens.append(token)
+        tokens.append(token)
 
-    # Remove duplicate adjacent tokens.
-    cleaned = []
-    for token in tokens:
-        if not cleaned or cleaned[-1] != token:
-            cleaned.append(token)
+    result = " ".join(tokens).strip()
 
-    return " ".join(cleaned).strip()
+    # "MBC2" -> "MBC 2" equivalence is handled by compact_key.
+    return NAME_ALIASES.get(
+        result,
+        result
+    )
 
 
-def numeric_tokens(text):
-    return re.findall(r"\d+", normalize_name(text))
-
-
-def token_set(text):
-    return set(normalize_name(text).split())
-
-
-def similarity(a, b):
-    na = normalize_name(a)
-    nb = normalize_name(b)
-
-    if not na or not nb:
-        return 0.0
-
-    if na == nb:
-        return 1.0
-
-    # Never allow a fuzzy match to cross different channel numbers.
-    nums_a = numeric_tokens(a)
-    nums_b = numeric_tokens(b)
-
-    if nums_a and nums_b and nums_a != nums_b:
-        return 0.0
-
-    seq = SequenceMatcher(None, na, nb).ratio()
-
-    ta = token_set(a)
-    tb = token_set(b)
-
-    if ta and tb:
-        overlap = len(ta & tb) / max(len(ta), len(tb))
-    else:
-        overlap = 0.0
-
-    return max(seq, overlap * 0.96)
+def compact_key(text):
+    return re.sub(
+        r"\s+",
+        "",
+        normalize_name(text)
+    )
 
 
 def create_session():
@@ -216,7 +158,10 @@ def create_session():
 def get_page(session, url, retries=3):
     for attempt in range(1, retries + 1):
         try:
-            response = session.get(url, timeout=30)
+            response = session.get(
+                url,
+                timeout=30
+            )
 
             if response.status_code == 200:
                 return response
@@ -245,7 +190,9 @@ def get_page(session, url, retries=3):
 
 
 def load_user_channels():
-    if not os.path.exists(M3U_CHANNELS_FILE):
+    if not os.path.exists(
+        M3U_CHANNELS_FILE
+    ):
         raise RuntimeError(
             f"الملف {M3U_CHANNELS_FILE} غير موجود."
         )
@@ -257,19 +204,20 @@ def load_user_channels():
     ) as file:
         data = json.load(file)
 
-    channels = data.get("channels", [])
+    channels = data.get(
+        "channels",
+        []
+    )
 
-    if not channels:
-        raise RuntimeError(
-            "لم يتم العثور على قنوات في epg_channels.json."
-        )
-
-    # Group repeated tvg-id values under one XML channel.
     grouped = {}
 
     for item in channels:
-        tvg_id = clean_text(item.get("tvg-id", ""))
-        name = clean_text(item.get("name", ""))
+        tvg_id = clean_text(
+            item.get("tvg-id", "")
+        )
+        name = clean_text(
+            item.get("name", "")
+        )
 
         if not tvg_id or not name:
             continue
@@ -282,12 +230,19 @@ def load_user_channels():
             }
 
         if name not in grouped[tvg_id]["names"]:
-            grouped[tvg_id]["names"].append(name)
+            grouped[tvg_id]["names"].append(
+                name
+            )
 
-    result = list(grouped.values())
+    result = list(
+        grouped.values()
+    )
 
     print()
-    print("قنوات M3U ذات tvg-id:", len(result))
+    print(
+        "M3U tvg-id الفريدة:",
+        len(result)
+    )
 
     return result
 
@@ -315,7 +270,10 @@ def discover_elcinema_channels(session):
 
     channels = {}
 
-    for link in soup.find_all("a", href=True):
+    for link in soup.find_all(
+        "a",
+        href=True
+    ):
         href = link["href"].strip()
 
         match = re.search(
@@ -328,9 +286,29 @@ def discover_elcinema_channels(session):
 
         channel_id = match.group(1)
 
-        name = clean_text(
-            link.get_text(" ", strip=True)
+        # Prefer full accessible attributes over truncated visible text.
+        name = (
+            link.get("title")
+            or link.get("aria-label")
+            or ""
         )
+
+        if not name:
+            image = link.find("img")
+            if image:
+                name = (
+                    image.get("alt")
+                    or image.get("title")
+                    or ""
+                )
+
+        if not name:
+            name = link.get_text(
+                " ",
+                strip=True
+            )
+
+        name = clean_text(name)
 
         if not name:
             continue
@@ -338,110 +316,227 @@ def discover_elcinema_channels(session):
         channels[channel_id] = {
             "id": channel_id,
             "name": name,
-            "url": urljoin(BASE_URL, href)
+            "url": urljoin(
+                BASE_URL,
+                href
+            )
         }
 
-    print("قنوات ElCinema المكتشفة:", len(channels))
+    print(
+        "قنوات ElCinema المكتشفة:",
+        len(channels)
+    )
 
-    return list(channels.values())
+    return list(
+        channels.values()
+    )
 
 
-def build_matches(user_channels, elcinema_channels):
-    print()
-    print("===================================")
-    print("مطابقة القنوات")
-    print("===================================")
+def build_user_indexes(user_channels):
+    exact = {}
+    compact = {}
 
-    matches = []
-    unmatched = []
+    for channel in user_channels:
+        keys = set()
 
-    for user_channel in user_channels:
-        best = None
-        best_score = 0.0
-        second_score = 0.0
+        for name in channel["names"]:
+            normalized = normalize_name(name)
 
-        for source in elcinema_channels:
-            score = 0.0
+            if normalized:
+                keys.add(normalized)
 
-            # Check every display name associated with the tvg-id.
-            for user_name in user_channel["names"]:
-                candidate_score = similarity(
-                    user_name,
-                    source["name"]
+            compact_value = compact_key(name)
+
+            if compact_value:
+                keys.add(
+                    "__COMPACT__" + compact_value
                 )
 
-                if candidate_score > score:
-                    score = candidate_score
-
-            if score > best_score:
-                second_score = best_score
-                best_score = score
-                best = source
-            elif score > second_score:
-                second_score = score
-
-        # Exact/very strong match.
-        accepted = (
-            best is not None
-            and best_score >= 0.90
-            and (best_score - second_score >= 0.03 or best_score >= 0.97)
-        )
-
-        if accepted:
-            matches.append({
-                "tvg_id": user_channel["tvg_id"],
-                "user_name": user_channel["name"],
-                "all_user_names": " | ".join(user_channel["names"]),
-                "elcinema_id": best["id"],
-                "elcinema_name": best["name"],
-                "score": round(best_score, 4),
-                "url": best["url"]
-            })
-        else:
-            unmatched.append({
-                "tvg_id": user_channel["tvg_id"],
-                "user_name": user_channel["name"],
-                "best_candidate": best["name"] if best else "",
-                "score": round(best_score, 4)
-            })
-
-    print("مطابقات مؤكدة:", len(matches))
-    print("غير مطابق:", len(unmatched))
-
-    if unmatched:
-        print()
-        print("أمثلة غير مطابقة:")
-        for item in unmatched[:30]:
-            print(
-                item["tvg_id"],
-                "|",
-                item["user_name"],
-                "| أفضل:",
-                item["best_candidate"],
-                "|",
-                item["score"]
+        for key in keys:
+            target = (
+                exact
+                if not key.startswith("__COMPACT__")
+                else compact
             )
 
-    return matches, unmatched
+            actual_key = (
+                key
+                if not key.startswith("__COMPACT__")
+                else key.replace(
+                    "__COMPACT__",
+                    "",
+                    1
+                )
+            )
+
+            target.setdefault(
+                actual_key,
+                []
+            ).append(channel)
+
+    return exact, compact
 
 
-def save_mapping_report(matches, unmatched):
+def find_user_matches(source_name, exact, compact):
+    source_normalized = normalize_name(
+        source_name
+    )
+
+    direct = exact.get(
+        source_normalized,
+        []
+    )
+
+    if direct:
+        return direct, "EXACT"
+
+    source_compact = compact_key(
+        source_name
+    )
+
+    compact_matches = compact.get(
+        source_compact,
+        []
+    )
+
+    if compact_matches:
+        return compact_matches, "COMPACT"
+
+    return [], ""
+
+
+def build_matches(
+    user_channels,
+    elcinema_channels
+):
+    print()
+    print("===================================")
+    print("مطابقة آمنة")
+    print("===================================")
+
+    exact_index, compact_index = build_user_indexes(
+        user_channels
+    )
+
+    matches = []
+    matched_tvg_ids = set()
+
+    for source in elcinema_channels:
+        user_matches, method = find_user_matches(
+            source["name"],
+            exact_index,
+            compact_index
+        )
+
+        for user_channel in user_matches:
+            tvg_id = user_channel["tvg_id"]
+
+            unique_key = (
+                tvg_id,
+                source["id"]
+            )
+
+            if unique_key in matched_tvg_ids:
+                continue
+
+            matched_tvg_ids.add(
+                unique_key
+            )
+
+            matches.append({
+                "tvg_id": tvg_id,
+                "user_name": user_channel["name"],
+                "all_user_names": " | ".join(
+                    user_channel["names"]
+                ),
+                "elcinema_id": source["id"],
+                "elcinema_name": source["name"],
+                "method": method,
+                "url": source["url"]
+            })
+
+    source_ids = {
+        item["elcinema_id"]
+        for item in matches
+    }
+
+    user_tvg_ids = {
+        item["tvg_id"]
+        for item in matches
+    }
+
+    unmatched_user = [
+        {
+            "tvg_id": item["tvg_id"],
+            "user_name": item["name"]
+        }
+        for item in user_channels
+        if item["tvg_id"] not in user_tvg_ids
+    ]
+
+    unmatched_source = [
+        {
+            "elcinema_id": item["id"],
+            "elcinema_name": item["name"],
+            "url": item["url"]
+        }
+        for item in elcinema_channels
+        if item["id"] not in source_ids
+    ]
+
+    print(
+        "مطابقات آمنة:",
+        len(matches)
+    )
+    print(
+        "قنوات ElCinema التي لم نجد لها tvg-id:",
+        len(unmatched_source)
+    )
+    print(
+        "tvg-id في M3U بدون ElCinema:",
+        len(unmatched_user)
+    )
+
+    print()
+    print("بعض المطابقات:")
+
+    for item in matches[:40]:
+        print(
+            item["tvg_id"],
+            "|",
+            item["user_name"],
+            "=>",
+            item["elcinema_name"],
+            "|",
+            item["method"]
+        )
+
+    return matches, unmatched_user, unmatched_source
+
+
+def save_mapping_report(
+    matches,
+    unmatched_user,
+    unmatched_source
+):
     with open(
         MAPPING_REPORT,
         "w",
         newline="",
         encoding="utf-8-sig"
     ) as file:
-        writer = csv.writer(file)
+
+        writer = csv.writer(
+            file
+        )
 
         writer.writerow([
-            "status",
+            "type",
             "tvg-id",
             "user_name",
-            "all_user_names",
             "elcinema_id",
             "elcinema_name",
-            "score",
+            "method",
             "url"
         ])
 
@@ -450,30 +545,44 @@ def save_mapping_report(matches, unmatched):
                 "MATCHED",
                 item["tvg_id"],
                 item["user_name"],
-                item["all_user_names"],
                 item["elcinema_id"],
                 item["elcinema_name"],
-                item["score"],
+                item["method"],
                 item["url"]
             ])
 
-        for item in unmatched:
+        for item in unmatched_user:
             writer.writerow([
-                "UNMATCHED",
+                "USER_UNMATCHED",
                 item["tvg_id"],
                 item["user_name"],
                 "",
                 "",
-                item["best_candidate"],
-                item["score"],
+                "",
                 ""
             ])
 
-    print("تقرير المطابقة:", MAPPING_REPORT)
+        for item in unmatched_source:
+            writer.writerow([
+                "ELCINEMA_UNMATCHED",
+                "",
+                "",
+                item["elcinema_id"],
+                item["elcinema_name"],
+                "",
+                item["url"]
+            ])
+
+    print(
+        "تقرير المطابقة:",
+        MAPPING_REPORT
+    )
 
 
 def parse_date(date_text):
-    date_text = clean_text(date_text)
+    date_text = clean_text(
+        date_text
+    )
 
     match = re.search(
         r"(\d{1,2})\s+([^\s]+)",
@@ -483,10 +592,15 @@ def parse_date(date_text):
     if not match:
         return None
 
-    day = int(match.group(1))
+    day = int(
+        match.group(1)
+    )
+
     month_name = match.group(2)
 
-    month = MONTHS.get(month_name)
+    month = MONTHS.get(
+        month_name
+    )
 
     if not month:
         return None
@@ -503,14 +617,20 @@ def parse_date(date_text):
     except ValueError:
         return None
 
-    if result < now - timedelta(days=180):
-        result = result.replace(year=year + 1)
+    if result < now - timedelta(
+        days=180
+    ):
+        result = result.replace(
+            year=year + 1
+        )
 
     return result
 
 
 def parse_time(time_text):
-    time_text = clean_text(time_text)
+    time_text = clean_text(
+        time_text
+    )
 
     match = re.search(
         r"(\d{1,2}):(\d{2})\s*(AM|PM)",
@@ -521,8 +641,14 @@ def parse_time(time_text):
     if not match:
         return None
 
-    hour = int(match.group(1))
-    minute = int(match.group(2))
+    hour = int(
+        match.group(1)
+    )
+
+    minute = int(
+        match.group(2)
+    )
+
     meridiem = match.group(3).upper()
 
     if meridiem == "AM":
@@ -536,27 +662,135 @@ def parse_time(time_text):
 
 
 def parse_duration(duration_text):
-    duration_text = clean_text(duration_text)
-
-    match = re.search(
-        r"(\d+)",
+    duration_text = clean_text(
         duration_text
     )
+
+    match = re.search(
+        r"(\d+)\s*(?:minutes|min)",
+        duration_text,
+        re.IGNORECASE
+    )
+
+    if not match:
+        match = re.search(
+            r"(\d+)",
+            duration_text
+        )
 
     if not match:
         return None
 
-    return int(match.group(1))
+    return int(
+        match.group(1)
+    )
 
 
-def extract_programs(soup, channel_id):
+def is_date_text(text):
+    text = clean_text(
+        text
+    )
+
+    if not text:
+        return False
+
+    pattern = (
+        r"^(?:(?:"
+        r"Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|"
+        r"الاثنين|الثلاثاء|الأربعاء|الاربعاء|الخميس|الجمعة|السبت|الأحد|الاحد"
+        r")\s+)?"
+        r"\d{1,2}\s+[^\s]+$"
+    )
+
+    return bool(
+        re.match(
+            pattern,
+            text,
+            re.IGNORECASE
+        )
+    )
+
+
+def find_program_container(title_link):
+    # Walk upward and choose the nearest ancestor that contains
+    # both a start time and a duration.
+    current = title_link
+
+    for _ in range(8):
+        if not current:
+            break
+
+        text = clean_text(
+            current.get_text(
+                " ",
+                strip=True
+            )
+        )
+
+        has_time = re.search(
+            r"\d{1,2}:\d{2}\s*(?:AM|PM)",
+            text,
+            re.IGNORECASE
+        )
+
+        has_duration = re.search(
+            r"\b\d+\s*(?:minutes|min)\b",
+            text,
+            re.IGNORECASE
+        )
+
+        if has_time and has_duration:
+            return current
+
+        current = current.parent
+
+    return title_link.parent
+
+
+def find_previous_date(node):
+    candidates = node.find_all_previous(
+        [
+            "h1", "h2", "h3", "h4", "h5",
+            "h6", "div", "section", "p"
+        ],
+        limit=80
+    )
+
+    for candidate in candidates:
+        text = clean_text(
+            candidate.get_text(
+                " ",
+                strip=True
+            )
+        )
+
+        if is_date_text(text):
+            parsed = parse_date(
+                text
+            )
+
+            if parsed:
+                return parsed
+
+    return None
+
+
+def extract_programs_legacy(
+    soup,
+    channel_id
+):
     programs_output = []
 
-    dates = soup.select("div.dates")
+    dates = soup.select(
+        "div.dates"
+    )
 
     for date_node in dates:
         current_date = parse_date(
-            date_node.get_text(" ", strip=True)
+            date_node.get_text(
+                " ",
+                strip=True
+            )
         )
 
         if not current_date:
@@ -629,9 +863,6 @@ def extract_programs(soup, channel_id):
                 )
             )
 
-            if not time_value:
-                continue
-
             duration_item = program.select_one(
                 "span.subheader"
             )
@@ -646,7 +877,7 @@ def extract_programs(soup, channel_id):
                 )
             )
 
-            if not duration:
+            if not time_value or not duration:
                 continue
 
             hour, minute = time_value
@@ -659,9 +890,13 @@ def extract_programs(soup, channel_id):
             )
 
             if previous_start and start < previous_start:
-                start += timedelta(days=1)
+                start += timedelta(
+                    days=1
+                )
 
-            stop = start + timedelta(minutes=duration)
+            stop = start + timedelta(
+                minutes=duration
+            )
 
             previous_start = start
 
@@ -675,20 +910,175 @@ def extract_programs(soup, channel_id):
     return programs_output
 
 
+def extract_programs_generic(
+    soup,
+    channel_id
+):
+    programs_output = []
+
+    seen = set()
+
+    title_links = soup.select(
+        "a[href^='/work/']"
+    )
+
+    for title_link in title_links:
+        title = clean_text(
+            title_link.get_text(
+                " ",
+                strip=True
+            )
+        )
+
+        if not title:
+            continue
+
+        container = find_program_container(
+            title_link
+        )
+
+        container_text = clean_text(
+            container.get_text(
+                " ",
+                strip=True
+            )
+        )
+
+        time_match = re.search(
+            r"(\d{1,2}:\d{2}\s*(?:AM|PM))",
+            container_text,
+            re.IGNORECASE
+        )
+
+        duration_match = re.search(
+            r"(\d+\s*(?:minutes|min))",
+            container_text,
+            re.IGNORECASE
+        )
+
+        if not time_match or not duration_match:
+            continue
+
+        current_date = find_previous_date(
+            title_link
+        )
+
+        if not current_date:
+            continue
+
+        time_value = parse_time(
+            time_match.group(1)
+        )
+
+        duration = parse_duration(
+            duration_match.group(1)
+        )
+
+        if not time_value or not duration:
+            continue
+
+        hour, minute = time_value
+
+        start = current_date.replace(
+            hour=hour,
+            minute=minute,
+            second=0,
+            microsecond=0
+        )
+
+        stop = start + timedelta(
+            minutes=duration
+        )
+
+        key = (
+            start,
+            stop,
+            title.lower()
+        )
+
+        if key in seen:
+            continue
+
+        seen.add(key)
+
+        programs_output.append({
+            "channel_id": channel_id,
+            "title": title,
+            "start": start,
+            "stop": stop
+        })
+
+    programs_output.sort(
+        key=lambda item: item["start"]
+    )
+
+    # Correct midnight rollover.
+    corrected = []
+    previous_start = None
+
+    for item in programs_output:
+        start = item["start"]
+        stop = item["stop"]
+
+        if previous_start and start < previous_start:
+            start += timedelta(
+                days=1
+            )
+            stop += timedelta(
+                days=1
+            )
+
+        previous_start = start
+
+        item["start"] = start
+        item["stop"] = stop
+
+        corrected.append(item)
+
+    return corrected
+
+
+def extract_programs(
+    soup,
+    channel_id
+):
+    legacy = extract_programs_legacy(
+        soup,
+        channel_id
+    )
+
+    if legacy:
+        return legacy
+
+    # Some ElCinema channel pages use a newer layout.
+    return extract_programs_generic(
+        soup,
+        channel_id
+    )
+
+
 def extract_logo(soup):
-    for image in soup.find_all("img"):
+    for image in soup.find_all(
+        "img"
+    ):
         src = image.get("src")
 
         if not src:
             continue
 
         if "/tvguide/" in src:
-            return urljoin(BASE_URL, src)
+            return urljoin(
+                BASE_URL,
+                src
+            )
 
     return ""
 
 
-def process_elcinema_channel(session, channel):
+def process_elcinema_channel(
+    session,
+    channel
+):
     response = get_page(
         session,
         channel["url"]
@@ -705,7 +1095,9 @@ def process_elcinema_channel(session, channel):
         "html.parser"
     )
 
-    logo = extract_logo(soup)
+    logo = extract_logo(
+        soup
+    )
 
     programs = extract_programs(
         soup,
@@ -718,64 +1110,94 @@ def process_elcinema_channel(session, channel):
     }
 
 
-def create_xml(matches, source_results):
-    tv = ET.Element("tv")
+def create_xml(
+    matches,
+    source_results
+):
+    tv = ET.Element(
+        "tv"
+    )
 
     total_programs = 0
     channels_with_programs = 0
 
-    for match in matches:
-        result = source_results.get(match["elcinema_id"], {})
+    # One source channel can feed multiple user tvg-id variants
+    # such as HD / FHD / 4K when they have the same normalized name.
+    grouped = {}
 
-        programs = result.get("programs", [])
-        logo = result.get("logo", "")
+    for match in matches:
+        grouped.setdefault(
+            match["elcinema_id"],
+            []
+        ).append(match)
+
+    for source_id, source_matches in grouped.items():
+        result = source_results.get(
+            source_id,
+            {}
+        )
+
+        programs = result.get(
+            "programs",
+            []
+        )
+
+        logo = result.get(
+            "logo",
+            ""
+        )
 
         if not programs:
             continue
 
-        channels_with_programs += 1
-        total_programs += len(programs)
-
-        channel_element = ET.SubElement(
-            tv,
-            "channel",
-            id=match["tvg_id"]
-        )
-
-        display_name = ET.SubElement(
-            channel_element,
-            "display-name"
-        )
-
-        display_name.text = match["user_name"]
-
-        if logo:
-            ET.SubElement(
-                channel_element,
-                "icon",
-                src=logo
+        for match in source_matches:
+            channels_with_programs += 1
+            total_programs += len(
+                programs
             )
 
-        for item in programs:
-            programme = ET.SubElement(
+            channel_element = ET.SubElement(
                 tv,
-                "programme",
-                start=item["start"].strftime(
-                    "%Y%m%d%H%M%S +0100"
-                ),
-                stop=item["stop"].strftime(
-                    "%Y%m%d%H%M%S +0100"
-                ),
-                channel=match["tvg_id"]
+                "channel",
+                id=match["tvg_id"]
             )
 
-            title = ET.SubElement(
-                programme,
-                "title",
-                lang="ar"
+            display_name = ET.SubElement(
+                channel_element,
+                "display-name"
             )
 
-            title.text = item["title"]
+            display_name.text = match[
+                "user_name"
+            ]
+
+            if logo:
+                ET.SubElement(
+                    channel_element,
+                    "icon",
+                    src=logo
+                )
+
+            for item in programs:
+                programme = ET.SubElement(
+                    tv,
+                    "programme",
+                    start=item["start"].strftime(
+                        "%Y%m%d%H%M%S +0100"
+                    ),
+                    stop=item["stop"].strftime(
+                        "%Y%m%d%H%M%S +0100"
+                    ),
+                    channel=match["tvg_id"]
+                )
+
+                title = ET.SubElement(
+                    programme,
+                    "title",
+                    lang="ar"
+                )
+
+                title.text = item["title"]
 
     if total_programs == 0:
         raise RuntimeError(
@@ -783,11 +1205,19 @@ def create_xml(matches, source_results):
             "لن يتم استبدال ملف XML الحالي."
         )
 
-    ET.indent(tv, space="  ")
+    ET.indent(
+        tv,
+        space="  "
+    )
 
-    temporary_file = OUTPUT_FILE + ".tmp"
+    temporary_file = (
+        OUTPUT_FILE + ".tmp"
+    )
 
-    tree = ET.ElementTree(tv)
+    tree = ET.ElementTree(
+        tv
+    )
+
     tree.write(
         temporary_file,
         encoding="utf-8",
@@ -803,10 +1233,18 @@ def create_xml(matches, source_results):
     print("===================================")
     print("النتيجة النهائية")
     print("===================================")
-    print("المطابقات:", len(matches))
-    print("قنوات لها برامج:", channels_with_programs)
-    print("إجمالي البرامج:", total_programs)
-    print("الملف:", OUTPUT_FILE)
+    print(
+        "قنوات M3U مرتبطة:",
+        channels_with_programs
+    )
+    print(
+        "إجمالي البرامج:",
+        total_programs
+    )
+    print(
+        "الملف:",
+        OUTPUT_FILE
+    )
     print("===================================")
 
 
@@ -825,14 +1263,15 @@ def main():
         session
     )
 
-    matches, unmatched = build_matches(
+    matches, unmatched_user, unmatched_source = build_matches(
         user_channels,
         elcinema_channels
     )
 
     save_mapping_report(
         matches,
-        unmatched
+        unmatched_user,
+        unmatched_source
     )
 
     if not matches:
@@ -843,15 +1282,21 @@ def main():
     source_results = {}
 
     unique_sources = {}
+
     for match in matches:
-        unique_sources[match["elcinema_id"]] = {
+        unique_sources[
+            match["elcinema_id"]
+        ] = {
             "id": match["elcinema_id"],
             "name": match["elcinema_name"],
             "url": match["url"]
         }
 
     print()
-    print("تحميل قنوات ElCinema المطابقة:", len(unique_sources))
+    print(
+        "تحميل قنوات ElCinema المطابقة:",
+        len(unique_sources)
+    )
 
     for index, channel in enumerate(
         unique_sources.values(),
@@ -869,13 +1314,22 @@ def main():
         )
 
         try:
-            source_results[channel["id"]] = process_elcinema_channel(
+            source_results[
+                channel["id"]
+            ] = process_elcinema_channel(
                 session,
                 channel
             )
+
         except Exception as error:
-            print("خطأ:", error)
-            source_results[channel["id"]] = {
+            print(
+                "خطأ:",
+                error
+            )
+
+            source_results[
+                channel["id"]
+            ] = {
                 "logo": "",
                 "programs": []
             }
