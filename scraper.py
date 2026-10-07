@@ -11,16 +11,37 @@ headers = {
 }
 
 response = requests.get(URL, headers=headers, timeout=30)
-
-print("HTTP:", response.status_code)
-
 response.raise_for_status()
 
 soup = BeautifulSoup(response.text, "html.parser")
 
-dates = soup.find_all("div", class_="dates")
+programs = soup.select("div.boxed-category-0.padded-half, div.boxed-category-1.padded-half")
 
-print("عدد التواريخ:", len(dates))
+print("عدد البرامج:", len(programs))
+print()
 
-for date in dates:
-    print(date.get_text(" ", strip=True))
+for program in programs:
+
+    title = ""
+
+    title_link = program.select_one("a[href^='/work/']")
+    if title_link:
+        title = title_link.get_text(" ", strip=True)
+    else:
+        title_item = program.select_one("ul.unstyled.no-margin li")
+        if title_item:
+            title = title_item.get_text(" ", strip=True)
+
+    time_item = program.select_one("ul.unstyled.text-center li:first-child")
+
+    if not time_item:
+        items = program.select("ul.unstyled.no-margin li")
+        if len(items) >= 2:
+            time_item = items[1]
+
+    time = time_item.get_text(" ", strip=True) if time_item else ""
+
+    duration_item = program.select_one("span.subheader")
+    duration = duration_item.get_text(" ", strip=True) if duration_item else ""
+
+    print(f"{time} | {title} | {duration}")
