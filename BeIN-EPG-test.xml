@@ -6556,13 +6556,13 @@
     <title lang="en">Uganda vs Libya - Africa Cup of Nations ( AFCON ) Qualification 2026/2027</title>
   </programme>
   <programme start="20261007100100 +0300" stop="20261007103000 +0300" channel="beINSports1.qa@MENA">
-    <title lang="en">Wales vs Denmark - UEFA Nations League 2026/27</title>
-  </programme>
-  <programme start="20261007103000 +0300" stop="20261007110200 +0300" channel="beINSports1.qa@MENA">
     <title lang="en">Lesotho vs Morocco - Africa Cup of Nations ( AFCON ) Qualification 2026/2027</title>
   </programme>
-  <programme start="20261007110200 +0300" stop="20261007113000 +0300" channel="beINSports1.qa@MENA">
-    <title lang="en">Portugal vs Norway - UEFA Nations League 2026/27</title>
+  <programme start="20261007103000 +0300" stop="20261007110000 +0300" channel="beINSports1.qa@MENA">
+    <title lang="en">Wales vs Denmark - UEFA Nations League 2026/27</title>
+  </programme>
+  <programme start="20261007110000 +0300" stop="20261007113000 +0300" channel="beINSports1.qa@MENA">
+    <title lang="en">UEFA UCL Magazine 2026/2027 - MD2 Review</title>
   </programme>
   <programme start="20261007113000 +0300" stop="20261007115900 +0300" channel="beINSports1.qa@MENA">
     <title lang="en">Burundi vs Algeria - Africa Cup of Nations ( AFCON ) Qualification 2026/2027</title>
@@ -6741,16 +6741,19 @@
   <programme start="20261008185500 +0300" stop="20261008195000 +0300" channel="beINSports1.qa@MENA">
     <title lang="en">Review Show - Laver Cup 2026</title>
   </programme>
-  <programme start="20261008195000 +0300" stop="20261008221500 +0300" channel="beINSports1.qa@MENA">
+  <programme start="20261008195000 +0300" stop="20261008220000 +0300" channel="beINSports1.qa@MENA">
     <title lang="en">Galatasaray A.Ş. vs Kasımpaşa A.Ş. - Turkish Super League 2027</title>
   </programme>
-  <programme start="20261008221500 +0300" stop="20261008224500 +0300" channel="beINSports1.qa@MENA">
+  <programme start="20261008220000 +0300" stop="20261008223000 +0300" channel="beINSports1.qa@MENA">
+    <title lang="en">Croatia vs Spain - UEFA Nations League 2026/27</title>
+  </programme>
+  <programme start="20261008223000 +0300" stop="20261008230000 +0300" channel="beINSports1.qa@MENA">
     <title lang="en">Greece vs Germany - UEFA Nations League 2026/27</title>
   </programme>
-  <programme start="20261008224500 +0300" stop="20261008231500 +0300" channel="beINSports1.qa@MENA">
+  <programme start="20261008230000 +0300" stop="20261008233000 +0300" channel="beINSports1.qa@MENA">
     <title lang="en">Italy vs Türkiye - UEFA Nations League 2026/27</title>
   </programme>
-  <programme start="20261008231500 +0300" stop="20261008234500 +0300" channel="beINSports1.qa@MENA">
+  <programme start="20261008233000 +0300" stop="20261009000000 +0300" channel="beINSports1.qa@MENA">
     <title lang="en">France vs Belgium - UEFA Nations League 2026/27</title>
   </programme>
   <channel id="beINSports2.qa@MENA">
@@ -6960,11 +6963,11 @@
   <programme start="20261007181000 +0300" stop="20261007195900 +0300" channel="beINSPORT4.qa@MENA">
     <title lang="en">Greece vs Germany - UEFA Nations League 2026/27</title>
   </programme>
-  <programme start="20261007195900 +0300" stop="20261007202500 +0300" channel="beINSPORT4.qa@MENA">
+  <programme start="20261007195900 +0300" stop="20261007202800 +0300" channel="beINSPORT4.qa@MENA">
     <title lang="en">Italy vs Türkiye - UEFA Nations League 2026/27</title>
   </programme>
-  <programme start="20261007202500 +0300" stop="20261007221000 +0300" channel="beINSPORT4.qa@MENA">
-    <title lang="en">Cyprus vs Latvia - UEFA Nations League 2026/27</title>
+  <programme start="20261007202800 +0300" stop="20261007221000 +0300" channel="beINSPORT4.qa@MENA">
+    <title lang="en">France vs Belgium - UEFA Nations League 2026/27</title>
   </programme>
   <programme start="20261007221000 +0300" stop="20261007224000 +0300" channel="beINSPORT4.qa@MENA">
     <title lang="en">Romania vs Sweden - UEFA Nations League 2026/27</title>
@@ -7344,7 +7347,7 @@
   <programme start="20261008082700 +0300" stop="20261008092600 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">Moto GP - Japan GP 2026</title>
   </programme>
-  <programme start="20261008084500 +0300" stop="20261008111500 +0300" channel="beINSports8.qa@MENA">
+  <programme start="20261008084500 +0300" stop="20261008101600 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">Minnesota vs Indiana - Pre</title>
   </programme>
   <programme start="20261008092600 +0300" stop="20261008100800 +0300" channel="beINSports8.qa@MENA">
@@ -7353,49 +7356,52 @@
   <programme start="20261008100800 +0300" stop="20261008113000 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">Moto GP - Japan GP 2026</title>
   </programme>
-  <programme start="20261008111500 +0300" stop="20261008134500 +0300" channel="beINSports8.qa@MENA">
+  <programme start="20261008101600 +0300" stop="20261008115100 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">New York vs Atlanta - Semi Final</title>
   </programme>
   <programme start="20261008113000 +0300" stop="20261008123000 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">Practice 1 - F1 Singapore Grand Prix</title>
   </programme>
+  <programme start="20261008115100 +0300" stop="20261008133600 +0300" channel="beINSports8.qa@MENA">
+    <title lang="en">Las Vegas vs Golden State - Semi Final</title>
+  </programme>
   <programme start="20261008123000 +0300" stop="20261008153000 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">Tampa Bay Buccaneers @ Dallas Cowboys - NFL</title>
   </programme>
-  <programme start="20261008134500 +0300" stop="20261008161500 +0300" channel="beINSports8.qa@MENA">
-    <title lang="en">Las Vegas vs Golden State - Semi Final</title>
+  <programme start="20261008133600 +0300" stop="20261008164500 +0300" channel="beINSports8.qa@MENA">
+    <title lang="en">Main Race - F1 Bahrain Grand Prix</title>
   </programme>
   <programme start="20261008153000 +0300" stop="20261008163000 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">Sprint Race Qualifying - F1 Singapore Grand Prix</title>
   </programme>
-  <programme start="20261008161500 +0300" stop="20261008170000 +0300" channel="beINSports8.qa@MENA">
-    <title lang="en">Moto 2 - Japan GP 2</title>
-  </programme>
   <programme start="20261008163000 +0300" stop="20261008183000 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">Albania vs San Marino - UEFA Nations League 2026/27</title>
   </programme>
-  <programme start="20261008170000 +0300" stop="20261008180000 +0300" channel="beINSports8.qa@MENA">
+  <programme start="20261008164500 +0300" stop="20261008173000 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">Moto 2 - Japan GP 2</title>
   </programme>
-  <programme start="20261008180000 +0300" stop="20261008184700 +0300" channel="beINSports8.qa@MENA">
+  <programme start="20261008173000 +0300" stop="20261008183000 +0300" channel="beINSports8.qa@MENA">
+    <title lang="en">Moto 2 - Japan GP 2</title>
+  </programme>
+  <programme start="20261008183000 +0300" stop="20261008193000 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">Moto 3 - Japan GP 2026</title>
   </programme>
   <programme start="20261008183000 +0300" stop="20261008193000 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">Practice 1 - F1 Singapore Grand Prix</title>
   </programme>
-  <programme start="20261008184700 +0300" stop="20261008194300 +0300" channel="beINSports8.qa@MENA">
+  <programme start="20261008193000 +0300" stop="20261008203000 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">Moto 3 - Japan GP 2026</title>
   </programme>
   <programme start="20261008193000 +0300" stop="20261008203000 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">Sprint Race Qualifying - F1 Singapore Grand Prix</title>
   </programme>
-  <programme start="20261008194300 +0300" stop="20261008213000 +0300" channel="beINSports8.qa@MENA">
+  <programme start="20261008203000 +0300" stop="20261008222000 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">Albania vs San Marino - UEFA Nations League 2026/27</title>
   </programme>
   <programme start="20261008203000 +0300" stop="20261008233500 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">Main Race - F1 Bahrain Grand Prix</title>
   </programme>
-  <programme start="20261008213000 +0300" stop="20261008220000 +0300" channel="beINSports8.qa@MENA">
+  <programme start="20261008222000 +0300" stop="20261008225000 +0300" channel="beINSports8.qa@MENA">
     <title lang="en">New York vs Atlanta - Semi Final</title>
   </programme>
   <programme start="20261008233500 +0300" stop="20261009000500 +0300" channel="beINSports8.qa@MENA">
