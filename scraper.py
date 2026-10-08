@@ -435,108 +435,204 @@ def add_program(
     })
 
 
-def extract_programs_legacy(
+def extract_programs(
     soup,
     channel_id
 ):
-
     programs = []
 
     seen = set()
 
-    date_nodes = soup.select(
-        "div.dates"
+    # ElCinema TV Guide container.
+    tvgrid = soup.select_one(
+        "div.tvgrid"
     )
 
-    for date_node in date_nodes:
+    if not tvgrid:
+        return programs
 
-        current_date = parse_date(
-            date_node.get_text(
-                " ",
-                strip=True
+    current_date = None
+    previous_start = None
+
+    # Walk through the TV grid in document order.
+    # Each "dates" element starts a new date section.
+    for node in tvgrid.find_all(
+        recursive=True
+    ):
+
+        # -------------------------------------------------
+        # New date section
+        # -------------------------------------------------
+
+        if (
+            node.name == "div"
+            and "dates" in node.get(
+                "class",
+                []
             )
+        ):
+
+            current_date = parse_date(
+                node.get_text(
+                    " ",
+                    strip=True
+                )
+            )
+
+            previous_start = None
+
+            continue
+
+        # -------------------------------------------------
+        # Programme card
+        # -------------------------------------------------
+
+        classes = node.get(
+            "class",
+            []
         )
+
+        if not any(
+            item.startswith(
+                "boxed-category-"
+            )
+            for item in classes
+        ):
+            continue
+
+        # Ignore nested programme cards.
+        parent = node.parent
+
+        nested = False
+
+        while parent is not None and parent is not tvgrid:
+
+            parent_classes = parent.get(
+                "class",
+                []
+            )
+
+            if any(
+                item.startswith(
+                    "boxed-category-"
+                )
+                for item in parent_classes
+            ):
+                nested = True
+                break
+
+            parent = parent.parent
+
+        if nested:
+            continue
 
         if not current_date:
             continue
 
-        container = date_node.find_next(
-            "div",
-            class_="columns small-12"
+        # -------------------------------------------------
+        # Title
+        # -------------------------------------------------
+
+        title = ""
+
+        title_link = node.select_one(
+            "a[href^='/work/']"
         )
 
-        if not container:
-            continue
+        if title_link:
 
-        blocks = container.select(
-            "div.boxed-category-0.padded-half, "
-            "div.boxed-category-1.padded-half"
-        )
-
-        for block in blocks:
-
-            title = ""
-
-            title_link = block.select_one(
-                "a[href^='/work/']"
+            title = clean_text(
+                title_link.get_text(
+                    " ",
+                    strip=True
+                )
             )
 
-            if title_link:
+        else:
+
+            title_node = node.select_one(
+                "ul.unstyled.no-margin li:first-child"
+            )
+
+            if title_node:
 
                 title = clean_text(
-                    title_link.get_text(
+                    title_node.get_text(
                         " ",
                         strip=True
                     )
                 )
 
-            else:
+        if not title:
+            continue
 
-                title_node = block.select_one(
-                    "ul.unstyled.no-margin li:first-child"
-                )
+        # -------------------------------------------------
+        # Time
+        # -------------------------------------------------
 
-                if title_node:
+        time_value = None
 
-                    title = clean_text(
-                        title_node.get_text(
-                            " ",
-                            strip=True
-                        )
-                    )
+        time_node = node.select_one(
+            "ul.unstyled.text-center li:first-child"
+        )
 
-            if not title:
-                continue
+        if time_node:
 
-            time_node = block.select_one(
-                "ul.unstyled.text-center li:first-child"
-            )
-
-            if not time_node:
-
-                items = block.select(
-                    "ul.unstyled.no-margin li"
-                )
-
-                if len(items) >= 2:
-                    time_node = items[1]
-
-            duration_node = block.select_one(
-                "span.subheader"
-            )
-
-            if not time_node:
-                continue
-
-            if not duration_node:
-                continue
-
-            start_time = parse_time(
+            time_value = parse_time(
                 time_node.get_text(
                     " ",
                     strip=True
                 )
             )
+
+        # Special card fallback.
+        if not time_value:
+
+            items = node.select(
+                "ul.unstyled.no-margin li"
+            )
+
+            if len(items) >= 2:
+
+                time_value = parse_time(
+                    items[1].get_text(
+                        " ",
+                        strip=True
+                    )
+                )
+
+        # Final fallback: search the whole card.
+        if not time_value:
+
+            time_match = re.search(
+                r"\d{1,2}:\d{2}\s*(?:AM|PM)",
+                node.get_text(
+                    " ",
+                    strip=True
+                ),
+                re.IGNORECASE
+            )
+
+            if time_match:
+
+                time_value = parse_time(
+                    time_match.group(0)
+                )
+
+        if not time_value:
+            continue
+
+        # -------------------------------------------------
+        # Duration
+        # -------------------------------------------------
+
+        duration = None
+
+        duration_node = node.select_one(
+            "span.subheader"
+        )
+
+        if duration_node:
 
             duration = parse_duration(
                 duration_node.get_text(
@@ -545,15 +641,78 @@ def extract_programs_legacy(
                 )
             )
 
-            add_program(
-                programs,
-                seen,
-                channel_id,
-                current_date,
-                title,
-                start_time,
-                duration
+        # Fallback for cards where duration is elsewhere.
+        if not duration:
+
+            duration_match = re.search(
+                r"\[\s*(\d+)\s*(?:minutes|min)\s*\]",
+                node.get_text(
+                    " ",
+                    strip=True
+                ),
+                re.IGNORECASE
             )
+
+            if duration_match:
+
+                duration = int(
+                    duration_match.group(1)
+                )
+
+        if not duration:
+            continue
+
+        # -------------------------------------------------
+        # Build start / stop
+        # -------------------------------------------------
+
+        hour, minute = time_value
+
+        start = current_date.replace(
+            hour=hour,
+            minute=minute,
+            second=0,
+            microsecond=0
+        )
+
+        # If the schedule crosses midnight.
+        if (
+            previous_start is not None
+            and start < previous_start
+        ):
+
+            start += timedelta(
+                days=1
+            )
+
+        stop = (
+            start
+            + timedelta(
+                minutes=duration
+            )
+        )
+
+        previous_start = start
+
+        key = (
+            start,
+            stop,
+            title
+        )
+
+        if key in seen:
+            continue
+
+        seen.add(
+            key
+        )
+
+        programs.append({
+            "channel_id": channel_id,
+            "title": title,
+            "start": start,
+            "stop": stop
+        })
 
     programs.sort(
         key=lambda item: item["start"]
