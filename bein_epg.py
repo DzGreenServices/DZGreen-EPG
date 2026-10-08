@@ -3,7 +3,6 @@ from datetime import datetime, timedelta, timezone
 from urllib.parse import urlparse
 import xml.etree.ElementTree as ET
 import csv
-import re
 import os
 import time
 
@@ -21,8 +20,14 @@ URL = (
 XML_OUTPUT = "BeIN-EPG.xml"
 CSV_OUTPUT = "BeIN-Channels.csv"
 
-# Official beIN guide displays the schedule in UTC+03:00.
+# Official beIN guide time = UTC+03:00
 SOURCE_TIMEZONE = timezone(timedelta(hours=3))
+
+# Official categories
+CATEGORIES = [
+    ("sports", "رياضة"),
+    ("entertainment", "ترفيه"),
+]
 
 
 # ============================================================
@@ -58,11 +63,8 @@ def get_channel_id(href):
 
 def epoch_to_xmltv(milliseconds):
     """
-    Convert official Unix milliseconds to XMLTV time.
-
-    The timestamp itself is absolute UTC.
-    We convert it to the timezone used by the
-    official beIN TV guide: UTC+03:00.
+    Convert official Unix milliseconds
+    to XMLTV time in UTC+03:00.
     """
 
     utc_dt = datetime.fromtimestamp(
@@ -77,16 +79,6 @@ def epoch_to_xmltv(milliseconds):
     return local_dt.strftime(
         "%Y%m%d%H%M%S +0300"
     )
-
-
-def safe_filename(path):
-    directory = os.path.dirname(path)
-
-    if directory:
-        os.makedirs(
-            directory,
-            exist_ok=True
-        )
 
 
 # ============================================================
@@ -125,9 +117,11 @@ def get_available_days(page):
         )
 
         if date_value:
+
             date_value = date_value.strip()
 
             if date_value not in dates:
+
                 dates.append(
                     date_value
                 )
@@ -136,6 +130,7 @@ def get_available_days(page):
     print("Available dates:")
 
     for date_value in dates:
+
         print(
             "  -",
             date_value
@@ -145,18 +140,18 @@ def get_available_days(page):
 
 
 # ============================================================
-# SELECT A DAY
+# SELECT DAY
 # ============================================================
 
 def select_day(page, date_value):
 
     print()
-    print("-" * 60)
+    print("=" * 60)
     print(
         "Selecting date:",
         date_value
     )
-    print("-" * 60)
+    print("=" * 60)
 
     selector = (
         f'.day-cell[data-date="{date_value}"]'
@@ -167,10 +162,12 @@ def select_day(page, date_value):
     )
 
     if day.count() == 0:
+
         print(
             "Date not found:",
             date_value
         )
+
         return False
 
     try:
@@ -190,9 +187,10 @@ def select_day(page, date_value):
 
         return False
 
-    # Give the website JavaScript time
-    # to update the TV guide.
-    page.wait_for_timeout(3000)
+    # Allow JavaScript to update the guide
+    page.wait_for_timeout(
+        2500
+    )
 
     try:
 
@@ -224,14 +222,101 @@ def select_day(page, date_value):
 
 
 # ============================================================
-# PARSE CURRENT DAY
+# SELECT CATEGORY
 # ============================================================
 
-def parse_current_day(page, date_value, channels, programmes):
+def select_category(page, category_id, category_name):
+
+    print()
+    print("-" * 60)
+    print(
+        "Selecting category:",
+        category_name,
+        "(" + category_id + ")"
+    )
+    print("-" * 60)
+
+    selector = (
+        f'.category-tab[data-category="{category_id}"]'
+    )
+
+    button = page.locator(
+        selector
+    )
+
+    if button.count() == 0:
+
+        print(
+            "Category button not found:",
+            category_id
+        )
+
+        return False
+
+    try:
+
+        button.scroll_into_view_if_needed()
+
+        button.click(
+            timeout=30000
+        )
+
+    except Exception as error:
+
+        print(
+            "Could not click category:",
+            error
+        )
+
+        return False
+
+    # Allow JavaScript to change the guide
+    page.wait_for_timeout(
+        2500
+    )
+
+    try:
+
+        page.wait_for_selector(
+            ".channel-row",
+            timeout=60000
+        )
+
+    except PlaywrightTimeoutError:
+
+        print(
+            "No channel rows after selecting:",
+            category_name
+        )
+
+        return False
+
+    print(
+        "Category loaded:",
+        category_name
+    )
+
+    return True
+
+
+# ============================================================
+# PARSE CURRENT CATEGORY / DAY
+# ============================================================
+
+def parse_current_view(
+    page,
+    date_value,
+    category_id,
+    category_name,
+    channels,
+    programmes
+):
 
     print()
     print(
         "Extracting:",
+        category_name,
+        "|",
         date_value
     )
 
@@ -247,6 +332,7 @@ def parse_current_day(page, date_value, channels, programmes):
     )
 
     day_program_count = 0
+    new_channel_count = 0
 
     for row_index in range(row_count):
 
@@ -255,7 +341,7 @@ def parse_current_day(page, date_value, channels, programmes):
         )
 
         # ----------------------------------------------------
-        # CHANNEL
+        # CHANNEL LINK
         # ----------------------------------------------------
 
         channel_link = row.locator(
@@ -305,16 +391,18 @@ def parse_current_day(page, date_value, channels, programmes):
                 "name": channel_id,
                 "logo": logo_url,
                 "bein_url": href,
+                "category": category_id,
             }
+
+            new_channel_count += 1
 
         else:
 
-            # If a logo was missing previously,
-            # keep the newly found official logo.
             if (
                 not channels[channel_id]["logo"]
                 and logo_url
             ):
+
                 channels[channel_id]["logo"] = logo_url
 
         # ----------------------------------------------------
@@ -354,7 +442,7 @@ def parse_current_day(page, date_value, channels, programmes):
             )
 
             # ------------------------------------------------
-            # Validate required official fields
+            # Validate official fields
             # ------------------------------------------------
 
             if not title:
@@ -380,20 +468,31 @@ def parse_current_day(page, date_value, channels, programmes):
             if end_ms <= start_ms:
                 continue
 
-            programme = {
-                "channel": channel_id,
-                "title": title,
-                "category": category,
-                "start_ms": start_ms,
-                "end_ms": end_ms,
-                "date": date_value,
-            }
+            programmes.append({
 
-            programmes.append(
-                programme
-            )
+                "channel": channel_id,
+
+                "title": title,
+
+                "category": category,
+
+                "start_ms": start_ms,
+
+                "end_ms": end_ms,
+
+                "date": date_value,
+
+                "guide_category":
+                    category_id,
+
+            })
 
             day_program_count += 1
+
+    print(
+        "New channels:",
+        new_channel_count
+    )
 
     print(
         "Programs extracted:",
@@ -482,9 +581,7 @@ def write_xml(channels, programmes):
             "display-name"
         )
 
-        # We use the official channel ID
-        # because the page structure we inspected
-        # does not expose another official channel name.
+        # Official channel ID from beIN
         display_name.text = channel["name"]
 
         if channel["logo"]:
@@ -544,11 +641,6 @@ def write_xml(channels, programmes):
                 programme["category"]
             )
 
-        # IMPORTANT:
-        # No <desc> is created because the official
-        # TV guide does not provide a separate description
-        # in the HTML structure we inspected.
-
     tree = ET.ElementTree(
         tv
     )
@@ -597,6 +689,7 @@ def write_csv(channels):
             "tvg_id",
             "logo_url",
             "bein_url",
+            "category",
         ])
 
         for channel_id in sorted(
@@ -612,6 +705,7 @@ def write_csv(channels):
                 channel["id"],
                 channel["logo"],
                 channel["bein_url"],
+                channel["category"],
             ])
 
     print(
@@ -630,6 +724,9 @@ def main():
     print("=" * 60)
     print(
         "DZGreen - Official beIN EPG"
+    )
+    print(
+        "Sports + Entertainment"
     )
     print("=" * 60)
 
@@ -666,13 +763,13 @@ def main():
             "Page loaded."
         )
 
-        # Allow JavaScript to build the guide
+        # Give JavaScript time to build guide
         page.wait_for_timeout(
             10000
         )
 
         # ----------------------------------------------------
-        # Get available dates
+        # AVAILABLE DAYS
         # ----------------------------------------------------
 
         dates = get_available_days(
@@ -687,46 +784,156 @@ def main():
                 "No dates found on the official beIN TV guide."
             )
 
-        # ----------------------------------------------------
-        # Process every official date
-        # ----------------------------------------------------
+        # ====================================================
+        # PROCESS SPORTS + ENTERTAINMENT
+        # ====================================================
 
-        for date_value in dates:
+        for category_id, category_name in CATEGORIES:
 
-            success = select_day(
+            print()
+            print("#" * 60)
+            print(
+                "CATEGORY:",
+                category_name,
+                "(" + category_id + ")"
+            )
+            print("#" * 60)
+
+            category_loaded = select_category(
                 page,
-                date_value
+                category_id,
+                category_name
             )
 
-            if not success:
+            if not category_loaded:
 
                 print(
-                    "Skipping:",
-                    date_value
+                    "Skipping category:",
+                    category_name
                 )
 
                 continue
 
-            parse_current_day(
-                page,
-                date_value,
-                channels,
+            category_channels_before = len(
+                channels
+            )
+
+            category_programmes_before = len(
                 programmes
             )
 
-        browser.close()
+            # ------------------------------------------------
+            # Every available date
+            # ------------------------------------------------
 
-    # --------------------------------------------------------
-    # Remove duplicates
-    # --------------------------------------------------------
+            for date_value in dates:
+
+                success = select_day(
+                    page,
+                    date_value
+                )
+
+                if not success:
+
+                    print(
+                        "Skipping date:",
+                        date_value
+                    )
+
+                    continue
+
+                # IMPORTANT:
+                # After selecting the day, ensure the
+                # requested category remains active.
+                active_button = page.locator(
+                    '.category-tab.active'
+                ).first
+
+                active_category = ""
+
+                if active_button.count() > 0:
+
+                    active_category = (
+                        active_button.get_attribute(
+                            "data-category"
+                        )
+                        or ""
+                    )
+
+                if active_category != category_id:
+
+                    print(
+                        "Category changed after date selection."
+                    )
+
+                    print(
+                        "Re-selecting:",
+                        category_name
+                    )
+
+                    if not select_category(
+                        page,
+                        category_id,
+                        category_name
+                    ):
+                        continue
+
+                    page.wait_for_timeout(
+                        1500
+                    )
+
+                parse_current_view(
+                    page,
+                    date_value,
+                    category_id,
+                    category_name,
+                    channels,
+                    programmes
+                )
+
+            category_channels_after = len(
+                channels
+            )
+
+            category_programmes_after = len(
+                programmes
+            )
+
+            print()
+            print(
+                "CATEGORY SUMMARY:",
+                category_name
+            )
+
+            print(
+                "Channels added:",
+                category_channels_after
+                - category_channels_before
+            )
+
+            print(
+                "Programs added:",
+                category_programmes_after
+                - category_programmes_before
+            )
+
+    # ========================================================
+    # REMOVE DUPLICATES
+    # ========================================================
 
     programmes = remove_duplicates(
         programmes
     )
 
+    # ========================================================
+    # FINAL SUMMARY
+    # ========================================================
+
     print()
     print("=" * 60)
-    print("EXTRACTION SUMMARY")
+    print(
+        "EXTRACTION SUMMARY"
+    )
     print("=" * 60)
 
     print(
@@ -760,9 +967,9 @@ def main():
             "No programs were extracted."
         )
 
-    # --------------------------------------------------------
-    # Create output files
-    # --------------------------------------------------------
+    # ========================================================
+    # CREATE FILES
+    # ========================================================
 
     write_xml(
         channels,
@@ -779,7 +986,9 @@ def main():
 
     print()
     print("=" * 60)
-    print("SUCCESS")
+    print(
+        "SUCCESS"
+    )
     print("=" * 60)
 
     print(
@@ -800,4 +1009,5 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
