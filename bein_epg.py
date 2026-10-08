@@ -273,7 +273,7 @@ def create_xml(channels, programs):
 
         lines.append(
             f'  <programme start="{start}" '
-            f'end="{end}" '
+            f'Stop="{end}" '
             f'channel="{xml_escape(channel_id)}">'
         )
 
