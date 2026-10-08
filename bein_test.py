@@ -5,15 +5,11 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 
 import requests
+from bs4 import BeautifulSoup
 
 
-CHANNEL_API = (
-    "https://www.beinsports.com/api/opta/tv-channel"
-)
-
-EVENT_API = (
-    "https://www.beinsports.com/api/opta/tv-event"
-)
+BASE_URL = "https://www.bein.com"
+EPG_URL = f"{BASE_URL}/en/epg-ajax-template/"
 
 OUTPUT_XML = "BeIN-EPG-test.xml"
 OUTPUT_CSV = "BeIN-Channel-Mapping-test.csv"
@@ -24,9 +20,16 @@ HEADERS = {
         "AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/154.0.0.0 Safari/537.36"
     ),
-    "Accept": "application/json, text/plain, */*",
-    "Referer": "https://www.beinsports.com/en-mena/tv-guide",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Referer": "https://www.bein.com/en/tv-guide/",
 }
+
+CATEGORIES = [
+    "sports",
+    "entertainment"
+]
+
+DAYS = 2
 
 
 def clean_text(text):
@@ -34,286 +37,397 @@ def clean_text(text):
         return ""
 
     return " ".join(
-        str(text).split()
+        text.split()
     )
 
 
-def get_json(
-    session,
-    url,
-    params=None,
-    retries=3
-):
-    for attempt in range(
-        1,
-        retries + 1
+def get_day(session, category, date_value):
+
+    params = {
+        "action": "epg_fetch",
+        "offset": "0",
+        "category": category,
+        "serviceidentity": "bein.net",
+        "mins": "00",
+        "cdate": date_value.strftime("%Y-%m-%d"),
+        "language": "EN",
+        "postid": "25356",
+        "loadindex": "0"
+    }
+
+    response = session.get(
+        EPG_URL,
+        params=params,
+        timeout=30
+    )
+
+    print(
+        "HTTP:",
+        response.status_code,
+        "|",
+        category,
+        "|",
+        date_value
+    )
+
+    if response.status_code != 200:
+        print(
+            response.text[:300]
+        )
+        return None
+
+    return response.text
+
+
+def discover_channels(html, category):
+
+    soup = BeautifulSoup(
+        html,
+        "html.parser"
+    )
+
+    channels = {}
+
+    for element in soup.select(
+        ".container-tvguide > div"
     ):
-        try:
 
-            response = session.get(
-                url,
-                params=params,
-                timeout=30
-            )
-
-            print(
-                "HTTP:",
-                response.status_code,
-                "|",
-                response.url
-            )
-
-            if response.status_code == 200:
-
-                try:
-                    return response.json()
-
-                except ValueError:
-
-                    print(
-                        "Réponse non JSON"
-                    )
-
-                    return None
-
-        except requests.RequestException as error:
-
-            print(
-                "Erreur:",
-                error
-            )
-
-        if attempt < retries:
-            time.sleep(2)
-
-    return None
-
-
-def get_channels(session):
-
-    print()
-    print(
-        "==================================="
-    )
-    print(
-        "Récupération des chaînes beIN"
-    )
-    print(
-        "==================================="
-    )
-
-    data = get_json(
-        session,
-        CHANNEL_API,
-        params={
-            "region": "en-MENA"
-        }
-    )
-
-    if not data:
-
-        raise RuntimeError(
-            "Impossible de récupérer les chaînes."
+        element_id = element.get(
+            "id",
+            ""
         )
 
-    rows = data.get(
-        "rows",
-        []
-    )
-
-    channels = []
-
-    for item in rows:
-
-        channel_id = item.get(
-            "id"
+        match = re.match(
+            r"channels_(\d+)",
+            element_id
         )
 
-        name = clean_text(
-            item.get(
-                "name",
-                ""
-            )
-        )
-
-        if not channel_id:
+        if not match:
             continue
+
+        channel_id = match.group(1)
+
+        link = element.find(
+            "a",
+            href=True
+        )
+
+        name = ""
+
+        if link:
+
+            name = clean_text(
+                link.get_text(
+                    " ",
+                    strip=True
+                )
+            )
+
+            if not name:
+
+                href = link.get(
+                    "href",
+                    ""
+                )
+
+                parts = [
+                    p
+                    for p in href.split("/")
+                    if p
+                ]
+
+                if parts:
+                    name = parts[-1]
 
         if not name:
-            continue
+            name = channel_id
 
-        channels.append({
-            "id": str(channel_id),
+        key = (
+            category,
+            channel_id
+        )
+
+        channels[key] = {
+            "category": category,
+            "site_id": channel_id,
             "name": name
-        })
+        }
 
     return channels
 
 
-def get_events_for_channel(
-    session,
-    channel_id,
-    days=2
+def parse_time(text):
+
+    match = re.search(
+        r"^(\d{1,2}):(\d{2})",
+        clean_text(text)
+    )
+
+    if not match:
+        return None
+
+    return (
+        int(match.group(1)),
+        int(match.group(2))
+    )
+
+
+def extract_programs(
+    html,
+    category,
+    date_value
 ):
 
-    now = datetime.now(
-        timezone.utc
+    soup = BeautifulSoup(
+        html,
+        "html.parser"
     )
 
-    start = (
-        now
-        .replace(
-            hour=0,
-            minute=0,
-            second=0,
-            microsecond=0
+    programs = {}
+
+    for element in soup.select(
+        ".container-tvguide > div"
+    ):
+
+        element_id = element.get(
+            "id",
+            ""
         )
-    )
 
-    end = (
-        start
-        + timedelta(
-            days=days
+        match = re.match(
+            r"channels_(\d+)",
+            element_id
         )
-    )
 
-    params = {
-        "startBefore": end.strftime(
-            "%Y-%m-%dT%H:%M:%S.000Z"
-        ),
-        "endAfter": start.strftime(
-            "%Y-%m-%dT%H:%M:%S.000Z"
-        ),
-        "channelIds": channel_id
-    }
+        if not match:
+            continue
 
-    data = get_json(
-        session,
-        EVENT_API,
-        params=params
-    )
+        channel_id = match.group(1)
 
-    if not data:
-        return []
+        items = element.select(
+            ".slider > ul:first-child > li"
+        )
 
-    rows = data.get(
-        "rows",
-        []
-    )
+        channel_programs = []
 
-    programs = []
+        # The official parser used by EPG tools
+        # starts from the previous day and rolls over
+        # when a start time decreases.
+        current_date = (
+            date_value
+            - timedelta(days=1)
+        )
 
-    for item in rows:
+        previous_start = None
 
-        title = clean_text(
-            item.get(
-                "title",
-                ""
+        for item in items:
+
+            title_node = item.select_one(
+                ".title"
             )
-        )
 
-        start_text = item.get(
-            "startDate"
-        )
+            if not title_node:
+                continue
 
-        end_text = item.get(
-            "endDate"
-        )
-
-        if not title:
-            continue
-
-        if not start_text:
-            continue
-
-        if not end_text:
-            continue
-
-        try:
-
-            start_date = datetime.fromisoformat(
-                start_text.replace(
-                    "Z",
-                    "+00:00"
+            title = clean_text(
+                title_node.get_text(
+                    " ",
+                    strip=True
                 )
             )
 
-            end_date = datetime.fromisoformat(
-                end_text.replace(
-                    "Z",
-                    "+00:00"
+            if not title:
+                continue
+
+            time_node = item.select_one(
+                ".time"
+            )
+
+            if not time_node:
+                continue
+
+            time_value = parse_time(
+                time_node.get_text(
+                    " ",
+                    strip=True
                 )
             )
 
-        except ValueError:
+            if not time_value:
+                continue
 
-            continue
+            hour, minute = time_value
 
-        programs.append({
-            "title": title,
-            "start": start_date,
-            "stop": end_date
-        })
+            start = datetime(
+                current_date.year,
+                current_date.month,
+                current_date.day,
+                hour,
+                minute,
+                tzinfo=timezone(
+                    timedelta(hours=3)
+                )
+            )
 
-    programs.sort(
-        key=lambda item: item["start"]
-    )
+            if (
+                previous_start
+                and start < previous_start
+            ):
+                current_date += timedelta(
+                    days=1
+                )
+
+                start = datetime(
+                    current_date.year,
+                    current_date.month,
+                    current_date.day,
+                    hour,
+                    minute,
+                    tzinfo=timezone(
+                        timedelta(hours=3)
+                    )
+                )
+
+            previous_start = start
+
+            channel_programs.append({
+                "title": title,
+                "start": start,
+                "stop": None
+            })
+
+        # Stop = next program start.
+        for index in range(
+            len(channel_programs)
+        ):
+
+            current = channel_programs[
+                index
+            ]
+
+            if (
+                index + 1
+                < len(channel_programs)
+            ):
+
+                current["stop"] = (
+                    channel_programs[
+                        index + 1
+                    ]["start"]
+                )
+
+            else:
+
+                current["stop"] = (
+                    current["start"]
+                    + timedelta(
+                        minutes=30
+                    )
+                )
+
+        if channel_programs:
+
+            key = (
+                category,
+                channel_id
+            )
+
+            programs[key] = channel_programs
 
     return programs
 
 
 def make_tvg_id(name):
 
-    normalized = clean_text(
+    value = clean_text(
         name
     ).lower()
 
-    normalized = normalized.replace(
-        "beIN".lower(),
-        "bein"
-    )
-
-    normalized = re.sub(
+    value = re.sub(
         r"[^a-z0-9]+",
         ".",
-        normalized
+        value
     )
 
-    normalized = normalized.strip(
+    value = value.strip(
         "."
     )
 
     return (
         "bein."
-        + normalized
+        + value
     )
 
 
-def create_xml(
-    channels,
-    all_programs
-):
+def write_csv(channels, programs):
+
+    with open(
+        OUTPUT_CSV,
+        "w",
+        newline="",
+        encoding="utf-8-sig"
+    ) as file:
+
+        writer = csv.writer(
+            file
+        )
+
+        writer.writerow([
+            "Category",
+            "beIN Site ID",
+            "Channel Name",
+            "Suggested tvg-id",
+            "Programs"
+        ])
+
+        for channel in channels.values():
+
+            key = (
+                channel["category"],
+                channel["site_id"]
+            )
+
+            writer.writerow([
+                channel["category"],
+                channel["site_id"],
+                channel["name"],
+                make_tvg_id(
+                    channel["name"]
+                ),
+                len(
+                    programs.get(
+                        key,
+                        []
+                    )
+                )
+            ])
+
+
+def write_xml(channels, programs):
 
     tv = ET.Element(
         "tv"
     )
 
-    total_programs = 0
-    channels_with_programs = 0
+    total = 0
+    channel_count = 0
 
-    for channel in channels:
+    for channel in channels.values():
 
-        channel_id = channel["id"]
+        key = (
+            channel["category"],
+            channel["site_id"]
+        )
 
-        programs = all_programs.get(
-            channel_id,
+        items = programs.get(
+            key,
             []
         )
 
-        if not programs:
+        if not items:
             continue
 
-        channels_with_programs += 1
+        channel_count += 1
 
         tvg_id = make_tvg_id(
             channel["name"]
@@ -334,34 +448,22 @@ def create_xml(
             "name"
         ]
 
-        for program in programs:
+        for item in items:
 
-            total_programs += 1
+            total += 1
 
             programme = ET.SubElement(
                 tv,
                 "programme",
-                start=program[
+                start=item[
                     "start"
-                ].astimezone(
-                    timezone(
-                        timedelta(
-                            hours=1
-                        )
-                    )
-                ).strftime(
-                    "%Y%m%d%H%M%S +0100"
+                ].strftime(
+                    "%Y%m%d%H%M%S +0300"
                 ),
-                stop=program[
+                stop=item[
                     "stop"
-                ].astimezone(
-                    timezone(
-                        timedelta(
-                            hours=1
-                        )
-                    )
-                ).strftime(
-                    "%Y%m%d%H%M%S +0100"
+                ].strftime(
+                    "%Y%m%d%H%M%S +0300"
                 ),
                 channel=tvg_id
             )
@@ -372,14 +474,14 @@ def create_xml(
                 lang="en"
             )
 
-            title.text = program[
+            title.text = item[
                 "title"
             ]
 
-    if total_programs == 0:
+    if total == 0:
 
         raise RuntimeError(
-            "Aucun programme récupéré."
+            "لم يتم استخراج أي برنامج."
         )
 
     ET.indent(
@@ -393,52 +495,7 @@ def create_xml(
         xml_declaration=True
     )
 
-    return (
-        channels_with_programs,
-        total_programs
-    )
-
-
-def create_csv(
-    channels,
-    all_programs
-):
-
-    with open(
-        OUTPUT_CSV,
-        "w",
-        newline="",
-        encoding="utf-8-sig"
-    ) as file:
-
-        writer = csv.writer(
-            file
-        )
-
-        writer.writerow([
-            "beIN site ID",
-            "Channel Name",
-            "Suggested tvg-id",
-            "Programs"
-        ])
-
-        for channel in channels:
-
-            channel_id = channel["id"]
-
-            programs = all_programs.get(
-                channel_id,
-                []
-            )
-
-            writer.writerow([
-                channel_id,
-                channel["name"],
-                make_tvg_id(
-                    channel["name"]
-                ),
-                len(programs)
-            ])
+    return channel_count, total
 
 
 def main():
@@ -451,6 +508,9 @@ def main():
         "DZGreen - beIN OFFICIAL TEST"
     )
     print(
+        "bein.com"
+    )
+    print(
         "==================================="
     )
 
@@ -460,101 +520,135 @@ def main():
         HEADERS
     )
 
-    channels = get_channels(
-        session
-    )
-
-    print()
-    print(
-        "Nombre de chaînes:",
-        len(channels)
-    )
-
+    channels = {}
     all_programs = {}
 
-    for index, channel in enumerate(
-        channels,
-        start=1
+    today = datetime.now().date()
+
+    for offset in range(
+        DAYS
     ):
 
-        print()
-        print(
-            "[",
-            index,
-            "/",
-            len(channels),
-            "]",
-            channel["name"]
+        date_value = (
+            today
+            + timedelta(days=offset)
         )
 
-        try:
+        for category in CATEGORIES:
 
-            programs = get_events_for_channel(
+            print()
+            print(
+                "CATEGORY:",
+                category,
+                "| DATE:",
+                date_value
+            )
+
+            html = get_day(
                 session,
-                channel["id"],
-                days=2
+                category,
+                date_value
             )
 
-            all_programs[
-                channel["id"]
-            ] = programs
+            if not html:
+                continue
 
-            print(
-                "Programmes:",
-                len(programs)
+            discovered = discover_channels(
+                html,
+                category
             )
 
-        except Exception as error:
+            for key, channel in discovered.items():
+                channels[key] = channel
 
-            print(
-                "Erreur:",
-                error
+            day_programs = extract_programs(
+                html,
+                category,
+                date_value
             )
 
-            all_programs[
-                channel["id"]
-            ] = []
+            for key, items in day_programs.items():
 
-        time.sleep(
-            0.3
+                all_programs.setdefault(
+                    key,
+                    []
+                ).extend(items)
+
+            time.sleep(0.5)
+
+    # Remove exact duplicates.
+    for key in list(
+        all_programs.keys()
+    ):
+
+        seen = set()
+        unique = []
+
+        for item in all_programs[key]:
+
+            unique_key = (
+                item["start"],
+                item["stop"],
+                item["title"]
+            )
+
+            if unique_key in seen:
+                continue
+
+            seen.add(
+                unique_key
+            )
+
+            unique.append(
+                item
+            )
+
+        unique.sort(
+            key=lambda x: x["start"]
         )
 
-    channels_with_programs, total_programs = create_xml(
-        channels,
-        all_programs
-    )
-
-    create_csv(
-        channels,
-        all_programs
-    )
+        all_programs[key] = unique
 
     print()
     print(
         "==================================="
     )
-    print(
-        "RESULTAT"
-    )
-    print(
-        "==================================="
-    )
 
     print(
-        "Chaînes:",
+        "القنوات المكتشفة:",
         len(channels)
     )
 
     print(
-        "Chaînes avec programmes:",
-        channels_with_programs
+        "القنوات التي لها برامج:",
+        sum(
+            1
+            for key in channels
+            if all_programs.get(
+                key
+            )
+        )
     )
 
     print(
-        "Programmes:",
-        total_programs
+        "إجمالي البرامج:",
+        sum(
+            len(items)
+            for items in all_programs.values()
+        )
     )
 
+    write_csv(
+        channels,
+        all_programs
+    )
+
+    channel_count, total = write_xml(
+        channels,
+        all_programs
+    )
+
+    print()
     print(
         "XML:",
         OUTPUT_XML
@@ -563,6 +657,16 @@ def main():
     print(
         "CSV:",
         OUTPUT_CSV
+    )
+
+    print(
+        "Channels:",
+        channel_count
+    )
+
+    print(
+        "Programs:",
+        total
     )
 
     print(
