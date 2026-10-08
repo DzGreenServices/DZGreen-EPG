@@ -29,7 +29,7 @@ jobs:
         run: python scraper.py
 
       - name: Run beIN scraper
-        run: python bein_test.py
+        run: bein_scraper.py
 
       - name: Save generated files
         run: |
