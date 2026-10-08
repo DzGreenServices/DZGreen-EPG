@@ -31,16 +31,23 @@ jobs:
       - name: Run beIN scraper
         run: python bein_test.py
 
+      - name: Prepare GitHub Pages
+        run: |
+          mkdir -p docs
+
+          cp ElCinema-EPG.xml docs/ElCinema-EPG.xml
+          cp BeIN-EPG-test.xml docs/BeIN-EPG.xml
+
+          cp ElCinema-Channel-Mapping.csv docs/ElCinema-Channel-Mapping.csv
+          cp BeIN-Channel-Mapping-test.csv docs/BeIN-Channel-Mapping.csv
+
       - name: Save generated files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add ElCinema-EPG.xml
-          git add ElCinema-Channel-Mapping.csv
-          git add BeIN-EPG-test.xml
-          git add BeIN-Channel-Mapping-test.csv
+          git add docs/
 
-          git diff --cached --quiet || git commit -m "Update ElCinema and beIN EPG"
+          git diff --cached --quiet || git commit -m "Update EPG"
 
           git push
