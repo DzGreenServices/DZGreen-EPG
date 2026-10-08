@@ -940,6 +940,150 @@ def write_xml(
     channels,
     programs
 ):
+    tv = ET.Element(
+        "tv",
+        {
+            "generator-info-name": "DZGreen beIN Official EPG",
+            "source-info-url": "https://www.beinsports.com/en-mena/tv-guide"
+        }
+    )
+
+    active_channels = []
+
+    used_tvg_ids = set()
+
+    # -------------------------------------------------
+    # 1. ALL channels first
+    # -------------------------------------------------
+
+    for key in sorted(
+        channels.keys(),
+        key=lambda item: (
+            item[0],
+            int(item[1])
+        )
+    ):
+
+        channel = channels[key]
+
+        program_list = programs.get(
+            key,
+            []
+        )
+
+        if not program_list:
+            continue
+
+        tvg_id = get_tvg_id(
+            channel["category"],
+            channel["site_id"],
+            channel["name"]
+        )
+
+        # Prevent duplicate IDs.
+        if tvg_id in used_tvg_ids:
+
+            tvg_id = (
+                tvg_id
+                + "."
+                + channel["site_id"]
+            )
+
+        used_tvg_ids.add(
+            tvg_id
+        )
+
+        active_channels.append(
+            (
+                channel,
+                program_list,
+                tvg_id
+            )
+        )
+
+        channel_element = ET.SubElement(
+            tv,
+            "channel",
+            {
+                "id": tvg_id
+            }
+        )
+
+        display_name = ET.SubElement(
+            channel_element,
+            "display-name",
+            {
+                "lang": "en"
+            }
+        )
+
+        display_name.text = channel[
+            "name"
+        ]
+
+    # -------------------------------------------------
+    # 2. ALL programmes after ALL channels
+    # -------------------------------------------------
+
+    total_programs = 0
+
+    for channel, program_list, tvg_id in active_channels:
+
+        for program in program_list:
+
+            total_programs += 1
+
+            programme = ET.SubElement(
+                tv,
+                "programme",
+                {
+                    "channel": tvg_id,
+                    "start": program[
+                        "start"
+                    ].strftime(
+                        "%Y%m%d%H%M%S +0300"
+                    ),
+                    "stop": program[
+                        "stop"
+                    ].strftime(
+                        "%Y%m%d%H%M%S +0300"
+                    )
+                }
+            )
+
+            title = ET.SubElement(
+                programme,
+                "title",
+                {
+                    "lang": "en"
+                }
+            )
+
+            title.text = program[
+                "title"
+            ]
+
+    if total_programs == 0:
+
+        raise RuntimeError(
+            "No beIN programs were extracted."
+        )
+
+    ET.indent(
+        tv,
+        space="  "
+    )
+
+    ET.ElementTree(tv).write(
+        OUTPUT_XML,
+        encoding="utf-8",
+        xml_declaration=True
+    )
+
+    return (
+        len(active_channels),
+        total_programs
+    )
 
     tv = ET.Element(
         "tv"
