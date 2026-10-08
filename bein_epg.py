@@ -1,688 +1,313 @@
-from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
-from datetime import datetime, timedelta, timezone
-from urllib.parse import urlparse
-import xml.etree.ElementTree as ET
 import csv
-import os
+import re
 import time
+from datetime import datetime, timezone, timedelta
+from pathlib import Path
+from urllib.parse import urlparse, unquote
+
+from playwright.sync_api import sync_playwright
 
 
 # ============================================================
-# CONFIGURATION
+# DZGreen - Official beIN EPG
+# Source: Official beIN TV Guide
 # ============================================================
 
-URL = (
-    "https://www.bein.com/ar/"
-    "%d8%ac%d8%af%d9%88%d9%84-%d8%a7%d9%84%d8%a8%d8%ab/"
-    "?c=dz&"
-)
+BASE_URL = "https://www.bein.com/ar/%d8%ac%d8%af%d9%88%d9%84-%d8%a7%d9%84%d8%a8%d8%ab/?c=dz&"
 
-XML_OUTPUT = "BeIN-EPG.xml"
-CSV_OUTPUT = "BeIN-Channels.csv"
+OUTPUT_XML = "BeIN-EPG.xml"
+OUTPUT_CSV = "BeIN-Channels.csv"
 
-# Official beIN guide time = UTC+03:00
-SOURCE_TIMEZONE = timezone(timedelta(hours=3))
-
-# Official categories
+# Official beIN guide categories
 CATEGORIES = [
     ("sports", "رياضة"),
     ("entertainment", "ترفيه"),
 ]
 
+# Official beIN guide timezone:
+# displayed times are Qatar/Makkah = UTC+03:00
+BEIN_TZ = timezone(timedelta(hours=3))
+
 
 # ============================================================
-# HELPERS
+# Helpers
 # ============================================================
 
 def clean_text(value):
     if not value:
         return ""
-
     return " ".join(value.split()).strip()
 
 
-def get_channel_id(href):
+def xml_escape(value):
+    value = str(value or "")
+    return (
+        value.replace("&", "&amp;")
+             .replace("<", "&lt;")
+             .replace(">", "&gt;")
+             .replace('"', "&quot;")
+             .replace("'", "&apos;")
+    )
+
+
+def get_channel_id_from_href(href):
     """
+    Extract channel ID from official beIN CONNECT URL.
+
     Example:
     https://beinconnect.app/beINSPORTS1
-
-    Result:
-    beINSPORTS1
+    -> beINSPORTS1
     """
 
     if not href:
         return ""
 
-    path = urlparse(href).path.strip("/")
+    try:
+        parsed = urlparse(href)
+        path = unquote(parsed.path).strip("/")
 
-    if not path:
+        if not path:
+            return ""
+
+        channel_id = path.split("/")[-1].strip()
+
+        if channel_id:
+            return channel_id
+
+    except Exception:
+        pass
+
+    return ""
+
+
+def get_channel_name_from_logo(logo_url):
+    """
+    Extract a readable channel name from the official logo filename.
+
+    Examples:
+
+    2023_Alkass_7.png
+    -> Alkass 7
+
+    2023_Alkass_2.png
+    -> Alkass 2
+
+    beIN_SPORTS1_ENGLISH_Digital_Mono.png
+    -> beIN SPORTS1 ENGLISH
+    """
+
+    if not logo_url:
         return ""
 
-    return path.split("/")[-1].strip()
+    try:
+        filename = unquote(urlparse(logo_url).path.split("/")[-1])
+
+        # Remove extension
+        filename = re.sub(r"\.(png|jpg|jpeg|webp|svg)$", "", filename,
+                          flags=re.IGNORECASE)
+
+        # Remove common year prefix
+        filename = re.sub(r"^2023_", "", filename, flags=re.IGNORECASE)
+
+        # Remove common logo suffixes
+        filename = re.sub(
+            r"(_Digital_Mono|_DIGITAL_Mono|_Mono|_Digital)$",
+            "",
+            filename,
+            flags=re.IGNORECASE
+        )
+
+        # Alkass -> AlKass style readable name
+        filename = filename.replace("_", " ")
+
+        # Clean multiple spaces
+        filename = clean_text(filename)
+
+        return filename
+
+    except Exception:
+        return ""
 
 
-def epoch_to_xmltv(milliseconds):
+def get_channel_identity(row):
     """
-    Convert official Unix milliseconds
-    to XMLTV time in UTC+03:00.
+    Determine channel identity.
+
+    Priority:
+    1. Official channel href
+    2. Official logo filename
+
+    Returns:
+        channel_id
+        channel_name
+        logo_url
+        bein_url
     """
 
-    utc_dt = datetime.fromtimestamp(
-        int(milliseconds) / 1000,
+    channel_id = ""
+    channel_name = ""
+    bein_url = ""
+    logo_url = ""
+
+    # --------------------------------------------------------
+    # Logo
+    # --------------------------------------------------------
+
+    img = row.locator(".channel-col img").first
+
+    if img.count() > 0:
+        logo_url = img.get_attribute("src") or ""
+
+    # --------------------------------------------------------
+    # Official href
+    # --------------------------------------------------------
+
+    link = row.locator(".channel-col a[href]").first
+
+    if link.count() > 0:
+        href = link.get_attribute("href") or ""
+
+        channel_id = get_channel_id_from_href(href)
+
+        if href:
+            bein_url = href
+
+    # --------------------------------------------------------
+    # If no href, use logo filename
+    # --------------------------------------------------------
+
+    if not channel_id:
+        channel_name = get_channel_name_from_logo(logo_url)
+
+        if channel_name:
+            channel_id = channel_name
+
+    else:
+        channel_name = channel_id
+
+    return {
+        "channel_id": channel_id,
+        "channel_name": channel_name,
+        "logo_url": logo_url,
+        "bein_url": bein_url,
+    }
+
+
+def ms_to_datetime(ms):
+    """
+    Convert official data-start-ms/data-end-ms
+    to timezone-aware datetime in UTC+03:00.
+    """
+
+    return datetime.fromtimestamp(
+        int(ms) / 1000,
         tz=timezone.utc
-    )
-
-    local_dt = utc_dt.astimezone(
-        SOURCE_TIMEZONE
-    )
-
-    return local_dt.strftime(
-        "%Y%m%d%H%M%S +0300"
-    )
+    ).astimezone(BEIN_TZ)
 
 
-# ============================================================
-# GET AVAILABLE DAYS
-# ============================================================
+def xmltv_datetime(dt):
+    """
+    XMLTV format:
+    YYYYMMDDHHMMSS +0300
+    """
 
-def get_available_days(page):
-
-    print()
-    print("Reading available dates...")
-
-    page.wait_for_selector(
-        ".day-cell",
-        timeout=60000
-    )
-
-    day_elements = page.locator(
-        ".day-cell"
-    )
-
-    count = day_elements.count()
-
-    print(
-        "Days found:",
-        count
-    )
-
-    dates = []
-
-    for i in range(count):
-
-        element = day_elements.nth(i)
-
-        date_value = element.get_attribute(
-            "data-date"
-        )
-
-        if date_value:
-
-            date_value = date_value.strip()
-
-            if date_value not in dates:
-
-                dates.append(
-                    date_value
-                )
-
-    print()
-    print("Available dates:")
-
-    for date_value in dates:
-
-        print(
-            "  -",
-            date_value
-        )
-
-    return dates
+    return dt.strftime("%Y%m%d%H%M%S %z")
 
 
 # ============================================================
-# SELECT DAY
+# XML Writer
 # ============================================================
 
-def select_day(page, date_value):
-
-    print()
-    print("=" * 60)
-    print(
-        "Selecting date:",
-        date_value
-    )
-    print("=" * 60)
-
-    selector = (
-        f'.day-cell[data-date="{date_value}"]'
-    )
-
-    day = page.locator(
-        selector
-    )
-
-    if day.count() == 0:
-
-        print(
-            "Date not found:",
-            date_value
-        )
-
-        return False
-
-    try:
-
-        day.scroll_into_view_if_needed()
-
-        day.click(
-            timeout=30000
-        )
-
-    except Exception as error:
-
-        print(
-            "Could not click date:",
-            error
-        )
-
-        return False
-
-    # Allow JavaScript to update the guide
-    page.wait_for_timeout(
-        2500
-    )
-
-    try:
-
-        page.wait_for_selector(
-            ".channel-row",
-            timeout=60000
-        )
-
-        page.wait_for_selector(
-            ".prog-block",
-            timeout=60000
-        )
-
-    except PlaywrightTimeoutError:
-
-        print(
-            "TV guide did not load for:",
-            date_value
-        )
-
-        return False
-
-    print(
-        "Date loaded:",
-        date_value
-    )
-
-    return True
-
-
-# ============================================================
-# SELECT CATEGORY
-# ============================================================
-
-def select_category(page, category_id, category_name):
-
-    print()
-    print("-" * 60)
-    print(
-        "Selecting category:",
-        category_name,
-        "(" + category_id + ")"
-    )
-    print("-" * 60)
-
-    selector = (
-        f'.category-tab[data-category="{category_id}"]'
-    )
-
-    button = page.locator(
-        selector
-    )
-
-    if button.count() == 0:
-
-        print(
-            "Category button not found:",
-            category_id
-        )
-
-        return False
-
-    try:
-
-        button.scroll_into_view_if_needed()
-
-        button.click(
-            timeout=30000
-        )
-
-    except Exception as error:
-
-        print(
-            "Could not click category:",
-            error
-        )
-
-        return False
-
-    # Allow JavaScript to change the guide
-    page.wait_for_timeout(
-        2500
-    )
-
-    try:
-
-        page.wait_for_selector(
-            ".channel-row",
-            timeout=60000
-        )
-
-    except PlaywrightTimeoutError:
-
-        print(
-            "No channel rows after selecting:",
-            category_name
-        )
-
-        return False
-
-    print(
-        "Category loaded:",
-        category_name
-    )
-
-    return True
-
-
-# ============================================================
-# PARSE CURRENT CATEGORY / DAY
-# ============================================================
-
-def parse_current_view(
-    page,
-    date_value,
-    category_id,
-    category_name,
-    channels,
-    programmes
-):
-
-    print()
-    print(
-        "Extracting:",
-        category_name,
-        "|",
-        date_value
-    )
-
-    rows = page.locator(
-        ".channel-row"
-    )
-
-    row_count = rows.count()
-
-    print(
-        "Channel rows:",
-        row_count
-    )
-
-    day_program_count = 0
-    new_channel_count = 0
-
-    for row_index in range(row_count):
-
-        row = rows.nth(
-            row_index
-        )
-
-        # ----------------------------------------------------
-        # CHANNEL LINK
-        # ----------------------------------------------------
-
-        channel_link = row.locator(
-            ".channel-col a[href]"
-        ).first
-
-        if channel_link.count() == 0:
-            continue
-
-        href = channel_link.get_attribute(
-            "href"
-        )
-
-        channel_id = get_channel_id(
-            href
-        )
-
-        if not channel_id:
-            continue
-
-        # ----------------------------------------------------
-        # LOGO
-        # ----------------------------------------------------
-
-        logo_url = ""
-
-        image = channel_link.locator(
-            "img"
-        ).first
-
-        if image.count() > 0:
-
-            logo_url = (
-                image.get_attribute("src")
-                or image.get_attribute("data-src")
-                or ""
-            ).strip()
-
-        # ----------------------------------------------------
-        # SAVE CHANNEL
-        # ----------------------------------------------------
-
-        if channel_id not in channels:
-
-            channels[channel_id] = {
-                "id": channel_id,
-                "name": channel_id,
-                "logo": logo_url,
-                "bein_url": href,
-                "category": category_id,
-            }
-
-            new_channel_count += 1
-
-        else:
-
-            if (
-                not channels[channel_id]["logo"]
-                and logo_url
-            ):
-
-                channels[channel_id]["logo"] = logo_url
-
-        # ----------------------------------------------------
-        # PROGRAMS
-        # ----------------------------------------------------
-
-        blocks = row.locator(
-            ".row-timeline-track .prog-block"
-        )
-
-        block_count = blocks.count()
-
-        for block_index in range(block_count):
-
-            block = blocks.nth(
-                block_index
-            )
-
-            title = clean_text(
-                block.get_attribute(
-                    "data-full-title"
-                )
-            )
-
-            category = clean_text(
-                block.get_attribute(
-                    "data-full-category"
-                )
-            )
-
-            start_ms = block.get_attribute(
-                "data-start-ms"
-            )
-
-            end_ms = block.get_attribute(
-                "data-end-ms"
-            )
-
-            # ------------------------------------------------
-            # Validate official fields
-            # ------------------------------------------------
-
-            if not title:
-                continue
-
-            if not start_ms or not end_ms:
-                continue
-
-            try:
-
-                start_ms = int(
-                    start_ms
-                )
-
-                end_ms = int(
-                    end_ms
-                )
-
-            except ValueError:
-
-                continue
-
-            if end_ms <= start_ms:
-                continue
-
-            programmes.append({
-
-                "channel": channel_id,
-
-                "title": title,
-
-                "category": category,
-
-                "start_ms": start_ms,
-
-                "end_ms": end_ms,
-
-                "date": date_value,
-
-                "guide_category":
-                    category_id,
-
-            })
-
-            day_program_count += 1
-
-    print(
-        "New channels:",
-        new_channel_count
-    )
-
-    print(
-        "Programs extracted:",
-        day_program_count
-    )
-
-
-# ============================================================
-# REMOVE DUPLICATES
-# ============================================================
-
-def remove_duplicates(programmes):
-
-    unique = {}
-
-    for programme in programmes:
-
-        key = (
-            programme["channel"],
-            programme["start_ms"],
-            programme["end_ms"],
-            programme["title"],
-            programme["category"],
-        )
-
-        unique[key] = programme
-
-    result = list(
-        unique.values()
-    )
-
-    result.sort(
-        key=lambda item: (
-            item["start_ms"],
-            item["channel"],
-            item["title"],
-        )
-    )
-
-    return result
-
-
-# ============================================================
-# WRITE XMLTV
-# ============================================================
-
-def write_xml(channels, programmes):
-
-    print()
-    print(
-        "Creating:",
-        XML_OUTPUT
-    )
-
-    tv = ET.Element(
-        "tv",
-        {
-            "generator-info-name":
-                "DZGreen Official beIN EPG",
-
-            "source-info-name":
-                "beIN Official TV Guide",
-        }
+def create_xml(channels, programs):
+    print("Creating:", OUTPUT_XML)
+
+    lines = []
+
+    lines.append('<?xml version="1.0" encoding="UTF-8"?>')
+    lines.append(
+        '<tv generator-info-name="DZGreen Official beIN EPG" '
+        'source-info-name="beIN">'
     )
 
     # --------------------------------------------------------
-    # CHANNELS
+    # Channels
     # --------------------------------------------------------
 
-    for channel_id in sorted(channels):
+    for channel_id in sorted(channels.keys()):
+        channel = channels[channel_id]
 
-        channel = channels[
-            channel_id
-        ]
-
-        channel_element = ET.SubElement(
-            tv,
-            "channel",
-            {
-                "id": channel["id"]
-            }
+        lines.append(
+            f'  <channel id="{xml_escape(channel_id)}">'
         )
 
-        display_name = ET.SubElement(
-            channel_element,
-            "display-name"
+        lines.append(
+            f'    <display-name>{xml_escape(channel["channel_name"])}</display-name>'
         )
 
-        # Official channel ID from beIN
-        display_name.text = channel["name"]
-
-        if channel["logo"]:
-
-            ET.SubElement(
-                channel_element,
-                "icon",
-                {
-                    "src": channel["logo"]
-                }
+        if channel["logo_url"]:
+            lines.append(
+                f'    <icon src="{xml_escape(channel["logo_url"])}"/>'
             )
+
+        lines.append("  </channel>")
 
     # --------------------------------------------------------
-    # PROGRAMMES
+    # Programs
     # --------------------------------------------------------
 
-    for programme in programmes:
+    for program in sorted(
+        programs,
+        key=lambda x: (
+            x["channel_id"],
+            x["start_ms"]
+        )
+    ):
+        start_dt = ms_to_datetime(program["start_ms"])
+        end_dt = ms_to_datetime(program["end_ms"])
 
-        programme_element = ET.SubElement(
-            tv,
-            "programme",
-            {
-                "start":
-                    epoch_to_xmltv(
-                        programme["start_ms"]
-                    ),
+        start = xmltv_datetime(start_dt)
+        end = xmltv_datetime(end_dt)
 
-                "stop":
-                    epoch_to_xmltv(
-                        programme["end_ms"]
-                    ),
+        channel_id = program["channel_id"]
+        title = program["title"]
 
-                "channel":
-                    programme["channel"],
-            }
+        lines.append(
+            f'  <programme start="{start}" '
+            f'end="{end}" '
+            f'channel="{xml_escape(channel_id)}">'
         )
 
-        # Official title
-        title_element = ET.SubElement(
-            programme_element,
-            "title"
+        lines.append(
+            f'    <title lang="ar">{xml_escape(title)}</title>'
         )
 
-        title_element.text = (
-            programme["title"]
-        )
+        lines.append("  </programme>")
 
-        # Official category
-        if programme["category"]:
+    lines.append("</tv>")
 
-            category_element = ET.SubElement(
-                programme_element,
-                "category"
-            )
-
-            category_element.text = (
-                programme["category"]
-            )
-
-    tree = ET.ElementTree(
-        tv
+    Path(OUTPUT_XML).write_text(
+        "\n".join(lines),
+        encoding="utf-8"
     )
 
-    ET.indent(
-        tree,
-        space="    "
-    )
-
-    tree.write(
-        XML_OUTPUT,
-        encoding="utf-8",
-        xml_declaration=True
-    )
-
-    print(
-        "XML created successfully."
-    )
+    print("XML created successfully.")
 
 
 # ============================================================
-# WRITE CSV
+# CSV Writer
 # ============================================================
 
-def write_csv(channels):
-
-    print()
-    print(
-        "Creating:",
-        CSV_OUTPUT
-    )
+def create_csv(channels):
+    print("Creating:", OUTPUT_CSV)
 
     with open(
-        CSV_OUTPUT,
+        OUTPUT_CSV,
         "w",
         newline="",
         encoding="utf-8-sig"
-    ) as file:
+    ) as f:
 
-        writer = csv.writer(
-            file
-        )
+        writer = csv.writer(f)
 
         writer.writerow([
             "channel_name",
@@ -692,29 +317,23 @@ def write_csv(channels):
             "category",
         ])
 
-        for channel_id in sorted(
-            channels
-        ):
+        for channel_id in sorted(channels.keys()):
 
-            channel = channels[
-                channel_id
-            ]
+            channel = channels[channel_id]
 
             writer.writerow([
-                channel["name"],
-                channel["id"],
-                channel["logo"],
+                channel["channel_name"],
+                channel_id,
+                channel["logo_url"],
                 channel["bein_url"],
                 channel["category"],
             ])
 
-    print(
-        "CSV created successfully."
-    )
+    print("CSV created successfully.")
 
 
 # ============================================================
-# MAIN
+# Main scraper
 # ============================================================
 
 def main():
@@ -722,184 +341,336 @@ def main():
     start_time = time.time()
 
     print("=" * 60)
-    print(
-        "DZGreen - Official beIN EPG"
-    )
-    print(
-        "Sports + Entertainment"
-    )
+    print("DZGreen - Official beIN EPG")
+    print("Sports + Entertainment")
     print("=" * 60)
 
     channels = {}
+    programs = []
 
-    programmes = []
+    # Used to avoid duplicate programs
+    program_keys = set()
 
     with sync_playwright() as p:
 
-        print()
-        print(
-            "Launching Chromium..."
-        )
+        print("Launching Chromium...")
 
         browser = p.chromium.launch(
             headless=True
         )
 
         page = browser.new_page(
-            locale="ar-DZ"
+            viewport={
+                "width": 1600,
+                "height": 1000
+            }
         )
 
-        print(
-            "Opening official beIN website..."
-        )
+        print("Opening official beIN website...")
 
         page.goto(
-            URL,
-            wait_until="domcontentloaded",
+            BASE_URL,
+            wait_until="networkidle",
             timeout=120000
         )
 
-        print(
-            "Page loaded."
-        )
-
-        # Give JavaScript time to build guide
-        page.wait_for_timeout(
-            10000
-        )
+        print("Page loaded.")
 
         # ----------------------------------------------------
-        # AVAILABLE DAYS
+        # Read dates
         # ----------------------------------------------------
 
-        dates = get_available_days(
-            page
+        print("Reading available dates...")
+
+        page.wait_for_selector(
+            ".day-cell",
+            timeout=60000
         )
 
-        if not dates:
+        date_cells = page.locator(".day-cell")
 
-            browser.close()
+        date_count = date_cells.count()
 
-            raise RuntimeError(
-                "No dates found on the official beIN TV guide."
-            )
+        print("Days found:", date_count)
+
+        dates = []
+
+        for i in range(date_count):
+
+            cell = date_cells.nth(i)
+
+            date_value = cell.get_attribute("data-date")
+
+            if date_value:
+                dates.append(date_value)
+
+        dates = list(dict.fromkeys(dates))
+
+        print("Available dates:")
+
+        for d in dates:
+            print("  -", d)
 
         # ====================================================
-        # PROCESS SPORTS + ENTERTAINMENT
+        # Categories
         # ====================================================
 
-        for category_id, category_name in CATEGORIES:
+        for category_code, category_name in CATEGORIES:
 
             print()
             print("#" * 60)
             print(
-                "CATEGORY:",
-                category_name,
-                "(" + category_id + ")"
+                f"CATEGORY: {category_name} ({category_code})"
             )
             print("#" * 60)
 
-            category_loaded = select_category(
-                page,
-                category_id,
-                category_name
-            )
+            # ------------------------------------------------
+            # Select category
+            # ------------------------------------------------
 
-            if not category_loaded:
+            print("-" * 60)
+            print(
+                f"Selecting category: "
+                f"{category_name} ({category_code})"
+            )
+            print("-" * 60)
+
+            category_button = page.locator(
+                f'.category-tab[data-category="{category_code}"]'
+            ).first
+
+            if category_button.count() == 0:
 
                 print(
-                    "Skipping category:",
-                    category_name
+                    "WARNING: Category button not found:",
+                    category_code
                 )
 
                 continue
 
-            category_channels_before = len(
-                channels
+            category_button.click()
+
+            page.wait_for_timeout(1500)
+
+            print(
+                "Category loaded:",
+                category_name
             )
 
-            category_programmes_before = len(
-                programmes
-            )
+            category_channel_count_before = len(channels)
+            category_program_count_before = len(programs)
 
-            # ------------------------------------------------
-            # Every available date
-            # ------------------------------------------------
+            # ================================================
+            # Dates
+            # ================================================
 
             for date_value in dates:
 
-                success = select_day(
-                    page,
+                print("=" * 60)
+                print(
+                    "Selecting date:",
                     date_value
                 )
+                print("=" * 60)
 
-                if not success:
+                # --------------------------------------------
+                # Re-find date cell after category change
+                # --------------------------------------------
+
+                date_cell = page.locator(
+                    f'.day-cell[data-date="{date_value}"]'
+                ).first
+
+                if date_cell.count() == 0:
 
                     print(
-                        "Skipping date:",
+                        "WARNING: Date not found:",
                         date_value
                     )
 
                     continue
 
-                # IMPORTANT:
-                # After selecting the day, ensure the
-                # requested category remains active.
-                active_button = page.locator(
-                    '.category-tab.active'
-                ).first
+                date_cell.click()
 
-                active_category = ""
+                page.wait_for_timeout(1200)
 
-                if active_button.count() > 0:
-
-                    active_category = (
-                        active_button.get_attribute(
-                            "data-category"
-                        )
-                        or ""
-                    )
-
-                if active_category != category_id:
-
-                    print(
-                        "Category changed after date selection."
-                    )
-
-                    print(
-                        "Re-selecting:",
-                        category_name
-                    )
-
-                    if not select_category(
-                        page,
-                        category_id,
-                        category_name
-                    ):
-                        continue
-
-                    page.wait_for_timeout(
-                        1500
-                    )
-
-                parse_current_view(
-                    page,
-                    date_value,
-                    category_id,
-                    category_name,
-                    channels,
-                    programmes
+                print(
+                    "Date loaded:",
+                    date_value
                 )
 
-            category_channels_after = len(
-                channels
-            )
+                # --------------------------------------------
+                # Channel rows
+                # --------------------------------------------
 
-            category_programmes_after = len(
-                programmes
-            )
+                rows = page.locator(
+                    ".channel-row"
+                )
 
-            print()
+                row_count = rows.count()
+
+                print(
+                    f"Extracting: "
+                    f"{category_name} | {date_value}"
+                )
+
+                print(
+                    "Channel rows:",
+                    row_count
+                )
+
+                new_channels_this_date = 0
+                programs_this_date = 0
+
+                # ============================================
+                # Process every channel-row
+                # ============================================
+
+                for row_index in range(row_count):
+
+                    row = rows.nth(row_index)
+
+                    identity = get_channel_identity(row)
+
+                    channel_id = identity["channel_id"]
+
+                    # ------------------------------------------------
+                    # IMPORTANT:
+                    # Do NOT skip the row simply because there is
+                    # no <a href>.
+                    # Logo is now accepted as fallback identity.
+                    # ------------------------------------------------
+
+                    if not channel_id:
+
+                        print(
+                            f"WARNING: Could not identify "
+                            f"channel row {row_index + 1}"
+                        )
+
+                        continue
+
+                    # ------------------------------------------------
+                    # Save channel
+                    # ------------------------------------------------
+
+                    if channel_id not in channels:
+
+                        channels[channel_id] = {
+                            "channel_name": identity["channel_name"],
+                            "logo_url": identity["logo_url"],
+                            "bein_url": identity["bein_url"],
+                            "category": category_name,
+                        }
+
+                        new_channels_this_date += 1
+
+                    else:
+
+                        # Update missing information if available
+                        existing = channels[channel_id]
+
+                        if (
+                            not existing["logo_url"]
+                            and identity["logo_url"]
+                        ):
+                            existing["logo_url"] = identity["logo_url"]
+
+                        if (
+                            not existing["bein_url"]
+                            and identity["bein_url"]
+                        ):
+                            existing["bein_url"] = identity["bein_url"]
+
+                    # ============================================
+                    # Programs
+                    # ============================================
+
+                    prog_blocks = row.locator(
+                        ".prog-block"
+                    )
+
+                    prog_count = prog_blocks.count()
+
+                    for prog_index in range(prog_count):
+
+                        prog = prog_blocks.nth(prog_index)
+
+                        title = clean_text(
+                            prog.get_attribute(
+                                "data-full-title"
+                            )
+                            or ""
+                        )
+
+                        category = clean_text(
+                            prog.get_attribute(
+                                "data-full-category"
+                            )
+                            or ""
+                        )
+
+                        start_ms = prog.get_attribute(
+                            "data-start-ms"
+                        )
+
+                        end_ms = prog.get_attribute(
+                            "data-end-ms"
+                        )
+
+                        if not title:
+                            continue
+
+                        if not start_ms or not end_ms:
+                            continue
+
+                        try:
+                            start_ms_int = int(start_ms)
+                            end_ms_int = int(end_ms)
+
+                        except ValueError:
+                            continue
+
+                        # ------------------------------------------------
+                        # Unique program key
+                        # ------------------------------------------------
+
+                        program_key = (
+                            channel_id,
+                            start_ms_int,
+                            end_ms_int,
+                            title,
+                        )
+
+                        if program_key in program_keys:
+                            continue
+
+                        program_keys.add(program_key)
+
+                        programs.append({
+                            "channel_id": channel_id,
+                            "title": title,
+                            "category": category,
+                            "start_ms": start_ms_int,
+                            "end_ms": end_ms_int,
+                        })
+
+                        programs_this_date += 1
+
+                print(
+                    "New channels:",
+                    new_channels_this_date
+                )
+
+                print(
+                    "Programs extracted:",
+                    programs_this_date
+                )
+
+            # ----------------------------------------------------
+            # Category summary
+            # ----------------------------------------------------
+
             print(
                 "CATEGORY SUMMARY:",
                 category_name
@@ -907,33 +678,23 @@ def main():
 
             print(
                 "Channels added:",
-                category_channels_after
-                - category_channels_before
+                len(channels) - category_channel_count_before
             )
 
             print(
                 "Programs added:",
-                category_programmes_after
-                - category_programmes_before
+                len(programs) - category_program_count_before
             )
 
-    # ========================================================
-    # REMOVE DUPLICATES
-    # ========================================================
-
-    programmes = remove_duplicates(
-        programmes
-    )
+        browser.close()
 
     # ========================================================
-    # FINAL SUMMARY
+    # Final output
     # ========================================================
 
     print()
     print("=" * 60)
-    print(
-        "EXTRACTION SUMMARY"
-    )
+    print("EXTRACTION SUMMARY")
     print("=" * 60)
 
     print(
@@ -943,7 +704,7 @@ def main():
 
     print(
         "Programs :",
-        len(programmes)
+        len(programs)
     )
 
     print(
@@ -951,63 +712,35 @@ def main():
         len(dates)
     )
 
-    # --------------------------------------------------------
-    # Safety checks
-    # --------------------------------------------------------
-
-    if not channels:
-
-        raise RuntimeError(
-            "No channels were extracted."
-        )
-
-    if not programmes:
-
-        raise RuntimeError(
-            "No programs were extracted."
-        )
-
-    # ========================================================
-    # CREATE FILES
-    # ========================================================
-
-    write_xml(
+    create_xml(
         channels,
-        programmes
+        programs
     )
 
-    write_csv(
+    create_csv(
         channels
     )
 
-    elapsed = (
-        time.time() - start_time
-    )
-
-    print()
     print("=" * 60)
-    print(
-        "SUCCESS"
-    )
+    print("SUCCESS")
     print("=" * 60)
 
     print(
         "Created:",
-        XML_OUTPUT
+        OUTPUT_XML
     )
 
     print(
         "Created:",
-        CSV_OUTPUT
+        OUTPUT_CSV
     )
 
+    execution_time = time.time() - start_time
+
     print(
-        "Execution time:",
-        round(elapsed, 2),
-        "seconds"
+        f"Execution time: {execution_time:.2f} seconds"
     )
 
 
 if __name__ == "__main__":
-
     main()
