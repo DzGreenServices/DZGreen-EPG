@@ -895,6 +895,196 @@ def create_xml(
     channels,
     results
 ):
+    tv = ET.Element(
+        "tv",
+        {
+            "generator-info-name": "DZGreen ElCinema EPG",
+            "source-info-url": "https://elcinema.com/en/tvguide"
+        }
+    )
+
+    total_programs = 0
+    channels_with_programs = 0
+
+    # -------------------------------------------------
+    # 1. Create ALL channel definitions first
+    # -------------------------------------------------
+
+    active_channels = []
+
+    for channel in channels:
+
+        channel_id = channel["id"]
+
+        result = results.get(
+            channel_id,
+            {}
+        )
+
+        programs = result.get(
+            "programs",
+            []
+        )
+
+        if not programs:
+            continue
+
+        active_channels.append(
+            (
+                channel,
+                result
+            )
+        )
+
+        tvg_id = suggested_tvg_id(
+            channel_id
+        )
+
+        channel_element = ET.SubElement(
+            tv,
+            "channel",
+            {
+                "id": tvg_id
+            }
+        )
+
+        display_name = ET.SubElement(
+            channel_element,
+            "display-name",
+            {
+                "lang": "en"
+            }
+        )
+
+        display_name.text = channel[
+            "name"
+        ]
+
+        logo = result.get(
+            "logo",
+            ""
+        )
+
+        if logo:
+            ET.SubElement(
+                channel_element,
+                "icon",
+                {
+                    "src": logo
+                }
+            )
+
+    channels_with_programs = len(
+        active_channels
+    )
+
+    # -------------------------------------------------
+    # 2. Create ALL programmes after all channels
+    # -------------------------------------------------
+
+    for channel, result in active_channels:
+
+        tvg_id = suggested_tvg_id(
+            channel["id"]
+        )
+
+        programs = result.get(
+            "programs",
+            []
+        )
+
+        for program in programs:
+
+            total_programs += 1
+
+            programme = ET.SubElement(
+                tv,
+                "programme",
+                {
+                    "channel": tvg_id,
+                    "start": program[
+                        "start"
+                    ].strftime(
+                        "%Y%m%d%H%M%S +0100"
+                    ),
+                    "stop": program[
+                        "stop"
+                    ].strftime(
+                        "%Y%m%d%H%M%S +0100"
+                    )
+                }
+            )
+
+            title = ET.SubElement(
+                programme,
+                "title",
+                {
+                    "lang": "en"
+                }
+            )
+
+            title.text = program[
+                "title"
+            ]
+
+    if total_programs == 0:
+
+        raise RuntimeError(
+            "لم يتم استخراج أي برنامج."
+        )
+
+    ET.indent(
+        tv,
+        space="  "
+    )
+
+    temporary_file = (
+        OUTPUT_XML
+        + ".tmp"
+    )
+
+    tree = ET.ElementTree(
+        tv
+    )
+
+    tree.write(
+        temporary_file,
+        encoding="utf-8",
+        xml_declaration=True
+    )
+
+    os.replace(
+        temporary_file,
+        OUTPUT_XML
+    )
+
+    print()
+    print(
+        "==================================="
+    )
+
+    print(
+        "ElCinema XML"
+    )
+
+    print(
+        "القنوات:",
+        channels_with_programs
+    )
+
+    print(
+        "البرامج:",
+        total_programs
+    )
+
+    print(
+        "الملف:",
+        OUTPUT_XML
+    )
+
+    print(
+        "==================================="
+    )
 
     tv = ET.Element(
         "tv"
