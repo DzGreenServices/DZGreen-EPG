@@ -1,4 +1,4 @@
-name: Update ElCinema EPG
+name: Update EPG
 
 on:
   workflow_dispatch:
@@ -25,7 +25,10 @@ jobs:
       - name: Install libraries
         run: pip install -r requirements.txt
 
-      - name: Run scraper
+      - name: Run ElCinema scraper
+        run: python scraper.py
+
+      - name: Run beIN scraper
         run: python bein_test.py
 
       - name: Save generated files
@@ -35,7 +38,9 @@ jobs:
 
           git add ElCinema-EPG.xml
           git add ElCinema-Channel-Mapping.csv
+          git add BeIN-EPG-test.xml
+          git add BeIN-Channel-Mapping-test.csv
 
-          git diff --cached --quiet || git commit -m "Update ElCinema EPG"
+          git diff --cached --quiet || git commit -m "Update ElCinema and beIN EPG"
 
           git push
