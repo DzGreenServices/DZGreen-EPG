@@ -25,21 +25,24 @@ jobs:
       - name: Install libraries
         run: pip install -r requirements.txt
 
+      - name: Install Playwright Chromium
+        run: python -m playwright install --with-deps chromium
+
       - name: Run ElCinema scraper
         run: python scraper.py
 
       - name: Run beIN scraper
-        run: python bein_test.py
+        run: python bein_epg.py
 
       - name: Prepare GitHub Pages
         run: |
           mkdir -p docs
 
           cp ElCinema-EPG.xml docs/ElCinema-EPG.xml
-          cp BeIN-EPG-test.xml docs/BeIN-EPG.xml
+          cp BeIN-EPG.xml docs/BeIN-EPG.xml
 
           cp ElCinema-Channel-Mapping.csv docs/ElCinema-Channel-Mapping.csv
-          cp BeIN-Channel-Mapping-test.csv docs/BeIN-Channel-Mapping.csv
+          cp BeIN-Channels.csv docs/BeIN-Channels.csv
 
       - name: Save generated files
         run: |
