@@ -1,5 +1,49 @@
 <?xml version='1.0' encoding='utf-8'?>
 <tv generator-info-name="DZGreen Official beIN EPG" source-info-name="beIN Official TV Guide">
+    <channel id="BaraemTV">
+        <display-name>BaraemTV</display-name>
+        <icon src="https://www.bein.com/ar/wp-content/uploads/sites/4/2020/06/Bara3em-1.png" />
+    </channel>
+    <channel id="JeemTV">
+        <display-name>JeemTV</display-name>
+        <icon src="https://assets.bein.com/mena/sites/4/2020/06/Jeem-HD-1-01.png" />
+    </channel>
+    <channel id="beINDRAMA">
+        <display-name>beINDRAMA</display-name>
+        <icon src="https://assets.bein.com/mena/sites/4/2021/02/Drama_Stacked_nov_2024_200x200.png" />
+    </channel>
+    <channel id="beINGOURMET">
+        <display-name>beINGOURMET</display-name>
+        <icon src="https://assets.bein.com/mena/sites/4/2015/06/GOURMET_DIGITAL_Mono.png" />
+    </channel>
+    <channel id="beINJUNIOR">
+        <display-name>beINJUNIOR</display-name>
+        <icon src="https://www.bein.com/ar/wp-content/uploads/sites/4/2020/06/beJUNIOR.png" />
+    </channel>
+    <channel id="beINMOVIES1">
+        <display-name>beINMOVIES1</display-name>
+        <icon src="https://assets.bein.com/mena/sites/4/2015/06/MOVIES1_PREMIERE_DIGITAL_Mono.png" />
+    </channel>
+    <channel id="beINMOVIES2">
+        <display-name>beINMOVIES2</display-name>
+        <icon src="https://assets.bein.com/mena/sites/4/2015/06/MOVIES2_ACTION_DIGITAL_Mono.png" />
+    </channel>
+    <channel id="beINMOVIES3">
+        <display-name>beINMOVIES3</display-name>
+        <icon src="https://assets.bein.com/mena/sites/4/2015/06/MOVIES3_DRAMA_DIGITAL_Mono.png" />
+    </channel>
+    <channel id="beINMOVIES4">
+        <display-name>beINMOVIES4</display-name>
+        <icon src="https://assets.bein.com/mena/sites/4/2015/06/MOVIES4_FAMILY_DIGITAL_Mono.png" />
+    </channel>
+    <channel id="beINSERIES1">
+        <display-name>beINSERIES1</display-name>
+        <icon src="https://assets.bein.com/mena/sites/4/2015/06/SERIES1_DIGITAL_Mono.png" />
+    </channel>
+    <channel id="beINSERIES2">
+        <display-name>beINSERIES2</display-name>
+        <icon src="https://assets.bein.com/mena/sites/4/2015/06/SERIES2_DIGITAL_Mono.png" />
+    </channel>
     <channel id="beINSPORTS">
         <display-name>beINSPORTS</display-name>
         <icon src="https://assets.bein.com/mena/sites/4/2015/06/bein_SPORTS_FTA_DIGITAL_Mono.png" />
@@ -104,13 +148,29 @@
         <title>Al Khaldiya (BHR) vs PFC Nasaf (UZB) - AFC Champions League Two 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261007224500 +0300" stop="20261008010000 +0300" channel="beINMOVIES1">
+        <title>الأرض الموعودة</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261007224500 +0300" stop="20261008003000 +0300" channel="beINSPORTS2">
         <title>Comoros vs Namibia - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
         <category>تصفيات كأس الأمم الأفريقية</category>
     </programme>
-    <programme start="20261008000000 +0300" stop="20261008003000 +0300" channel="beINSPORTS1">
-        <title>South Sudan vs Egypt - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
+    <programme start="20261007225900 +0300" stop="20261008004500 +0300" channel="beINMOVIES3">
+        <title>ستارسكي وهاتش</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261007231400 +0300" stop="20261008010000 +0300" channel="beINMOVIES4">
+        <title>ماتيلدا</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008000000 +0300" stop="20261008014400 +0300" channel="beINMOVIES2">
+        <title>ما بعد الأرض</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008000000 +0300" stop="20261008020000 +0300" channel="beINSERIES1">
+        <title>E22 | S21 أمريكا غوت تالنت</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261008000000 +0300" stop="20261008014500 +0300" channel="beINSPORTS3">
         <title>Roma vs Barcelona - UEFA Women’s Champions League 2026/2027 - MD2</title>
@@ -140,29 +200,33 @@
         <title>Agustin Tapia ARG Arturo Coello ESP vs Franco Stupaczuk ARG Jon Sanz ESP - Men Final - Premier Pade</title>
         <category>باديل</category>
     </programme>
-    <programme start="20261008003000 +0300" stop="20261008010000 +0300" channel="beINSPORTS1">
-        <title>Wales vs Denmark - UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
-    </programme>
     <programme start="20261008003000 +0300" stop="20261008023000 +0300" channel="beINSPORTS2">
         <title>Italy vs Türkiye - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261008004500 +0300" stop="20261008021500 +0300" channel="beINMOVIES3">
+        <title>مرحبا!</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008004500 +0300" stop="20261008023300 +0300" channel="beINSPORTS5">
         <title>Al Qadsiah (KSA) vs Al Wasl (UAE) - AFC Champions League Elite 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008010000 +0300" stop="20261008013000 +0300" channel="beINSPORTS1">
-        <title>Uganda vs Libya - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
+    <programme start="20261008010000 +0300" stop="20261008024500 +0300" channel="beINMOVIES1">
+        <title>لدغة</title>
+        <category>أفلام</category>
     </programme>
-    <programme start="20261008013000 +0300" stop="20261008020300 +0300" channel="beINSPORTS1">
-        <title>Portugal vs Norway - UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
+    <programme start="20261008010000 +0300" stop="20261008024500 +0300" channel="beINMOVIES4">
+        <title>جومانجي</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008013000 +0300" stop="20261008022500 +0300" channel="beINSPORTS9">
         <title>Equestrian - Asian Games Aichi-Nagoya 2026 - Jumping, Idividual Competition B (Heights of up to 1.55</title>
         <category>دورة الألعاب الآسيوية</category>
+    </programme>
+    <programme start="20261008014400 +0300" stop="20261008034500 +0300" channel="beINMOVIES2">
+        <title>الكائن الفضائي: العهد</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008014500 +0300" stop="20261008034500 +0300" channel="beINSPORTS3">
         <title>Lyon vs Chelsea - UEFA Women’s Champions League 2026/2027 - MD2</title>
@@ -176,13 +240,17 @@
         <title>Kosovo vs Austria - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261008020000 +0300" stop="20261008030000 +0300" channel="beINSERIES1">
+        <title>E10 | S4 دخيلة</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261008020000 +0300" stop="20261008043000 +0300" channel="beINSPORTS8">
         <title>Minnesota vs Indiana - Pre- Season NBA - 2026</title>
         <category>الدوري الأميركي لكرة السلة</category>
     </programme>
-    <programme start="20261008020300 +0300" stop="20261008023000 +0300" channel="beINSPORTS1">
-        <title>Botswana vs Tunisia - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
+    <programme start="20261008021500 +0300" stop="20261008040000 +0300" channel="beINMOVIES3">
+        <title>ابن عم سانتا</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008022500 +0300" stop="20261008045200 +0300" channel="beINSPORTS9">
         <title>New York vs Atlanta - Semi Final -Game 2 - Women's National Basketball Association - WNBA</title>
@@ -190,10 +258,6 @@
     </programme>
     <programme start="20261008022800 +0300" stop="20261008042700 +0300" channel="beINSPORTS7">
         <title>Yibing Wu (CHN) vs Michael Zheng (USA) - ATP 1000 Rolex Shanghai Masters 2026</title>
-        <category>الرياضة العام</category>
-    </programme>
-    <programme start="20261008023000 +0300" stop="20261008030000 +0300" channel="beINSPORTS1">
-        <title>Netherlands vs Serbia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
     <programme start="20261008023000 +0300" stop="20261008043000 +0300" channel="beINSPORTS2">
@@ -204,41 +268,57 @@
         <title>Al Ain (UAE) vs Al Nassr (KSA) - AFC Champions League Elite 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008030000 +0300" stop="20261008033200 +0300" channel="beINSPORTS1">
-        <title>Burundi vs Algeria - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
+    <programme start="20261008024500 +0300" stop="20261008043000 +0300" channel="beINMOVIES1">
+        <title>الدمية</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008024500 +0300" stop="20261008041500 +0300" channel="beINMOVIES4">
+        <title>اختطاف فضائي</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008030000 +0300" stop="20261008040000 +0300" channel="beINSERIES1">
+        <title>E3 | S8 أوتلاندر</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261008033100 +0300" stop="20261008051200 +0300" channel="beINSPORTS6">
         <title>France vs Belgium - UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
-    </programme>
-    <programme start="20261008033200 +0300" stop="20261008040000 +0300" channel="beINSPORTS1">
-        <title>Greece vs Germany - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
     <programme start="20261008034000 +0300" stop="20261008041000 +0300" channel="beINSPORTS4">
         <title>Wales vs Denmark - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261008034500 +0300" stop="20261008051500 +0300" channel="beINMOVIES2">
+        <title>استحواذ</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261008034500 +0300" stop="20261008054500 +0300" channel="beINSPORTS3">
         <title>Valencia vs Real Sociedad - Spanish LaLiga 2026/2027 - Week 7</title>
         <category>الدوري الإسباني لكرة القدم</category>
     </programme>
-    <programme start="20261008040000 +0300" stop="20261008042700 +0300" channel="beINSPORTS1">
-        <title>Lesotho vs Morocco - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
+    <programme start="20261008040000 +0300" stop="20261008053100 +0300" channel="beINMOVIES3">
+        <title>سجن ذاتي</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008040000 +0300" stop="20261008050000 +0300" channel="beINSERIES1">
+        <title>E7 | S1 الأخت الأخرى من عائلة بينيت</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261008041000 +0300" stop="20261008055200 +0300" channel="beINSPORTS4">
         <title>Malta vs Andorra - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008042700 +0300" stop="20261008045500 +0300" channel="beINSPORTS1">
-        <title>Bosnia-Herzegovina vs Poland - UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
+    <programme start="20261008041500 +0300" stop="20261008055900 +0300" channel="beINMOVIES4">
+        <title>مغامرات بيبي لونغستوكينغ الجديدة</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008042700 +0300" stop="20261008061700 +0300" channel="beINSPORTS7">
         <title>Arthur Fery (GBR) vs Marin Cilic (CRO) - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261008043000 +0300" stop="20261008061500 +0300" channel="beINMOVIES1">
+        <title>ليدي سكوربيونز</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008043000 +0300" stop="20261008063000 +0300" channel="beINSPORTS2">
         <title>Malta vs Andorra - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -256,9 +336,9 @@
         <title>Equestrian - Jumping, Indivisual Competition A (Heights of 1.40 - 1.50m) Final 2nd Round - Asian G</title>
         <category>دورة الألعاب الآسيوية</category>
     </programme>
-    <programme start="20261008045500 +0300" stop="20261008053000 +0300" channel="beINSPORTS1">
-        <title>In The Footsteps Of Fabian Ruiz</title>
-        <category>الرياضة العام</category>
+    <programme start="20261008050000 +0300" stop="20261008060000 +0300" channel="beINSERIES1">
+        <title>The Good Doctor S2 | E9</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261008050000 +0300" stop="20261008064600 +0300" channel="beINSPORTS5">
         <title>Al Hussein (JOR) vs East Bengal FC (IND) - AFC Champions League Two 2026/2027 - MD1</title>
@@ -268,9 +348,13 @@
         <title>Kazakhstan vs Faroe Islands - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008053000 +0300" stop="20261008060000 +0300" channel="beINSPORTS1">
-        <title>Italy vs Türkiye - UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
+    <programme start="20261008051500 +0300" stop="20261008070000 +0300" channel="beINMOVIES2">
+        <title>ترقيع</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008053100 +0300" stop="20261008071500 +0300" channel="beINMOVIES3">
+        <title>لغز جزيرة المد والجزر</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008054500 +0300" stop="20261008074500 +0300" channel="beINSPORTS3">
         <title>Espanyol vs Elche - Spanish LaLiga 2026/2027 - Week 7</title>
@@ -280,20 +364,24 @@
         <title>Portugal vs Norway - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008060000 +0300" stop="20261008063000 +0300" channel="beINSPORTS1">
-        <title>UEFA UCL Magazine 2026/2027- MD2 Review</title>
-        <category>دوري أبطال أوروبا لكرة القدم</category>
+    <programme start="20261008055900 +0300" stop="20261008073000 +0300" channel="beINMOVIES4">
+        <title>جريسي وبيدرو</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008060000 +0300" stop="20261008080000 +0300" channel="beINSERIES1">
+        <title>E22 | S21 أمريكا غوت تالنت</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261008060000 +0300" stop="20261008075900 +0300" channel="beINSPORTS9">
         <title>Equestrian - Jumping, Indivisual Competition B (Heights of up to 1.55m) Final 2nd Round - Asian Gam</title>
         <category>دورة الألعاب الآسيوية</category>
     </programme>
+    <programme start="20261008061500 +0300" stop="20261008080000 +0300" channel="beINMOVIES1">
+        <title>Friendship</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261008061700 +0300" stop="20261008070000 +0300" channel="beINSPORTS7">
         <title>ATP Tour - Magazine 2026</title>
-        <category>الرياضة العام</category>
-    </programme>
-    <programme start="20261008063000 +0300" stop="20261008070000 +0300" channel="beINSPORTS1">
-        <title>France vs Belgium - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
     <programme start="20261008063000 +0300" stop="20261008083000 +0300" channel="beINSPORTS2">
@@ -304,9 +392,9 @@
         <title>Al Shorta (IRQ) vs Al Seeb Club (OMA) - AFC Champions League Two 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008070000 +0300" stop="20261008073000 +0300" channel="beINSPORTS1">
-        <title>Scotland vs Slovenia - UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
+    <programme start="20261008070000 +0300" stop="20261008083000 +0300" channel="beINMOVIES2">
+        <title>نهاية المطاف</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008070000 +0300" stop="20261008083000 +0300" channel="beINSPORTS6">
         <title>Saran vs Paris - Daikin StarLigue - French Handball - 2026</title>
@@ -320,9 +408,13 @@
         <title>Moto 3 - Japan GP 2026 - Qualifying</title>
         <category>بطولة العالم للدراجات النارية</category>
     </programme>
-    <programme start="20261008073000 +0300" stop="20261008080000 +0300" channel="beINSPORTS1">
-        <title>South Sudan vs Egypt - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
+    <programme start="20261008071500 +0300" stop="20261008093000 +0300" channel="beINMOVIES3">
+        <title>Almost Famous</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008073000 +0300" stop="20261008091500 +0300" channel="beINMOVIES4">
+        <title>ماتيلدا</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008074500 +0300" stop="20261008094500 +0300" channel="beINSPORTS3">
         <title>Osasuna vs Rayo Vallecano - Spanish LaLiga 2026/2027 - Week 7</title>
@@ -340,13 +432,21 @@
         <title>Class 7 - LGCT Grand Prix – Mexico</title>
         <category>الفروسية</category>
     </programme>
-    <programme start="20261008080000 +0300" stop="20261008083300 +0300" channel="beINSPORTS1">
-        <title>England vs Czechia - UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
+    <programme start="20261008080000 +0300" stop="20261008095900 +0300" channel="beINMOVIES1">
+        <title>كاسينو إن إيشيا</title>
+        <category>مسلسلات</category>
+    </programme>
+    <programme start="20261008080000 +0300" stop="20261008090000 +0300" channel="beINSERIES1">
+        <title>E10 | S4 دخيلة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261008081500 +0300" stop="20261008100300 +0300" channel="beINSPORTS4">
         <title>Wales vs Denmark - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261008083000 +0300" stop="20261008101400 +0300" channel="beINMOVIES2">
+        <title>فار هيفن</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008083000 +0300" stop="20261008103000 +0300" channel="beINSPORTS2">
         <title>Zambia vs Togo - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
@@ -360,10 +460,6 @@
         <title>Montpellier vs Chambéry - Daikin StarLigue - French Handball - 2026</title>
         <category>كرة اليد</category>
     </programme>
-    <programme start="20261008083300 +0300" stop="20261008090000 +0300" channel="beINSPORTS1">
-        <title>Botswana vs Tunisia - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
-    </programme>
     <programme start="20261008084500 +0300" stop="20261008101600 +0300" channel="beINSPORTS8">
         <title>Minnesota vs Indiana - Pre- Season NBA - 2026</title>
         <category>الدوري الأميركي لكرة السلة</category>
@@ -372,9 +468,9 @@
         <title>Montenegro vs Armenia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008090000 +0300" stop="20261008093000 +0300" channel="beINSPORTS1">
-        <title>Croatia vs Spain -UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
+    <programme start="20261008090000 +0300" stop="20261008100000 +0300" channel="beINSERIES1">
+        <title>E3 | S8 أوتلاندر</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261008090000 +0300" stop="20261008123500 +0300" channel="beINSPORTS7">
         <title>Mariano Navone (ARG) vs Pablo Carreno Busta (ESP) - ATP 1000 Rolex Shanghai Masters 2026</title>
@@ -384,25 +480,37 @@
         <title>GCL R2 – Competition Team</title>
         <category>الفروسية</category>
     </programme>
-    <programme start="20261008093000 +0300" stop="20261008100100 +0300" channel="beINSPORTS1">
-        <title>Uganda vs Libya - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
+    <programme start="20261008091500 +0300" stop="20261008110000 +0300" channel="beINMOVIES4">
+        <title>بيتر الأرنب</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008093000 +0300" stop="20261008111500 +0300" channel="beINMOVIES3">
+        <title>السباحة إلى المنزل</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008094500 +0300" stop="20261008112800 +0300" channel="beINSPORTS3">
         <title>Roma vs Barcelona - UEFA Women’s Champions League 2026/2027 - MD2</title>
         <category>دوري أبطال أوروبا - سيدات</category>
     </programme>
+    <programme start="20261008095900 +0300" stop="20261008112900 +0300" channel="beINMOVIES1">
+        <title>السطو</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008100000 +0300" stop="20261008110000 +0300" channel="beINSERIES1">
+        <title>E7 | S1 الأخت الأخرى من عائلة بينيت</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261008100000 +0300" stop="20261008113000 +0300" channel="beINSPORTS9">
         <title>Premier Padel - Germany P2 2026 - Martina Calvo ESP Claudia Fernandez Sanchez ESP vs Noemi Aguilar C</title>
         <category>باديل</category>
     </programme>
-    <programme start="20261008100100 +0300" stop="20261008103000 +0300" channel="beINSPORTS1">
-        <title>Lesotho vs Morocco - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
-    </programme>
     <programme start="20261008100300 +0300" stop="20261008115500 +0300" channel="beINSPORTS4">
         <title>Portugal vs Norway - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261008101400 +0300" stop="20261008120000 +0300" channel="beINMOVIES2">
+        <title>ضباب الحرب</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008101500 +0300" stop="20261008120000 +0300" channel="beINSPORTS6">
         <title>Nîmes vs Aix - Daikin StarLigue - French Handball - 2026</title>
@@ -412,10 +520,6 @@
         <title>New York vs Atlanta - Semi Final -Game 2 - Women's National Basketball Association - WNBA</title>
         <category>كرة السلة</category>
     </programme>
-    <programme start="20261008103000 +0300" stop="20261008110000 +0300" channel="beINSPORTS1">
-        <title>Wales vs Denmark - UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
-    </programme>
     <programme start="20261008103000 +0300" stop="20261008123000 +0300" channel="beINSPORTS2">
         <title>Cape Verde vs Rwanda - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
         <category>تصفيات كأس الأمم الأفريقية</category>
@@ -424,17 +528,25 @@
         <title>Scotland vs Slovenia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008110000 +0300" stop="20261008113000 +0300" channel="beINSPORTS1">
-        <title>UEFA UCL Magazine 2026/2027- MD2 Review</title>
-        <category>دوري أبطال أوروبا لكرة القدم</category>
+    <programme start="20261008110000 +0300" stop="20261008124500 +0300" channel="beINMOVIES4">
+        <title>بيت الوحوش</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008110000 +0300" stop="20261008120000 +0300" channel="beINSERIES1">
+        <title>The Good Doctor S2 | E9</title>
+        <category>مسلسلات</category>
+    </programme>
+    <programme start="20261008111500 +0300" stop="20261008124500 +0300" channel="beINMOVIES3">
+        <title>JUNGLELAND</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008112800 +0300" stop="20261008132500 +0300" channel="beINSPORTS3">
         <title>Lyon vs Chelsea - UEFA Women’s Champions League 2026/2027 - MD2</title>
         <category>دوري أبطال أوروبا - سيدات</category>
     </programme>
-    <programme start="20261008113000 +0300" stop="20261008115900 +0300" channel="beINSPORTS1">
-        <title>Burundi vs Algeria - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
+    <programme start="20261008112900 +0300" stop="20261008131400 +0300" channel="beINMOVIES1">
+        <title>فتى الكاراتيه: الأساطير</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008113000 +0300" stop="20261008130000 +0300" channel="beINSPORTS9">
         <title>Premier Padel - Germany P2 2026 - Sofia Saiz Vallejo ESP Marta Talavan ESP vs Paula Josemaria Martin</title>
@@ -448,9 +560,13 @@
         <title>England vs Czechia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008115900 +0300" stop="20261008134500 +0300" channel="beINSPORTS1">
-        <title>France vs Belgium - UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
+    <programme start="20261008120000 +0300" stop="20261008140000 +0300" channel="beINMOVIES2">
+        <title>غير مكتشفة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008120000 +0300" stop="20261008140000 +0300" channel="beINSERIES1">
+        <title>E22 | S21 أمريكا غوت تالنت</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261008120000 +0300" stop="20261008134500 +0300" channel="beINSPORTS6">
         <title>Angola vs Malawi - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
@@ -472,6 +588,14 @@
         <title>Martin Landaluce (ESP) vs Jan-Lennard Struff (GER) - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261008124500 +0300" stop="20261008143000 +0300" channel="beINMOVIES3">
+        <title>جيرسي جيرل</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008124500 +0300" stop="20261008140000 +0300" channel="beINMOVIES4">
+        <title>مغامرات إلمو في غروشلاند</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261008130000 +0300" stop="20261008144500 +0300" channel="beINSPORTS5">
         <title>Al Hilal (KSA) vs Al Gharafa (QAT) - AFC Champions League Elite 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
@@ -484,6 +608,10 @@
         <title>Luca Van Assche (FRA) vs Yunchaokete Bu (CHN) - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261008131400 +0300" stop="20261008145900 +0300" channel="beINMOVIES1">
+        <title>تنفس!</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261008132500 +0300" stop="20261008151000 +0300" channel="beINSPORTS3">
         <title>Moldova vs Slovakia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -492,17 +620,29 @@
         <title>Main Race - F1 Bahrain Grand Prix - 2026</title>
         <category>بطولة العالم للفورمولا وان</category>
     </programme>
-    <programme start="20261008134500 +0300" stop="20261008153000 +0300" channel="beINSPORTS1">
-        <title>England vs Czechia - UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
-    </programme>
     <programme start="20261008134500 +0300" stop="20261008151500 +0300" channel="beINSPORTS6">
         <title>Saran vs Paris - Daikin StarLigue - French Handball - 2026</title>
         <category>كرة اليد</category>
     </programme>
+    <programme start="20261008140000 +0300" stop="20261008155900 +0300" channel="beINMOVIES2">
+        <title>جومانجي: مرحباً في الغابة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008140000 +0300" stop="20261008154500 +0300" channel="beINMOVIES4">
+        <title>بيتر الأرنب</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008140000 +0300" stop="20261008150000 +0300" channel="beINSERIES1">
+        <title>E10 | S4 دخيلة</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261008140700 +0300" stop="20261008155500 +0300" channel="beINSPORTS4">
         <title>Lille vs Troyes - French Ligue 1 2026/2027 - Week 4</title>
         <category>الدوري الفرنسي</category>
+    </programme>
+    <programme start="20261008143000 +0300" stop="20261008163000 +0300" channel="beINMOVIES3">
+        <title>LABOR DAY</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008143000 +0300" stop="20261008163000 +0300" channel="beINSPORTS2">
         <title>Italy vs Türkiye - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -516,6 +656,14 @@
         <title>Kashima Antlers (JPN) vs Newcastle Jets (AUS) - AFC Champions League Elite 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261008145900 +0300" stop="20261008171400 +0300" channel="beINMOVIES1">
+        <title>الأرض الموعودة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008150000 +0300" stop="20261008160000 +0300" channel="beINSERIES1">
+        <title>E3 | S8 أوتلاندر</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261008150000 +0300" stop="20261008171500 +0300" channel="beINSPORTS7">
         <title>Cameron Norrie (GBR) vs Dalibor Svrcina (CZE) - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
@@ -528,17 +676,21 @@
         <title>Scotland vs Slovenia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008153000 +0300" stop="20261008160000 +0300" channel="beINSPORTS1">
-        <title>UEFA UCL Magazine 2026/2027- MD2 Review</title>
-        <category>دوري أبطال أوروبا لكرة القدم</category>
+    <programme start="20261008154500 +0300" stop="20261008171400 +0300" channel="beINMOVIES4">
+        <title>بيت الوحوش</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008155500 +0300" stop="20261008162600 +0300" channel="beINSPORTS4">
         <title>Portugal vs Norway - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008160000 +0300" stop="20261008163000 +0300" channel="beINSPORTS1">
-        <title>Netherlands vs Serbia - UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
+    <programme start="20261008155900 +0300" stop="20261008174400 +0300" channel="beINMOVIES2">
+        <title>ما بعد الأرض</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008160000 +0300" stop="20261008170000 +0300" channel="beINSERIES1">
+        <title>E7 | S1 الأخت الأخرى من عائلة بينيت</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261008160000 +0300" stop="20261008173000 +0300" channel="beINSPORTS9">
         <title>Premier Padel - Germany P2 2026 - Jimena Velasco Postiguillo ESP Raquel Eugenio Barrera ESP vs Andre</title>
@@ -548,9 +700,9 @@
         <title>Netherlands vs Serbia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008163000 +0300" stop="20261008165800 +0300" channel="beINSPORTS1">
-        <title>Botswana vs Tunisia - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
+    <programme start="20261008163000 +0300" stop="20261008180000 +0300" channel="beINMOVIES3">
+        <title>JUNGLELAND</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008163000 +0300" stop="20261008183000 +0300" channel="beINSPORTS2">
         <title>Wales vs Denmark - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -568,24 +720,28 @@
         <title>Athletic Bilbao vs Deportivo Alaves - Spanish LaLiga 2026/2027 - Week 7</title>
         <category>الدوري الإسباني لكرة القدم</category>
     </programme>
-    <programme start="20261008165800 +0300" stop="20261008173000 +0300" channel="beINSPORTS1">
-        <title>Bosnia-Herzegovina vs Poland - UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
-    </programme>
     <programme start="20261008165800 +0300" stop="20261008184500 +0300" channel="beINSPORTS5">
         <title>FC Seoul (KOR) vs Persib Bandung (IDN) - AFC Champions League Two 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261008170000 +0300" stop="20261008180000 +0300" channel="beINSERIES1">
+        <title>The Good Doctor S2 | E9</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261008170000 +0300" stop="20261008183000 +0300" channel="beINSPORTS6">
         <title>Saran vs Paris - Daikin StarLigue - French Handball - 2026</title>
         <category>كرة اليد</category>
     </programme>
+    <programme start="20261008171400 +0300" stop="20261008185900 +0300" channel="beINMOVIES1">
+        <title>فتى الكاراتيه: الأساطير</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008171400 +0300" stop="20261008183000 +0300" channel="beINMOVIES4">
+        <title>مغامرات إلمو في غروشلاند</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261008171500 +0300" stop="20261008185000 +0300" channel="beINSPORTS7">
         <title>Kimmer Coppejans (BEL) vs Stefanos Tsitsipas (GRE) - ATP 1000 Rolex Shanghai Masters 2026</title>
-        <category>الرياضة العام</category>
-    </programme>
-    <programme start="20261008173000 +0300" stop="20261008180200 +0300" channel="beINSPORTS1">
-        <title>Italy vs Türkiye - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
     <programme start="20261008173000 +0300" stop="20261008183000 +0300" channel="beINSPORTS8">
@@ -596,17 +752,25 @@
         <title>Premier Padel - Germany P2 2026 - Gemma Triay Pons ESP Delfina Brea Senesi ARG vs Barrera De La Fuen</title>
         <category>باديل</category>
     </programme>
-    <programme start="20261008180200 +0300" stop="20261008183000 +0300" channel="beINSPORTS1">
-        <title>South Sudan vs Egypt - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
+    <programme start="20261008174400 +0300" stop="20261008194500 +0300" channel="beINMOVIES2">
+        <title>غير مكتشفة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008180000 +0300" stop="20261008194500 +0300" channel="beINMOVIES3">
+        <title>ستارسكي وهاتش</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008180000 +0300" stop="20261008200000 +0300" channel="beINSERIES1">
+        <title>E22 | S21 أمريكا غوت تالنت</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261008181000 +0300" stop="20261008195900 +0300" channel="beINSPORTS4">
         <title>Greece vs Germany - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008183000 +0300" stop="20261008190000 +0300" channel="beINSPORTS1">
-        <title>Uganda vs Libya - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
+    <programme start="20261008183000 +0300" stop="20261008203000 +0300" channel="beINMOVIES4">
+        <title>النساء الصغيرات</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008183000 +0300" stop="20261008203000 +0300" channel="beINSPORTS2">
         <title>Malta vs Andorra - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -632,29 +796,33 @@
         <title>Mariano Navone (ARG) vs Pablo Carreno Busta (ESP) - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008190000 +0300" stop="20261008193000 +0300" channel="beINSPORTS1">
-        <title>France vs Belgium - UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
+    <programme start="20261008185900 +0300" stop="20261008205900 +0300" channel="beINMOVIES1">
+        <title>قرمزي</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008190000 +0300" stop="20261008203000 +0300" channel="beINSPORTS9">
         <title>Premier Padel - Germany P2 2026 - Javier Garrido ESP Juan Ignacio De Pascual ARG vs Alejandro Galan</title>
         <category>باديل</category>
     </programme>
-    <programme start="20261008193000 +0300" stop="20261008200000 +0300" channel="beINSPORTS1">
-        <title>Scotland vs Slovenia - UEFA Nations League 2026/27 - Match Day 4</title>
-        <category>الرياضة العام</category>
-    </programme>
     <programme start="20261008193000 +0300" stop="20261008203000 +0300" channel="beINSPORTS8">
         <title>Moto 3 - Japan GP 2026 - Main Race</title>
         <category>بطولة العالم للدراجات النارية</category>
+    </programme>
+    <programme start="20261008194500 +0300" stop="20261008220000 +0300" channel="beINMOVIES2">
+        <title>الرجل العنكبوت المذهل</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008194500 +0300" stop="20261008213000 +0300" channel="beINMOVIES3">
+        <title>خادمة في مانهاتن</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008195900 +0300" stop="20261008202800 +0300" channel="beINSPORTS4">
         <title>Italy vs Türkiye - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008200000 +0300" stop="20261008203000 +0300" channel="beINSPORTS1">
-        <title>Ligue 1 Show - 2026/2027</title>
-        <category>الدوري الفرنسي</category>
+    <programme start="20261008200000 +0300" stop="20261008210000 +0300" channel="beINSERIES1">
+        <title>E10 | S4 دخيلة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261008201500 +0300" stop="20261008220000 +0300" channel="beINSPORTS6">
         <title>Nîmes vs Aix - Daikin StarLigue - French Handball - 2026</title>
@@ -672,9 +840,9 @@
         <title>France vs Belgium - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008203000 +0300" stop="20261008210000 +0300" channel="beINSPORTS1">
-        <title>The Big Interview 2026-2027</title>
-        <category>الدوري الإنجليزي الممتاز</category>
+    <programme start="20261008203000 +0300" stop="20261008221500 +0300" channel="beINMOVIES4">
+        <title>ليموني سنيكتس: سلسلة من الأحداث المأسوية</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008203000 +0300" stop="20261008223000 +0300" channel="beINSPORTS2">
         <title>Cyprus vs Latvia - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -692,17 +860,29 @@
         <title>Premier Padel - Germany P2 2026 - Franco Stupaczuk ARG Jon Sanz ESP vs Wunner/Lindmeyer OR Martinez/</title>
         <category>باديل</category>
     </programme>
-    <programme start="20261008210000 +0300" stop="20261008213000 +0300" channel="beINSPORTS1">
-        <title>Best Goals UEFA Nations League 2026/27 - MD1 to MD3</title>
-        <category>الرياضة العام</category>
+    <programme start="20261008205900 +0300" stop="20261008225900 +0300" channel="beINMOVIES1">
+        <title>صاحب الكلاب</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008210000 +0300" stop="20261008220000 +0300" channel="beINSERIES1">
+        <title>E5 | S1 الزوجة المصغرة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261008210000 +0300" stop="20261008224500 +0300" channel="beINSPORTS5">
         <title>Daejeon Hanacitizen (KOR) vs Kyoto Sanga (JPN) - AFC Champions League Elite 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008213000 +0300" stop="20261008220200 +0300" channel="beINSPORTS1">
-        <title>Interview With Mikel Arteta</title>
-        <category>الرياضة العام</category>
+    <programme start="20261008213000 +0300" stop="20261008233000 +0300" channel="beINMOVIES3">
+        <title>ماري أنطوانيت</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008220000 +0300" stop="20261008234500 +0300" channel="beINMOVIES2">
+        <title>الاختطاف</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008220000 +0300" stop="20261008230000 +0300" channel="beINSERIES1">
+        <title>E7 | S1 مزرعة دوتون</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261008220000 +0300" stop="20261009000000 +0300" channel="beINSPORTS6">
         <title>Scotland vs Slovenia - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -712,13 +892,13 @@
         <title>Equestrian - Dressage - Asian Games Aichi-Nagoya 2026</title>
         <category>دورة الألعاب الآسيوية</category>
     </programme>
-    <programme start="20261008220200 +0300" stop="20261008223000 +0300" channel="beINSPORTS1">
-        <title>Burundi vs Algeria - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
-    </programme>
     <programme start="20261008221000 +0300" stop="20261009000000 +0300" channel="beINSPORTS4">
         <title>Romania vs Sweden - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261008221500 +0300" stop="20261009000000 +0300" channel="beINMOVIES4">
+        <title>فتاتي</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261008221500 +0300" stop="20261009000000 +0300" channel="beINSPORTS3">
         <title>Atletico Madrid vs Real Madrid ( Elderbi De Madrid ) - Spanish LaLiga 2026/2027 - Week 7</title>
@@ -728,10 +908,6 @@
         <title>New York vs Atlanta - Semi Final -Game 2 - Women's National Basketball Association - WNBA</title>
         <category>كرة السلة</category>
     </programme>
-    <programme start="20261008223000 +0300" stop="20261008230000 +0300" channel="beINSPORTS1">
-        <title>UEFA UCL Magazine 2026/2027- MD2 Review</title>
-        <category>دوري أبطال أوروبا لكرة القدم</category>
-    </programme>
     <programme start="20261008223000 +0300" stop="20261009003000 +0300" channel="beINSPORTS2">
         <title>Zambia vs Togo - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
         <category>تصفيات كأس الأمم الأفريقية</category>
@@ -740,13 +916,29 @@
         <title>Gamba Osaka (JPN) vs Cong An Ha Noi (VIE) - AFC Champions League Elite 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
     </programme>
-    <programme start="20261008230000 +0300" stop="20261008233200 +0300" channel="beINSPORTS1">
-        <title>Lesotho vs Morocco - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
+    <programme start="20261008225900 +0300" stop="20261009010000 +0300" channel="beINMOVIES1">
+        <title>خطة التقاعد</title>
+        <category>أفلام</category>
     </programme>
-    <programme start="20261008233200 +0300" stop="20261009000000 +0300" channel="beINSPORTS1">
-        <title>South Sudan vs Egypt - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
-        <category>تصفيات كأس الأمم الأفريقية</category>
+    <programme start="20261008230000 +0300" stop="20261009000000 +0300" channel="beINSERIES1">
+        <title>The Good Doctor S2 | E9</title>
+        <category>مسلسلات</category>
+    </programme>
+    <programme start="20261008233000 +0300" stop="20261009013000 +0300" channel="beINMOVIES3">
+        <title>الساعات</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261008234500 +0300" stop="20261009021500 +0300" channel="beINMOVIES2">
+        <title>الرجل العنكبوت المذهل 2</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009000000 +0300" stop="20261009021400 +0300" channel="beINMOVIES4">
+        <title>آني</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009000000 +0300" stop="20261009020000 +0300" channel="beINSERIES1">
+        <title>E23 | S21 أمريكا غوت تالنت</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261009000000 +0300" stop="20261009003000 +0300" channel="beINSPORTS1">
         <title>Ligue 1 Show - 2026/2027</title>
@@ -792,6 +984,10 @@
         <title>Cameron Norrie (GBR) vs Dalibor Svrcina (CZE) - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009010000 +0300" stop="20261009024400 +0300" channel="beINMOVIES1">
+        <title>عودة من الموت</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009010000 +0300" stop="20261009013300 +0300" channel="beINSPORTS1">
         <title>Croatia vs Spain -UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -799,6 +995,10 @@
     <programme start="20261009010000 +0300" stop="20261009024500 +0300" channel="beINSPORTS5">
         <title>Lion City Sailors (SGP) vs BG Pathum United (THA) - AFC Champions League Two 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261009013000 +0300" stop="20261009034400 +0300" channel="beINMOVIES3">
+        <title>الموتى لا يؤذون</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261009013300 +0300" stop="20261009020000 +0300" channel="beINSPORTS1">
         <title>South Sudan vs Egypt - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
@@ -816,9 +1016,21 @@
         <title>Brest vs PSG - French Ligue 1 2026/2027 - Week 4</title>
         <category>الدوري الفرنسي</category>
     </programme>
+    <programme start="20261009020000 +0300" stop="20261009030000 +0300" channel="beINSERIES1">
+        <title>E11 | S4 دخيلة</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261009020000 +0300" stop="20261009023000 +0300" channel="beINSPORTS1">
         <title>England vs Czechia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261009021400 +0300" stop="20261009034400 +0300" channel="beINMOVIES4">
+        <title>قرصان العام</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009021500 +0300" stop="20261009034500 +0300" channel="beINMOVIES2">
+        <title>بايثون</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261009023000 +0300" stop="20261009030100 +0300" channel="beINSPORTS1">
         <title>Uganda vs Libya - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
@@ -832,9 +1044,17 @@
         <title>GCL R2 – Competition Team - Shanghai Tour Highlights</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009024400 +0300" stop="20261009043000 +0300" channel="beINMOVIES1">
+        <title>التضحية</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009024500 +0300" stop="20261009043000 +0300" channel="beINSPORTS5">
         <title>Adelaide United (AUS) vs Tai Po FC (HKG) - AFC Champions League Two 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261009030000 +0300" stop="20261009040000 +0300" channel="beINSERIES1">
+        <title>E5 | S1 الزوجة المصغرة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261009030000 +0300" stop="20261009053000 +0300" channel="beINSPORTS9">
         <title>Atlanta vs San Antonio - Pre- Season NBA - 2026</title>
@@ -868,6 +1088,22 @@
         <title>Scotland vs Slovenia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009034400 +0300" stop="20261009052900 +0300" channel="beINMOVIES3">
+        <title>ناقوس السماء</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009034400 +0300" stop="20261009051500 +0300" channel="beINMOVIES4">
+        <title>باو باترول: ذا موفي</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009034500 +0300" stop="20261009054500 +0300" channel="beINMOVIES2">
+        <title>الظل</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009040000 +0300" stop="20261009050000 +0300" channel="beINSERIES1">
+        <title>E7 | S1 مزرعة دوتون</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261009040000 +0300" stop="20261009054700 +0300" channel="beINSPORTS4">
         <title>Bosnia-Herzegovina vs Poland - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -879,6 +1115,10 @@
     <programme start="20261009040300 +0300" stop="20261009043200 +0300" channel="beINSPORTS1">
         <title>France vs Belgium - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261009043000 +0300" stop="20261009055900 +0300" channel="beINMOVIES1">
+        <title>السطو</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261009043000 +0300" stop="20261009063000 +0300" channel="beINSPORTS2">
         <title>Cyprus vs Latvia - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -896,6 +1136,10 @@
         <title>ATP Tour - Magazine 2026</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009050000 +0300" stop="20261009060000 +0300" channel="beINSERIES1">
+        <title>The Good Doctor S2 | E10</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261009050000 +0300" stop="20261009053400 +0300" channel="beINSPORTS1">
         <title>Italy vs Türkiye - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -904,9 +1148,17 @@
         <title>Montenegro vs Armenia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009051500 +0300" stop="20261009072900 +0300" channel="beINMOVIES4">
+        <title>آني</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009051500 +0300" stop="20261009070000 +0300" channel="beINSPORTS7">
         <title>Mariano Navone (ARG) vs Pablo Carreno Busta (ESP) - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261009052900 +0300" stop="20261009070000 +0300" channel="beINMOVIES3">
+        <title>كيف تقع في الحب بحلول عيد الميلاد</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261009053000 +0300" stop="20261009071500 +0300" channel="beINSPORTS3">
         <title>Luxembourg vs Bulgaria - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -920,6 +1172,10 @@
         <title>Lesotho vs Morocco - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
         <category>تصفيات كأس الأمم الأفريقية</category>
     </programme>
+    <programme start="20261009054500 +0300" stop="20261009073000 +0300" channel="beINMOVIES2">
+        <title>فار هيفن</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009054500 +0300" stop="20261009071500 +0300" channel="beINSPORTS6">
         <title>Saran vs Paris - Daikin StarLigue - French Handball - 2026</title>
         <category>كرة اليد</category>
@@ -927,6 +1183,14 @@
     <programme start="20261009054700 +0300" stop="20261009073000 +0300" channel="beINSPORTS4">
         <title>Ukraine vs Hungary - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261009055900 +0300" stop="20261009075900 +0300" channel="beINMOVIES1">
+        <title>قرمزي</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009060000 +0300" stop="20261009080000 +0300" channel="beINSERIES1">
+        <title>E23 | S21 أمريكا غوت تالنت</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261009060000 +0300" stop="20261009063000 +0300" channel="beINSPORTS1">
         <title>Bosnia-Herzegovina vs Poland - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -948,6 +1212,10 @@
         <title>Scotland vs Slovenia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009070000 +0300" stop="20261009084400 +0300" channel="beINMOVIES3">
+        <title>ابن عم سانتا</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009070000 +0300" stop="20261009073200 +0300" channel="beINSPORTS1">
         <title>Greece vs Germany - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -964,6 +1232,14 @@
         <title>Montpellier vs Chambéry - Daikin StarLigue - French Handball - 2026</title>
         <category>كرة اليد</category>
     </programme>
+    <programme start="20261009072900 +0300" stop="20261009093000 +0300" channel="beINMOVIES4">
+        <title>النساء الصغيرات</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009073000 +0300" stop="20261009100000 +0300" channel="beINMOVIES2">
+        <title>سقوط الصقر الأسود</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009073000 +0300" stop="20261009075700 +0300" channel="beINSPORTS4">
         <title>England vs Czechia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -975,6 +1251,14 @@
     <programme start="20261009075700 +0300" stop="20261009094500 +0300" channel="beINSPORTS4">
         <title>Rennes vs Marseille - French Ligue 1 2026/2027 - Week 4</title>
         <category>الدوري الفرنسي</category>
+    </programme>
+    <programme start="20261009075900 +0300" stop="20261009094400 +0300" channel="beINMOVIES1">
+        <title>كونغ فو جيمز</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009080000 +0300" stop="20261009090000 +0300" channel="beINSERIES1">
+        <title>E11 | S4 دخيلة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261009080000 +0300" stop="20261009082700 +0300" channel="beINSPORTS1">
         <title>Netherlands vs Serbia - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1000,6 +1284,14 @@
         <title>Al Shamal (QAT) vs Al Ittihad (KSA) - AFC Champions League Elite 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009084400 +0300" stop="20261009101500 +0300" channel="beINMOVIES3">
+        <title>سجن ذاتي</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009090000 +0300" stop="20261009100000 +0300" channel="beINSERIES1">
+        <title>E5 | S1 الزوجة المصغرة</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261009090000 +0300" stop="20261009093000 +0300" channel="beINSPORTS3">
         <title>EPL Stories 2026/2027 EP.11 - The Tigers Return</title>
         <category>الدوري الإنجليزي الممتاز</category>
@@ -1024,6 +1316,10 @@
         <title>Moto GP - Japan GP 2026 - Sprint Race</title>
         <category>بطولة العالم للدراجات النارية</category>
     </programme>
+    <programme start="20261009093000 +0300" stop="20261009113000 +0300" channel="beINMOVIES4">
+        <title>ليموني سنيكتس: سلسلة من الأحداث المأسوية</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009093000 +0300" stop="20261009100000 +0300" channel="beINSPORTS1">
         <title>UEFA UCL Magazine 2026/2027- MD2 Review</title>
         <category>دوري أبطال أوروبا لكرة القدم</category>
@@ -1032,9 +1328,21 @@
         <title>Man City vs Real Madrid - UEFA Women’s Champions League 2026/2027 - MD2</title>
         <category>دوري أبطال أوروبا - سيدات</category>
     </programme>
+    <programme start="20261009094400 +0300" stop="20261009112900 +0300" channel="beINMOVIES1">
+        <title>سترينجرز</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009094500 +0300" stop="20261009113000 +0300" channel="beINSPORTS4">
         <title>Strasbourg vs Monaco - French Ligue 1 2026/2027 - Week 4</title>
         <category>الدوري الفرنسي</category>
+    </programme>
+    <programme start="20261009100000 +0300" stop="20261009113000 +0300" channel="beINMOVIES2">
+        <title>نهاية المطاف</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009100000 +0300" stop="20261009110000 +0300" channel="beINSERIES1">
+        <title>E7 | S1 مزرعة دوتون</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261009100000 +0300" stop="20261009103000 +0300" channel="beINSPORTS1">
         <title>Portugal vs Norway - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1043,6 +1351,10 @@
     <programme start="20261009100800 +0300" stop="20261009113000 +0300" channel="beINSPORTS8">
         <title>Moto GP - Japan GP 2026 - Main Race</title>
         <category>بطولة العالم للدراجات النارية</category>
+    </programme>
+    <programme start="20261009101500 +0300" stop="20261009122900 +0300" channel="beINMOVIES3">
+        <title>ماري أنطوانيت</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261009103000 +0300" stop="20261009110000 +0300" channel="beINSPORTS1">
         <title>Croatia vs Spain -UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1064,6 +1376,10 @@
         <title>Beijing FC (CHN) vsFC Pohang Steelers (KOR) - AFC Champions League Elite 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009110000 +0300" stop="20261009120000 +0300" channel="beINSERIES1">
+        <title>The Good Doctor S2 | E10</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261009110000 +0300" stop="20261009113000 +0300" channel="beINSPORTS1">
         <title>South Sudan vs Egypt - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
         <category>تصفيات كأس الأمم الأفريقية</category>
@@ -1084,6 +1400,18 @@
         <title>Wales vs Denmark - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009112900 +0300" stop="20261009132900 +0300" channel="beINMOVIES1">
+        <title>صاحب الكلاب</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009113000 +0300" stop="20261009131500 +0300" channel="beINMOVIES2">
+        <title>الاختطاف</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009113000 +0300" stop="20261009131500 +0300" channel="beINMOVIES4">
+        <title>فتاتي</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009113000 +0300" stop="20261009115700 +0300" channel="beINSPORTS1">
         <title>England vs Czechia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -1103,6 +1431,14 @@
     <programme start="20261009115800 +0300" stop="20261009134500 +0300" channel="beINSPORTS4">
         <title>Northern Ireland vs Georgia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261009120000 +0300" stop="20261009140000 +0300" channel="beINSERIES1">
+        <title>E23 | S21 أمريكا غوت تالنت</title>
+        <category>مسلسلات</category>
+    </programme>
+    <programme start="20261009122900 +0300" stop="20261009135900 +0300" channel="beINMOVIES3">
+        <title>مرحبا!</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261009123000 +0300" stop="20261009143000 +0300" channel="beINSPORTS2">
         <title>England vs Czechia - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1144,6 +1480,18 @@
         <title>Novak Djokovic (SRB) vs Hubert Hurkacz (POL) - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009131500 +0300" stop="20261009153000 +0300" channel="beINMOVIES2">
+        <title>الرجل العنكبوت المذهل</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009131500 +0300" stop="20261009151400 +0300" channel="beINMOVIES4">
+        <title>النساء الصغيرات</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009132900 +0300" stop="20261009152900 +0300" channel="beINMOVIES1">
+        <title>قرمزي</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009133000 +0300" stop="20261009140000 +0300" channel="beINSPORTS1">
         <title>France vs Belgium - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -1151,6 +1499,14 @@
     <programme start="20261009134500 +0300" stop="20261009153000 +0300" channel="beINSPORTS4">
         <title>Italy vs Türkiye - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261009135900 +0300" stop="20261009154400 +0300" channel="beINMOVIES3">
+        <title>خادمة في مانهاتن</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009140000 +0300" stop="20261009150000 +0300" channel="beINSERIES1">
+        <title>E11 | S4 دخيلة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261009140000 +0300" stop="20261009143000 +0300" channel="beINSPORTS1">
         <title>Burundi vs Algeria - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
@@ -1180,6 +1536,10 @@
         <title>Scotland vs Slovenia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009150000 +0300" stop="20261009160000 +0300" channel="beINSERIES1">
+        <title>E5 | S1 الزوجة المصغرة</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261009150000 +0300" stop="20261009152800 +0300" channel="beINSPORTS1">
         <title>Lesotho vs Morocco - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
         <category>تصفيات كأس الأمم الأفريقية</category>
@@ -1192,9 +1552,21 @@
         <title>Yi Zhou (CHN) vs Lorenzo Musetti (ITA) - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009151400 +0300" stop="20261009170000 +0300" channel="beINMOVIES4">
+        <title>ليموني سنيكتس: سلسلة من الأحداث المأسوية</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009152800 +0300" stop="20261009160000 +0300" channel="beINSPORTS1">
         <title>Bosnia-Herzegovina vs Poland - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261009152900 +0300" stop="20261009171500 +0300" channel="beINMOVIES1">
+        <title>خطة التقاعد</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009153000 +0300" stop="20261009180000 +0300" channel="beINMOVIES2">
+        <title>الرجل العنكبوت المذهل 2</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261009153000 +0300" stop="20261009160000 +0300" channel="beINSPORTS4">
         <title>Croatia vs Spain -UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1207,6 +1579,14 @@
     <programme start="20261009153000 +0300" stop="20261009170000 +0300" channel="beINSPORTS9">
         <title>Equestrian - Asian Games Aichi-Nagoya 2026 - Jumping, Idividual Competition A (Heights of 1.40 - 150</title>
         <category>دورة الألعاب الآسيوية</category>
+    </programme>
+    <programme start="20261009154400 +0300" stop="20261009175900 +0300" channel="beINMOVIES3">
+        <title>ماري أنطوانيت</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009160000 +0300" stop="20261009170000 +0300" channel="beINSERIES1">
+        <title>E7 | S1 مزرعة دوتون</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261009160000 +0300" stop="20261009163000 +0300" channel="beINSPORTS1">
         <title>Ligue 1 Show - 2026/2027</title>
@@ -1236,6 +1616,14 @@
         <title>Luxembourg vs Bulgaria - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009170000 +0300" stop="20261009184500 +0300" channel="beINMOVIES4">
+        <title>فتاتي</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009170000 +0300" stop="20261009180000 +0300" channel="beINSERIES1">
+        <title>The Good Doctor S2 | E10</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261009170000 +0300" stop="20261009184500 +0300" channel="beINSPORTS5">
         <title>Jeonbuk (KOR) vs Kashiwa Reysol (JPN) - AFC Champions League Elite 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
@@ -1252,6 +1640,10 @@
         <title>The Big Interview 2026-2027</title>
         <category>الدوري الإنجليزي الممتاز</category>
     </programme>
+    <programme start="20261009171500 +0300" stop="20261009191500 +0300" channel="beINMOVIES1">
+        <title>صاحب الكلاب</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009173000 +0300" stop="20261009180000 +0300" channel="beINSPORTS1">
         <title>Netherlands vs Serbia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -1263,6 +1655,18 @@
     <programme start="20261009174500 +0300" stop="20261009194500 +0300" channel="beINSPORTS4">
         <title>Montenegro vs Armenia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261009175900 +0300" stop="20261009195900 +0300" channel="beINMOVIES3">
+        <title>الساعات</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009180000 +0300" stop="20261009194500 +0300" channel="beINMOVIES2">
+        <title>الاختطاف</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009180000 +0300" stop="20261009200000 +0300" channel="beINSERIES1">
+        <title>E23 | S21 أمريكا غوت تالنت</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261009180000 +0300" stop="20261009182700 +0300" channel="beINSPORTS1">
         <title>UEFA UCL Magazine 2026/2027- MD2 Review</title>
@@ -1288,6 +1692,10 @@
         <title>Practice 1 - F1 Singapore Grand Prix - 2026</title>
         <category>بطولة العالم للفورمولا وان</category>
     </programme>
+    <programme start="20261009184500 +0300" stop="20261009203000 +0300" channel="beINMOVIES4">
+        <title>فتاتي 2</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009184500 +0300" stop="20261009203000 +0300" channel="beINSPORTS5">
         <title>Port FC (THA) vs Vissel Kobe (JPN) - AFC Champions League Elite 2026/2027 - MD1</title>
         <category>الرياضة العام</category>
@@ -1304,9 +1712,17 @@
         <title>Premier Padel - Germany P2 2026 - M5</title>
         <category>باديل</category>
     </programme>
+    <programme start="20261009191500 +0300" stop="20261009210000 +0300" channel="beINMOVIES1">
+        <title>إلينور العظيمة</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009193000 +0300" stop="20261009203000 +0300" channel="beINSPORTS8">
         <title>Sprint Race Qualifying - F1 Singapore Grand Prix - 2026</title>
         <category>بطولة العالم للفورمولا وان</category>
+    </programme>
+    <programme start="20261009194500 +0300" stop="20261009220000 +0300" channel="beINMOVIES2">
+        <title>ستار تريك</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261009194500 +0300" stop="20261009213500 +0300" channel="beINSPORTS4">
         <title>Netherlands vs Serbia - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1315,6 +1731,14 @@
     <programme start="20261009195000 +0300" stop="20261009220000 +0300" channel="beINSPORTS1">
         <title>Galatasaray A.Ş. vs Kasımpaşa A.Ş. - Turkish Super League 2027 - MD7</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261009195900 +0300" stop="20261009212900 +0300" channel="beINMOVIES3">
+        <title>طريقة سهلة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009200000 +0300" stop="20261009210000 +0300" channel="beINSERIES1">
+        <title>E11 | S4 دخيلة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261009200000 +0300" stop="20261009215000 +0300" channel="beINSPORTS2">
         <title>Italy vs Türkiye - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1328,6 +1752,10 @@
         <title>PSG vs Leuven - UEFA Women’s Champions League 2026/2027 - MD2</title>
         <category>دوري أبطال أوروبا - سيدات</category>
     </programme>
+    <programme start="20261009203000 +0300" stop="20261009215900 +0300" channel="beINMOVIES4">
+        <title>بامبي: قصة حياة في الغابة</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009203000 +0300" stop="20261009210000 +0300" channel="beINSPORTS5">
         <title>Wales vs Denmark - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -1335,6 +1763,14 @@
     <programme start="20261009203000 +0300" stop="20261009233500 +0300" channel="beINSPORTS8">
         <title>Main Race - F1 Bahrain Grand Prix - 2026</title>
         <category>بطولة العالم للفورمولا وان</category>
+    </programme>
+    <programme start="20261009210000 +0300" stop="20261009224400 +0300" channel="beINMOVIES1">
+        <title>ماعز</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009210000 +0300" stop="20261009220000 +0300" channel="beINSERIES1">
+        <title>E13 | S17 حوض أسماك القرش</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261009210000 +0300" stop="20261009220000 +0300" channel="beINSPORTS5">
         <title>England vs Czechia - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1348,6 +1784,10 @@
         <title>Premier Padel - Germany P2 2026 - M6</title>
         <category>باديل</category>
     </programme>
+    <programme start="20261009212900 +0300" stop="20261009232900 +0300" channel="beINMOVIES3">
+        <title>النساء الصغيرات</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009213500 +0300" stop="20261010000000 +0300" channel="beINSPORTS4">
         <title>Lens vs Lyon - French Ligue 1 2026/2027 - Week 6</title>
         <category>الدوري الفرنسي</category>
@@ -1359,6 +1799,18 @@
     <programme start="20261009215000 +0300" stop="20261010000000 +0300" channel="beINSPORTS3">
         <title>West Ham vs QPR - EFL - English Football League SkyBet - Championship 2026/2027</title>
         <category>دوري البطولة الإنجليزية - الدرجة الأولى</category>
+    </programme>
+    <programme start="20261009215900 +0300" stop="20261009234500 +0300" channel="beINMOVIES4">
+        <title>هدير</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009220000 +0300" stop="20261010000000 +0300" channel="beINMOVIES2">
+        <title>ستار تريك بيوند</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009220000 +0300" stop="20261009230000 +0300" channel="beINSERIES1">
+        <title>E16 | S2 ماتلوك</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261009220000 +0300" stop="20261009223000 +0300" channel="beINSPORTS1">
         <title>Croatia vs Spain -UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1376,6 +1828,14 @@
         <title>Greece vs Germany - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009224400 +0300" stop="20261010004500 +0300" channel="beINMOVIES1">
+        <title>بريدجيت جونز: مهووسة بالفتى</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261009230000 +0300" stop="20261010000000 +0300" channel="beINSERIES1">
+        <title>The Good Doctor S2 | E10</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261009230000 +0300" stop="20261009232700 +0300" channel="beINSPORTS1">
         <title>Italy vs Türkiye - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -1392,9 +1852,25 @@
         <title>France vs Belgium - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261009232900 +0300" stop="20261010013100 +0300" channel="beINMOVIES3">
+        <title>فيلادلفيا</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261009233500 +0300" stop="20261010003000 +0300" channel="beINSPORTS8">
         <title>Moto GP - Japan GP 2026 - Qualifying</title>
         <category>بطولة العالم للدراجات النارية</category>
+    </programme>
+    <programme start="20261009234500 +0300" stop="20261010011500 +0300" channel="beINMOVIES4">
+        <title>مادلين</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010000000 +0300" stop="20261010021500 +0300" channel="beINMOVIES2">
+        <title>ستار تريك إنتو داركنس</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010000000 +0300" stop="20261010010000 +0300" channel="beINSERIES1">
+        <title>E6 | S2 الوسيط</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261010000000 +0300" stop="20261010003000 +0300" channel="beINSPORTS1">
         <title>Scotland vs Slovenia - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1428,6 +1904,14 @@
         <title>Moto GP - Japan GP 2026 - Sprint Race</title>
         <category>بطولة العالم للدراجات النارية</category>
     </programme>
+    <programme start="20261010004500 +0300" stop="20261010025900 +0300" channel="beINMOVIES1">
+        <title>لا زلت هنا</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010010000 +0300" stop="20261010020000 +0300" channel="beINSERIES1">
+        <title>E7 | S2 الوسيط</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261010010000 +0300" stop="20261010030000 +0300" channel="beINSPORTS7">
         <title>M5 - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
@@ -1439,6 +1923,14 @@
     <programme start="20261010011000 +0300" stop="20261010023000 +0300" channel="beINSPORTS8">
         <title>Moto GP - Japan GP 2026 - Main Race</title>
         <category>بطولة العالم للدراجات النارية</category>
+    </programme>
+    <programme start="20261010011500 +0300" stop="20261010030000 +0300" channel="beINMOVIES4">
+        <title>قشعريرة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010013100 +0300" stop="20261010034400 +0300" channel="beINMOVIES3">
+        <title>ا فيو قود من</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261010014500 +0300" stop="20261010033000 +0300" channel="beINSPORTS2">
         <title>Belarus vs Finland - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1452,6 +1944,14 @@
         <title>Italy vs Türkiye - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261010020000 +0300" stop="20261010030000 +0300" channel="beINSERIES1">
+        <title>E8 | S2 الوسيط</title>
+        <category>مسلسلات</category>
+    </programme>
+    <programme start="20261010021500 +0300" stop="20261010034400 +0300" channel="beINMOVIES2">
+        <title>Crawl</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010021500 +0300" stop="20261010033000 +0300" channel="beINSPORTS9">
         <title>Equestrian - Jumping, Indivisual Competition B (Heights of up to 1.55m) Final 2nd Round - Asian Gam</title>
         <category>دورة الألعاب الآسيوية</category>
@@ -1463,6 +1963,18 @@
     <programme start="20261010023000 +0300" stop="20261010055000 +0300" channel="beINSPORTS8">
         <title>Atlanta vs New York - Semi Final -Game 3 - Women's National Basketball Association - WNBA</title>
         <category>كرة السلة</category>
+    </programme>
+    <programme start="20261010025900 +0300" stop="20261010044400 +0300" channel="beINMOVIES1">
+        <title>الوحدة القاتلة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010030000 +0300" stop="20261010043000 +0300" channel="beINMOVIES4">
+        <title>المعيشة الكبيرة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010030000 +0300" stop="20261010050000 +0300" channel="beINSERIES1">
+        <title>E22 | S21 أمريكا غوت تالنت</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261010030000 +0300" stop="20261010033000 +0300" channel="beINSPORTS1">
         <title>South Sudan vs Egypt - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
@@ -1488,6 +2000,14 @@
         <title>Class 7 - LGCT Grand Prix – Mexico</title>
         <category>الفروسية</category>
     </programme>
+    <programme start="20261010034400 +0300" stop="20261010051400 +0300" channel="beINMOVIES2">
+        <title>البايو</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010034400 +0300" stop="20261010052900 +0300" channel="beINMOVIES3">
+        <title>ليلة عيد الميلاد في ميلر</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010034500 +0300" stop="20261010054500 +0300" channel="beINSPORTS3">
         <title>West Ham vs QPR - EFL - English Football League SkyBet - Championship 2026/2027</title>
         <category>دوري البطولة الإنجليزية - الدرجة الأولى</category>
@@ -1500,6 +2020,10 @@
         <title>Lens vs Lyon - French Ligue 1 2026/2027 - Week 6</title>
         <category>الدوري الفرنسي</category>
     </programme>
+    <programme start="20261010043000 +0300" stop="20261010060000 +0300" channel="beINMOVIES4">
+        <title>باو باترول: ذا موفي</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010043000 +0300" stop="20261010050000 +0300" channel="beINSPORTS1">
         <title>Netherlands vs Serbia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -1507,6 +2031,14 @@
     <programme start="20261010043000 +0300" stop="20261010070000 +0300" channel="beINSPORTS9">
         <title>Golden State vs Las Vegas - Semi Final - Game 3 - Women's National Basketball Association - WNBA</title>
         <category>كرة السلة</category>
+    </programme>
+    <programme start="20261010044400 +0300" stop="20261010062900 +0300" channel="beINMOVIES1">
+        <title>سترينجرز</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010050000 +0300" stop="20261010060000 +0300" channel="beINSERIES1">
+        <title>E7 | S4 دخيلة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261010050000 +0300" stop="20261010053000 +0300" channel="beINSPORTS1">
         <title>Botswana vs Tunisia - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
@@ -1516,9 +2048,17 @@
         <title>M2 - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261010051400 +0300" stop="20261010070000 +0300" channel="beINMOVIES2">
+        <title>مليون متابع</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010051700 +0300" stop="20261010070000 +0300" channel="beINSPORTS2">
         <title>Estonia vs Iceland - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261010052900 +0300" stop="20261010070600 +0300" channel="beINMOVIES3">
+        <title>أريكة أمي</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261010053000 +0300" stop="20261010060000 +0300" channel="beINSPORTS1">
         <title>Greece vs Germany - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1536,9 +2076,21 @@
         <title>Moto GP - Indonesia GP - Qualifying</title>
         <category>بطولة العالم للدراجات النارية</category>
     </programme>
+    <programme start="20261010060000 +0300" stop="20261010072900 +0300" channel="beINMOVIES4">
+        <title>مادلين</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010060000 +0300" stop="20261010070000 +0300" channel="beINSERIES1">
+        <title>E8 | S4 دخيلة</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261010060000 +0300" stop="20261010063000 +0300" channel="beINSPORTS1">
         <title>Burundi vs Algeria - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
         <category>تصفيات كأس الأمم الأفريقية</category>
+    </programme>
+    <programme start="20261010062900 +0300" stop="20261010082900 +0300" channel="beINMOVIES1">
+        <title>بريدجيت جونز: مهووسة بالفتى</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261010063000 +0300" stop="20261010070000 +0300" channel="beINSPORTS1">
         <title>Bosnia-Herzegovina vs Poland - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1547,6 +2099,14 @@
     <programme start="20261010063000 +0300" stop="20261010074500 +0300" channel="beINSPORTS8">
         <title>Practice 1 - F1 Singapore Grand Prix - 2026</title>
         <category>بطولة العالم للفورمولا وان</category>
+    </programme>
+    <programme start="20261010070000 +0300" stop="20261010083000 +0300" channel="beINMOVIES2">
+        <title>ظلال الشك</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010070000 +0300" stop="20261010080000 +0300" channel="beINSERIES1">
+        <title>E9 | S4 دخيلة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261010070000 +0300" stop="20261010073000 +0300" channel="beINSPORTS1">
         <title>Lesotho vs Morocco - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
@@ -1564,6 +2124,14 @@
         <title>Longines Global Champions Tour - Mexico City Jumping - GCL R1 Competition Team</title>
         <category>الفروسية</category>
     </programme>
+    <programme start="20261010070600 +0300" stop="20261010083000 +0300" channel="beINMOVIES3">
+        <title>زفاف جميل</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010072900 +0300" stop="20261010091400 +0300" channel="beINMOVIES4">
+        <title>فتاتي 2</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010073000 +0300" stop="20261010080000 +0300" channel="beINSPORTS1">
         <title>Italy vs Türkiye - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -1579,6 +2147,10 @@
     <programme start="20261010074500 +0300" stop="20261010084000 +0300" channel="beINSPORTS8">
         <title>Moto 3 - Indonesia GP - Qualifying</title>
         <category>بطولة العالم للدراجات النارية</category>
+    </programme>
+    <programme start="20261010080000 +0300" stop="20261010090000 +0300" channel="beINSERIES1">
+        <title>E10 | S4 دخيلة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261010080000 +0300" stop="20261010083000 +0300" channel="beINSPORTS1">
         <title>Ligue 1 Show - 2026/2027</title>
@@ -1596,6 +2168,18 @@
         <title>Longines Global Champions Tour - Mexico City Jumping - GCL R2 – Competition Team</title>
         <category>الفروسية</category>
     </programme>
+    <programme start="20261010082900 +0300" stop="20261010101500 +0300" channel="beINMOVIES1">
+        <title>ذا لاست غنفايت</title>
+        <category>مسلسلات</category>
+    </programme>
+    <programme start="20261010083000 +0300" stop="20261010100000 +0300" channel="beINMOVIES2">
+        <title>قرفة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010083000 +0300" stop="20261010100100 +0300" channel="beINMOVIES3">
+        <title>كيف تقع في الحب بحلول عيد الميلاد</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010083000 +0300" stop="20261010090000 +0300" channel="beINSPORTS1">
         <title>France vs Belgium - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -1608,6 +2192,10 @@
         <title>Central African Republic vs Burkina Faso - Africa Cup of Nations ( AFCON ) Qualification 2026/2027-</title>
         <category>تصفيات كأس الأمم الأفريقية</category>
     </programme>
+    <programme start="20261010090000 +0300" stop="20261010100000 +0300" channel="beINSERIES1">
+        <title>E11 | S4 دخيلة</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261010090000 +0300" stop="20261010093000 +0300" channel="beINSPORTS1">
         <title>The Big Interview 2026-2027</title>
         <category>الدوري الإنجليزي الممتاز</category>
@@ -1615,6 +2203,10 @@
     <programme start="20261010090000 +0300" stop="20261010110000 +0300" channel="beINSPORTS7">
         <title>M2 - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261010091400 +0300" stop="20261010104400 +0300" channel="beINMOVIES4">
+        <title>بامبي: قصة حياة في الغابة</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261010091500 +0300" stop="20261010120300 +0300" channel="beINSPORTS9">
         <title>Longines Global Champions Tour - Mexico City Jumping - Trofeo banorte Against the clock with Jump Of</title>
@@ -1632,6 +2224,14 @@
         <title>England vs Czechia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261010100000 +0300" stop="20261010114500 +0300" channel="beINMOVIES2">
+        <title>قيمة المال: مغامرة رافعة لارجو</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010100000 +0300" stop="20261010110000 +0300" channel="beINSERIES1">
+        <title>E22 | S2 وثيقة</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261010100000 +0300" stop="20261010110000 +0300" channel="beINSPORTS1">
         <title>Review Show - Laver Cup 2026</title>
         <category>الرياضة العام</category>
@@ -1640,9 +2240,25 @@
         <title>Moto GP - Indonesia GP - Sprint Race</title>
         <category>بطولة العالم للدراجات النارية</category>
     </programme>
+    <programme start="20261010100100 +0300" stop="20261010115900 +0300" channel="beINMOVIES3">
+        <title>النساء الصغيرات</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010101500 +0300" stop="20261010121500 +0300" channel="beINMOVIES1">
+        <title>آرت أوف إيت ليمبس</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010104000 +0300" stop="20261010122500 +0300" channel="beINSPORTS2">
         <title>Belarus vs Finland - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261010104400 +0300" stop="20261010121500 +0300" channel="beINMOVIES4">
+        <title>جيمي نيوترون: الصبي العبقري</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010110000 +0300" stop="20261010120000 +0300" channel="beINSERIES1">
+        <title>E1 | S1 ليلة غرق تايتانيك</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261010110000 +0300" stop="20261010113000 +0300" channel="beINSPORTS1">
         <title>England vs Czechia - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1668,9 +2284,21 @@
         <title>Netherlands vs Serbia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261010114500 +0300" stop="20261010133000 +0300" channel="beINMOVIES2">
+        <title>أحضره لي!</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010114500 +0300" stop="20261010145000 +0300" channel="beINSPORTS5">
         <title>Hockenheim Round - Porsche Cup Germany 2026 - Race 1</title>
         <category>رياضة السيارات</category>
+    </programme>
+    <programme start="20261010115900 +0300" stop="20261010141400 +0300" channel="beINMOVIES3">
+        <title>الموتى لا يؤذون</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010120000 +0300" stop="20261010130000 +0300" channel="beINSERIES1">
+        <title>E7 | S1 الأخت الأخرى من عائلة بينيت</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261010120000 +0300" stop="20261010140000 +0300" channel="beINSPORTS1">
         <title>Galatasaray A.Ş. vs Kasımpaşa A.Ş. - Turkish Super League 2027 - MD7</title>
@@ -1688,6 +2316,14 @@
         <title>Longines Global Champions Tour - Mexico City Jumping - Grand Prix</title>
         <category>الفروسية</category>
     </programme>
+    <programme start="20261010121500 +0300" stop="20261010140000 +0300" channel="beINMOVIES1">
+        <title>ماعز</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010121500 +0300" stop="20261010134700 +0300" channel="beINMOVIES4">
+        <title>هدير</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010122500 +0300" stop="20261010142000 +0300" channel="beINSPORTS2">
         <title>Albania vs San Marino - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -1695,6 +2331,10 @@
     <programme start="20261010123000 +0300" stop="20261010134500 +0300" channel="beINSPORTS6">
         <title>Hockenheim Round - ADAC-GT4 2026 - Race 1</title>
         <category>رياضة السيارات</category>
+    </programme>
+    <programme start="20261010130000 +0300" stop="20261010140000 +0300" channel="beINSERIES1">
+        <title>E5 | S1 الزوجة المصغرة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261010130000 +0300" stop="20261010150000 +0300" channel="beINSPORTS3">
         <title>Malaga vs Espanyol - Spanish LaLiga 2026/2027 - Week 8</title>
@@ -1708,6 +2348,10 @@
         <title>Moto 3 - Indonesia GP - Qualifying</title>
         <category>بطولة العالم للدراجات النارية</category>
     </programme>
+    <programme start="20261010133000 +0300" stop="20261010154500 +0300" channel="beINMOVIES2">
+        <title>ستار تريك</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010134500 +0300" stop="20261010154500 +0300" channel="beINSPORTS4">
         <title>Galatasaray A.Ş. vs Kasımpaşa A.Ş. - Turkish Super League 2027 - MD7</title>
         <category>الرياضة العام</category>
@@ -1716,13 +2360,29 @@
         <title>Scotland vs Slovenia - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261010134700 +0300" stop="20261010152900 +0300" channel="beINMOVIES4">
+        <title>فتاتي 2</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010135500 +0300" stop="20261010160000 +0300" channel="beINSPORTS8">
         <title>DTM - Hockenheim Round - Race 1</title>
         <category>رياضة السيارات</category>
     </programme>
+    <programme start="20261010140000 +0300" stop="20261010154500 +0300" channel="beINMOVIES1">
+        <title>إلينور العظيمة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010140000 +0300" stop="20261010150000 +0300" channel="beINSERIES1">
+        <title>E13 | S17 حوض أسماك القرش</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261010140000 +0300" stop="20261010164500 +0300" channel="beINSPORTS1">
         <title>Arsenal vs Leeds United - English Premier League 2026/2027 - Week 6</title>
         <category>الدوري الإنجليزي الممتاز</category>
+    </programme>
+    <programme start="20261010141400 +0300" stop="20261010154500 +0300" channel="beINMOVIES3">
+        <title>طريقة سهلة</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261010141500 +0300" stop="20261010145000 +0300" channel="beINSPORTS6">
         <title>England vs Czechia - UEFA Nations League 2026/27 - Match Day 4</title>
@@ -1740,6 +2400,10 @@
         <title>Nantes vs Reims - French Ligue 2 - 2026/2027</title>
         <category>الدوري الفرنسي - الدرجة الثانية</category>
     </programme>
+    <programme start="20261010150000 +0300" stop="20261010160000 +0300" channel="beINSERIES1">
+        <title>E16 | S2 ماتلوك</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261010150000 +0300" stop="20261010165000 +0300" channel="beINSPORTS3">
         <title>PSG vs Leuven - UEFA Women’s Champions League 2026/2027 - MD2</title>
         <category>دوري أبطال أوروبا - سيدات</category>
@@ -1752,9 +2416,29 @@
         <title>Premier Padel - Germany P2 2026 - M1</title>
         <category>باديل</category>
     </programme>
+    <programme start="20261010152900 +0300" stop="20261010170000 +0300" channel="beINMOVIES4">
+        <title>بامبي: قصة حياة في الغابة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010154500 +0300" stop="20261010174500 +0300" channel="beINMOVIES1">
+        <title>بريدجيت جونز: مهووسة بالفتى</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010154500 +0300" stop="20261010174500 +0300" channel="beINMOVIES2">
+        <title>ستار تريك بيوند</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010154500 +0300" stop="20261010174500 +0300" channel="beINMOVIES3">
+        <title>النساء الصغيرات</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010154500 +0300" stop="20261010161500 +0300" channel="beINSPORTS4">
         <title>Greece vs Germany - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261010160000 +0300" stop="20261010170000 +0300" channel="beINSERIES1">
+        <title>E22 | S2 وثيقة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261010160000 +0300" stop="20261010170000 +0300" channel="beINSPORTS8">
         <title>Main Race Qualifying - F1 Singapore Grand Prix - 2026</title>
@@ -1784,6 +2468,14 @@
         <title>Ipswich Town vs Fulham - English Premier League 2026/2027 - Week 6</title>
         <category>الدوري الإنجليزي الممتاز</category>
     </programme>
+    <programme start="20261010170000 +0300" stop="20261010183300 +0300" channel="beINMOVIES4">
+        <title>هدير</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010170000 +0300" stop="20261010180000 +0300" channel="beINSERIES1">
+        <title>E1 | S1 ليلة غرق تايتانيك</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261010170000 +0300" stop="20261010173000 +0300" channel="beINSPORTS6">
         <title>Croatia vs Spain -UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
@@ -1804,6 +2496,22 @@
         <title>France vs Belgium - UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261010174500 +0300" stop="20261010193000 +0300" channel="beINMOVIES1">
+        <title>ماعز</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010174500 +0300" stop="20261010195900 +0300" channel="beINMOVIES2">
+        <title>ستار تريك إنتو داركنس</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010174500 +0300" stop="20261010194600 +0300" channel="beINMOVIES3">
+        <title>فيلادلفيا</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010180000 +0300" stop="20261010190000 +0300" channel="beINSERIES1">
+        <title>E3 | S8 أوتلاندر</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261010180000 +0300" stop="20261010190000 +0300" channel="beINSPORTS9">
         <title>HL – CSI5* - Against the Coolock with Jump Off</title>
         <category>الفروسية</category>
@@ -1816,9 +2524,17 @@
         <title>Hockenheim Round - ADAC-GT4 2026 - Race 2</title>
         <category>رياضة السيارات</category>
     </programme>
+    <programme start="20261010183300 +0300" stop="20261010203000 +0300" channel="beINMOVIES4">
+        <title>آني</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010185000 +0300" stop="20261010213500 +0300" channel="beINSPORTS7">
         <title>Çaykur Rizespor A.Ş. vs Fenerbahçe A.Ş. - Turkish Super League 2027 - MD7</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261010190000 +0300" stop="20261010200000 +0300" channel="beINSERIES1">
+        <title>E22 | S2 وثيقة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261010190000 +0300" stop="20261010214500 +0300" channel="beINSPORTS2">
         <title>Barcelona vs Getafe - Spanish LaLiga 2026/2027 - Week 8</title>
@@ -1840,9 +2556,29 @@
         <title>Lens vs Lyon - French Ligue 1 2026/2027 - Week 6</title>
         <category>الدوري الفرنسي</category>
     </programme>
+    <programme start="20261010193000 +0300" stop="20261010210000 +0300" channel="beINMOVIES1">
+        <title>السلاح المجرد</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010193500 +0300" stop="20261010203500 +0300" channel="beINSPORTS8">
         <title>Moto GP - Indonesia GP - Sprint Race</title>
         <category>بطولة العالم للدراجات النارية</category>
+    </programme>
+    <programme start="20261010194600 +0300" stop="20261010212900 +0300" channel="beINMOVIES3">
+        <title>She's Out of My League</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010195900 +0300" stop="20261010215900 +0300" channel="beINMOVIES2">
+        <title>السائق بيبي</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010200000 +0300" stop="20261010210000 +0300" channel="beINSERIES1">
+        <title>E7 | S1 الأخت الأخرى من عائلة بينيت</title>
+        <category>مسلسلات</category>
+    </programme>
+    <programme start="20261010203000 +0300" stop="20261010220000 +0300" channel="beINMOVIES4">
+        <title>فينيك 2</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261010203000 +0300" stop="20261010220000 +0300" channel="beINSPORTS9">
         <title>Premier Padel - Germany P2 2026 - M4</title>
@@ -1860,9 +2596,21 @@
         <title>St Etienne vs Rodez - French Ligue 2 - 2026/2027</title>
         <category>الدوري الفرنسي - الدرجة الثانية</category>
     </programme>
+    <programme start="20261010210000 +0300" stop="20261010230000 +0300" channel="beINMOVIES1">
+        <title>Materialists</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010210000 +0300" stop="20261010220000 +0300" channel="beINSERIES1">
+        <title>E5 | S1 الزوجة المصغرة</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261010210000 +0300" stop="20261010213500 +0300" channel="beINSPORTS4">
         <title>Ligue 1 Show - 2026/2027</title>
         <category>الدوري الفرنسي</category>
+    </programme>
+    <programme start="20261010212900 +0300" stop="20261010231400 +0300" channel="beINMOVIES3">
+        <title>غراوندهوغ داي</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261010213000 +0300" stop="20261011003000 +0300" channel="beINSPORTS1">
         <title>PSG vs Le Mans - French Ligue 1 2026/2027 - Week 6</title>
@@ -1892,6 +2640,18 @@
         <title>Lesotho vs Morocco - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
         <category>تصفيات كأس الأمم الأفريقية</category>
     </programme>
+    <programme start="20261010215900 +0300" stop="20261010234500 +0300" channel="beINMOVIES2">
+        <title>جاك راين: الشبح المجند</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010220000 +0300" stop="20261010233000 +0300" channel="beINMOVIES4">
+        <title>عالم الإيموجي</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010220000 +0300" stop="20261010230000 +0300" channel="beINSERIES1">
+        <title>E13 | S17 حوض أسماك القرش</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261010220000 +0300" stop="20261010233000 +0300" channel="beINSPORTS9">
         <title>Longines Global Champions Tour - Shanghai Jumping - Round 1 Competition Team</title>
         <category>الفروسية</category>
@@ -1904,13 +2664,37 @@
         <title>Hockenheim Round - ADAC-GT4 2026 - Race 2</title>
         <category>رياضة السيارات</category>
     </programme>
+    <programme start="20261010230000 +0300" stop="20261011011500 +0300" channel="beINMOVIES1">
+        <title>دن أوف ثيفز: بانتيرا</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010230000 +0300" stop="20261011000000 +0300" channel="beINSERIES1">
+        <title>E16 | S2 ماتلوك</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261010230000 +0300" stop="20261011130000 +0300" channel="beINSPORTS6">
         <title>Hockenheim Round - ADAC-GT4 2026 - Race 1</title>
         <category>رياضة السيارات</category>
     </programme>
+    <programme start="20261010231400 +0300" stop="20261011013000 +0300" channel="beINMOVIES3">
+        <title>رجل يٝدعى أوتو</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261010233000 +0300" stop="20261011004500 +0300" channel="beINMOVIES4">
+        <title>أميرة البجعة: الهروب من قلعة الجبل</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261010233000 +0300" stop="20261011004500 +0300" channel="beINSPORTS9">
         <title>Longines Global Champions Tour - Shanghai Jumping - Round 2 Competition Team</title>
         <category>الفروسية</category>
+    </programme>
+    <programme start="20261010234500 +0300" stop="20261011023000 +0300" channel="beINMOVIES2">
+        <title>صائد الأسرار</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011000000 +0300" stop="20261011010000 +0300" channel="beINSERIES1">
+        <title>يلوجاكيتس S2</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261011000000 +0300" stop="20261011014500 +0300" channel="beINSPORTS4">
         <title>Ipswich Town vs Fulham - English Premier League 2026/2027 - Week 6</title>
@@ -1936,13 +2720,29 @@
         <title>West Bromwich Albion vs Birmingham - EFL - English Football League SkyBet - Championship 2026/2027</title>
         <category>دوري البطولة الإنجليزية - الدرجة الأولى</category>
     </programme>
+    <programme start="20261011004500 +0300" stop="20261011021500 +0300" channel="beINMOVIES4">
+        <title>يتيمان في الغرب الأمريكي</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011004500 +0300" stop="20261011030000 +0300" channel="beINSPORTS9">
         <title>Longines Global Champions Tour - Shanghai Jumping - Against The Clock With Jump Off</title>
         <category>الفروسية</category>
     </programme>
+    <programme start="20261011010000 +0300" stop="20261011020000 +0300" channel="beINSERIES1">
+        <title>يلوجاكيتس S2</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261011010000 +0300" stop="20261011013000 +0300" channel="beINSPORTS1">
         <title>Chelsea vs Bournemouth - English Premier League 2026/2027 - Week 6</title>
         <category>الدوري الإنجليزي الممتاز</category>
+    </programme>
+    <programme start="20261011011500 +0300" stop="20261011030000 +0300" channel="beINMOVIES1">
+        <title>لعبة المصعد</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011013000 +0300" stop="20261011031500 +0300" channel="beINMOVIES3">
+        <title>أنسليم</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261011013000 +0300" stop="20261011020000 +0300" channel="beINSPORTS1">
         <title>Manchester United vs Tottenham Hotspur - English Premier League 2026/2027 - Week 6</title>
@@ -1951,6 +2751,10 @@
     <programme start="20261011014500 +0300" stop="20261011033000 +0300" channel="beINSPORTS4">
         <title>Monaco vs Toulouse - French Ligue 1 2026/2027 - Week 6</title>
         <category>الدوري الفرنسي</category>
+    </programme>
+    <programme start="20261011020000 +0300" stop="20261011030000 +0300" channel="beINSERIES1">
+        <title>يلوجاكيتس S2</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261011020000 +0300" stop="20261011023000 +0300" channel="beINSPORTS1">
         <title>Barcelona vs Getafe - Spanish LaLiga 2026/2027 - Week 8</title>
@@ -1964,6 +2768,14 @@
         <title>M3 - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261011021500 +0300" stop="20261011041500 +0300" channel="beINMOVIES4">
+        <title>تمساح نيويورك</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011023000 +0300" stop="20261011041500 +0300" channel="beINMOVIES2">
+        <title>عودة الشاردة</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011023000 +0300" stop="20261011053000 +0300" channel="beINSPORTS1">
         <title>PSG vs Le Mans - French Ligue 1 2026/2027 - Week 6</title>
         <category>الدوري الفرنسي</category>
@@ -1976,9 +2788,21 @@
         <title>Moto GP - Indonesia GP - Qualifying</title>
         <category>بطولة العالم للدراجات النارية</category>
     </programme>
+    <programme start="20261011030000 +0300" stop="20261011043000 +0300" channel="beINMOVIES1">
+        <title>الحساء والموت</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011030000 +0300" stop="20261011050000 +0300" channel="beINSERIES1">
+        <title>E23 | S21 أمريكا غوت تالنت</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261011030000 +0300" stop="20261011060000 +0300" channel="beINSPORTS9">
         <title>Longines Global Champions Tour - Shanghai Jumping - Grand Prix</title>
         <category>الفروسية</category>
+    </programme>
+    <programme start="20261011031500 +0300" stop="20261011050000 +0300" channel="beINMOVIES3">
+        <title>الطفو</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261011031500 +0300" stop="20261011040000 +0300" channel="beINSPORTS8">
         <title>Moto 3 - Indonesia GP - Qualifying</title>
@@ -2004,9 +2828,29 @@
         <title>Moto 2 - Indonesia GP - Qualifying</title>
         <category>بطولة العالم للدراجات النارية</category>
     </programme>
+    <programme start="20261011041500 +0300" stop="20261011060000 +0300" channel="beINMOVIES2">
+        <title>ليلة المطاردة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011041500 +0300" stop="20261011060000 +0300" channel="beINMOVIES4">
+        <title>قشعريرة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011043000 +0300" stop="20261011061500 +0300" channel="beINMOVIES1">
+        <title>الإمام الشاب</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011043000 +0300" stop="20261011071500 +0300" channel="beINSPORTS2">
         <title>Barcelona vs Getafe - Spanish LaLiga 2026/2027 - Week 8</title>
         <category>الدوري الإسباني لكرة القدم</category>
+    </programme>
+    <programme start="20261011050000 +0300" stop="20261011070000 +0300" channel="beINMOVIES3">
+        <title>المدخل</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011050000 +0300" stop="20261011060000 +0300" channel="beINSERIES1">
+        <title>The Good Doctor S2 | E6</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261011050000 +0300" stop="20261011060000 +0300" channel="beINSPORTS8">
         <title>Moto GP - Indonesia GP - Sprint Race</title>
@@ -2024,6 +2868,18 @@
         <title>Çaykur Rizespor A.Ş. vs Fenerbahçe A.Ş. - Turkish Super League 2027 - MD7</title>
         <category>الرياضة العام</category>
     </programme>
+    <programme start="20261011060000 +0300" stop="20261011074500 +0300" channel="beINMOVIES2">
+        <title>أحضره لي!</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011060000 +0300" stop="20261011073000 +0300" channel="beINMOVIES4">
+        <title>المعيشة الكبيرة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011060000 +0300" stop="20261011070000 +0300" channel="beINSERIES1">
+        <title>The Good Doctor S2 | E7</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261011060000 +0300" stop="20261011070000 +0300" channel="beINSPORTS8">
         <title>Sprint Race - F1 Singapore Grand Prix - 2026</title>
         <category>بطولة العالم للفورمولا وان</category>
@@ -2032,9 +2888,21 @@
         <title>HL – csi5* - Grand Prix Final</title>
         <category>الفروسية</category>
     </programme>
+    <programme start="20261011061500 +0300" stop="20261011080000 +0300" channel="beINMOVIES1">
+        <title>آرت أوف إيت ليمبس</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011061500 +0300" stop="20261011070000 +0300" channel="beINSPORTS7">
         <title>ATP Tour - Magazine 2026</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261011070000 +0300" stop="20261011084500 +0300" channel="beINMOVIES3">
+        <title>غراوندهوغ داي</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011070000 +0300" stop="20261011080000 +0300" channel="beINSERIES1">
+        <title>The Good Doctor S2 | E8</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261011070000 +0300" stop="20261011090000 +0300" channel="beINSPORTS7">
         <title>M1 - ATP 1000 Rolex Shanghai Masters 2026</title>
@@ -2052,6 +2920,10 @@
         <title>Real Madrid vs Villarreal - Spanish LaLiga 2026/2027 - Week 8</title>
         <category>الدوري الإسباني لكرة القدم</category>
     </programme>
+    <programme start="20261011073000 +0300" stop="20261011084500 +0300" channel="beINMOVIES4">
+        <title>أميرة البجعة: الهروب من قلعة الجبل</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011073000 +0300" stop="20261011091500 +0300" channel="beINSPORTS3">
         <title>Alaves vs Atletico Madrid - Spanish LaLiga 2026/2027 - Week 8</title>
         <category>الدوري الإسباني لكرة القدم</category>
@@ -2059,6 +2931,18 @@
     <programme start="20261011073000 +0300" stop="20261011080000 +0300" channel="beINSPORTS4">
         <title>Croatia vs Spain -UEFA Nations League 2026/27 - Match Day 4</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261011074500 +0300" stop="20261011100000 +0300" channel="beINMOVIES2">
+        <title>الغفران</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011080000 +0300" stop="20261011093000 +0300" channel="beINMOVIES1">
+        <title>وينتر سبرينغ سمر أور فول</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011080000 +0300" stop="20261011090000 +0300" channel="beINSERIES1">
+        <title>The Good Doctor S2 | E9</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261011080000 +0300" stop="20261011104500 +0300" channel="beINSPORTS1">
         <title>Arsenal vs Leeds United - English Premier League 2026/2027 - Week 6</title>
@@ -2072,9 +2956,21 @@
         <title>Moto 2 - Indonesia GP - Main Race</title>
         <category>بطولة العالم للدراجات النارية</category>
     </programme>
+    <programme start="20261011084500 +0300" stop="20261011110000 +0300" channel="beINMOVIES3">
+        <title>ا فيو قود من</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011084500 +0300" stop="20261011104500 +0300" channel="beINMOVIES4">
+        <title>آني</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011084500 +0300" stop="20261011100000 +0300" channel="beINSPORTS9">
         <title>Longines Global Champions Tour - Madrid Jumping - Round 2 - Competition Team</title>
         <category>الفروسية</category>
+    </programme>
+    <programme start="20261011090000 +0300" stop="20261011100000 +0300" channel="beINSERIES1">
+        <title>The Good Doctor S2 | E10</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261011090000 +0300" stop="20261011110000 +0300" channel="beINSPORTS7">
         <title>M2 - ATP 1000 Rolex Shanghai Masters 2026</title>
@@ -2084,9 +2980,21 @@
         <title>Sunderland vs Brighton &amp; Hove Albion - English Premier League 2026/2027 - Week 6</title>
         <category>الدوري الإنجليزي الممتاز</category>
     </programme>
+    <programme start="20261011093000 +0300" stop="20261011113000 +0300" channel="beINMOVIES1">
+        <title>ذا لوكدون</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011094500 +0300" stop="20261011113000 +0300" channel="beINSPORTS4">
         <title>Lens vs Lyon - French Ligue 1 2026/2027 - Week 6</title>
         <category>الدوري الفرنسي</category>
+    </programme>
+    <programme start="20261011100000 +0300" stop="20261011114500 +0300" channel="beINMOVIES2">
+        <title>مليون متابع</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011100000 +0300" stop="20261011110000 +0300" channel="beINSERIES1">
+        <title>E7 | S1 الأخت الأخرى من عائلة بينيت</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261011100000 +0300" stop="20261011120000 +0300" channel="beINSPORTS2">
         <title>West Bromwich Albion vs Birmingham - EFL - English Football League SkyBet - Championship 2026/2027</title>
@@ -2100,9 +3008,21 @@
         <title>Longines Global Champions Tour - Madrid Jumping - 1.50m Against the clock with Jump off</title>
         <category>الفروسية</category>
     </programme>
+    <programme start="20261011104500 +0300" stop="20261011121500 +0300" channel="beINMOVIES4">
+        <title>فينيك 2</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011104500 +0300" stop="20261011131500 +0300" channel="beINSPORTS1">
         <title>Chelsea vs Bournemouth - English Premier League 2026/2027 - Week 6</title>
         <category>الدوري الإنجليزي الممتاز</category>
+    </programme>
+    <programme start="20261011110000 +0300" stop="20261011134500 +0300" channel="beINMOVIES3">
+        <title>ذات مرة ... في هوليوود</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011110000 +0300" stop="20261011120000 +0300" channel="beINSERIES1">
+        <title>E5 | S1 الزوجة المصغرة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261011110000 +0300" stop="20261011124500 +0300" channel="beINSPORTS3">
         <title>Barcelona vs Getafe - Spanish LaLiga 2026/2027 - Week 8</title>
@@ -2116,9 +3036,21 @@
         <title>Moto 3 - Indonesia GP - Main Race</title>
         <category>بطولة العالم للدراجات النارية</category>
     </programme>
+    <programme start="20261011113000 +0300" stop="20261011133000 +0300" channel="beINMOVIES1">
+        <title>Materialists</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011113000 +0300" stop="20261011120000 +0300" channel="beINSPORTS4">
         <title>Ligue 1 Show - 2026/2027</title>
         <category>الدوري الفرنسي</category>
+    </programme>
+    <programme start="20261011114500 +0300" stop="20261011133000 +0300" channel="beINMOVIES2">
+        <title>جاك راين: الشبح المجند</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011120000 +0300" stop="20261011130000 +0300" channel="beINSERIES1">
+        <title>E13 | S17 حوض أسماك القرش</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261011120000 +0300" stop="20261011140000 +0300" channel="beINSPORTS2">
         <title>Aston villa vs Brentford - English Premier League 2026/2027 - Week 6</title>
@@ -2132,6 +3064,10 @@
         <title>Hockenheim Round - ADAC-GT4 2026 - Race 3</title>
         <category>رياضة السيارات</category>
     </programme>
+    <programme start="20261011121500 +0300" stop="20261011134400 +0300" channel="beINMOVIES4">
+        <title>عالم الإيموجي</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011124500 +0300" stop="20261011145000 +0300" channel="beINSPORTS3">
         <title>Real Madrid vs Villarreal - Spanish LaLiga 2026/2027 - Week 8</title>
         <category>الدوري الإسباني لكرة القدم</category>
@@ -2139,6 +3075,10 @@
     <programme start="20261011124500 +0300" stop="20261011150000 +0300" channel="beINSPORTS9">
         <title>Longines Global Champions Tour - Madrid Jumping - LGCT GRAND PRIX</title>
         <category>الفروسية</category>
+    </programme>
+    <programme start="20261011130000 +0300" stop="20261011140000 +0300" channel="beINSERIES1">
+        <title>E16 | S2 ماتلوك</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261011130000 +0300" stop="20261011163000 +0300" channel="beINSPORTS6">
         <title>Dallas vs Houston - Pre- Season NBA - 2026</title>
@@ -2156,9 +3096,29 @@
         <title>Hockenheim Round - Porsche Cup Germany 2026 - Race 2</title>
         <category>رياضة السيارات</category>
     </programme>
+    <programme start="20261011133000 +0300" stop="20261011150000 +0300" channel="beINMOVIES1">
+        <title>السلاح المجرد</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011133000 +0300" stop="20261011153000 +0300" channel="beINMOVIES2">
+        <title>السائق بيبي</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011134400 +0300" stop="20261011154500 +0300" channel="beINMOVIES4">
+        <title>آني</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011134500 +0300" stop="20261011153000 +0300" channel="beINMOVIES3">
+        <title>She's Out of My League</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011134500 +0300" stop="20261011155000 +0300" channel="beINSPORTS4">
         <title>Lille vs Havre AC - French Ligue 1 2026/2027 - Week 6</title>
         <category>الدوري الفرنسي</category>
+    </programme>
+    <programme start="20261011140000 +0300" stop="20261011150000 +0300" channel="beINSERIES1">
+        <title>E22 | S2 وثيقة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261011140000 +0300" stop="20261011155000 +0300" channel="beINSPORTS2">
         <title>Barcelona vs Getafe - Spanish LaLiga 2026/2027 - Week 8</title>
@@ -2172,6 +3132,14 @@
         <title>Elche vs Celta Vigo - Spanish LaLiga 2026/2027 - Week 8</title>
         <category>الدوري الإسباني لكرة القدم</category>
     </programme>
+    <programme start="20261011150000 +0300" stop="20261011171500 +0300" channel="beINMOVIES1">
+        <title>دن أوف ثيفز: بانتيرا</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011150000 +0300" stop="20261011160000 +0300" channel="beINSERIES1">
+        <title>E1 | S1 ليلة غرق تايتانيك</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261011150000 +0300" stop="20261011170000 +0300" channel="beINSPORTS7">
         <title>M5 - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
@@ -2184,9 +3152,21 @@
         <title>Hockenheim Round - ADAC GT Masters - 2026</title>
         <category>رياضة السيارات</category>
     </programme>
+    <programme start="20261011153000 +0300" stop="20261011181500 +0300" channel="beINMOVIES2">
+        <title>صائد الأسرار</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011153000 +0300" stop="20261011171500 +0300" channel="beINMOVIES3">
+        <title>غراوندهوغ داي</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011153000 +0300" stop="20261011181500 +0300" channel="beINSPORTS1">
         <title>Crystal Palace vs Nottingham Forest - English Premier League 2026/2027 - Week 6</title>
         <category>الدوري الإنجليزي الممتاز</category>
+    </programme>
+    <programme start="20261011154500 +0300" stop="20261011171400 +0300" channel="beINMOVIES4">
+        <title>فينيك 2</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261011155000 +0300" stop="20261011181500 +0300" channel="beINSPORTS2">
         <title>Hull City vs Evsrton - English Premier League 2026/2027 - Week 6</title>
@@ -2196,9 +3176,17 @@
         <title>Nice vs Strasbourg - French Ligue 1 2026/2027 - Week 6</title>
         <category>الدوري الفرنسي</category>
     </programme>
+    <programme start="20261011160000 +0300" stop="20261011170000 +0300" channel="beINSERIES1">
+        <title>E7 | S1 الأخت الأخرى من عائلة بينيت</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261011163000 +0300" stop="20261011200000 +0300" channel="beINSPORTS6">
         <title>Philadelphia Eagles @ Jacksonville Jaguars - NFL -National Footbal League - 2026/27</title>
         <category>دوري كرة القدم الأمريكية</category>
+    </programme>
+    <programme start="20261011170000 +0300" stop="20261011180000 +0300" channel="beINSERIES1">
+        <title>E5 | S1 الزوجة المصغرة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261011170000 +0300" stop="20261011190000 +0300" channel="beINSPORTS7">
         <title>M1 - ATP 1000 Rolex Shanghai Masters 2026</title>
@@ -2212,13 +3200,33 @@
         <title>Real Sociedad vs Deprotivo La Coruna - Spanish LaLiga 2026/2027 - Week 8</title>
         <category>الدوري الإسباني لكرة القدم</category>
     </programme>
+    <programme start="20261011171400 +0300" stop="20261011184400 +0300" channel="beINMOVIES4">
+        <title>عالم الإيموجي</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011171500 +0300" stop="20261011191500 +0300" channel="beINMOVIES1">
+        <title>Materialists</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011171500 +0300" stop="20261011193000 +0300" channel="beINMOVIES3">
+        <title>رجل يٝدعى أوتو</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011173000 +0300" stop="20261011183000 +0300" channel="beINSPORTS8">
         <title>Moto 3 - Indonesia GP - Main Race</title>
         <category>بطولة العالم للدراجات النارية</category>
     </programme>
+    <programme start="20261011180000 +0300" stop="20261011190000 +0300" channel="beINSERIES1">
+        <title>E22 | S2 وثيقة</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261011180500 +0300" stop="20261011203000 +0300" channel="beINSPORTS4">
         <title>Rennes vs Auxerre - French Ligue 1 2026/2027 - Week 6</title>
         <category>الدوري الفرنسي</category>
+    </programme>
+    <programme start="20261011181500 +0300" stop="20261011200000 +0300" channel="beINMOVIES2">
+        <title>جاك راين: الشبح المجند</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261011181500 +0300" stop="20261011213000 +0300" channel="beINSPORTS1">
         <title>Liverpool vs Manchester City - English Premier League 2026/2027 - Week 6</title>
@@ -2232,6 +3240,10 @@
         <title>Moto 2 - Indonesia GP - Main Race</title>
         <category>بطولة العالم للدراجات النارية</category>
     </programme>
+    <programme start="20261011184400 +0300" stop="20261011203000 +0300" channel="beINMOVIES4">
+        <title>إيه إكس إل</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011184500 +0300" stop="20261011192000 +0300" channel="beINSPORTS2">
         <title>Chelsea vs Bournemouth - English Premier League 2026/2027 - Week 6</title>
         <category>الدوري الإنجليزي الممتاز</category>
@@ -2239,6 +3251,10 @@
     <programme start="20261011185000 +0300" stop="20261012215000 +0300" channel="beINSPORTS5">
         <title>Beşiktaş A.Ş. vs Kocaelispor - Turkish Super League 2027 - MD7</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261011190000 +0300" stop="20261011200000 +0300" channel="beINSERIES1">
+        <title>E3 | S8 أوتلاندر</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261011190000 +0300" stop="20261011210000 +0300" channel="beINSPORTS7">
         <title>M2 - ATP 1000 Rolex Shanghai Masters 2026</title>
@@ -2248,9 +3264,17 @@
         <title>Longines Global Champions Tour - Cannes Jumping - Round 1 Competition Team</title>
         <category>الفروسية</category>
     </programme>
+    <programme start="20261011191500 +0300" stop="20261011210000 +0300" channel="beINMOVIES1">
+        <title>دير سانتا</title>
+        <category>أفلام</category>
+    </programme>
     <programme start="20261011192000 +0300" stop="20261011215000 +0300" channel="beINSPORTS2">
         <title>Real Betis vs Osasuna - Spanish LaLiga 2026/2027 - Week 8</title>
         <category>الدوري الإسباني لكرة القدم</category>
+    </programme>
+    <programme start="20261011193000 +0300" stop="20261011213000 +0300" channel="beINMOVIES3">
+        <title>Revolutionary Road</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261011193000 +0300" stop="20261011213500 +0300" channel="beINSPORTS3">
         <title>Sunderland vs Brighton &amp; Hove Albion - English Premier League 2026/2027 - Week 6</title>
@@ -2260,9 +3284,21 @@
         <title>Moto GP - Indonesia GP - Main Race</title>
         <category>بطولة العالم للدراجات النارية</category>
     </programme>
+    <programme start="20261011200000 +0300" stop="20261011215900 +0300" channel="beINMOVIES2">
+        <title>أسود وأزرق</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011200000 +0300" stop="20261011210000 +0300" channel="beINSERIES1">
+        <title>E13 | S17 حوض أسماك القرش</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261011200000 +0300" stop="20261011232500 +0300" channel="beINSPORTS6">
         <title>Minnesota Vikings @ New Orleans Saints - NFL -National Footbal League - 2026/27</title>
         <category>دوري كرة القدم الأمريكية</category>
+    </programme>
+    <programme start="20261011203000 +0300" stop="20261011221400 +0300" channel="beINMOVIES4">
+        <title>السنافر</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261011203000 +0300" stop="20261011221500 +0300" channel="beINSPORTS4">
         <title>PSG vs Le Mans - French Ligue 1 2026/2027 - Week 6</title>
@@ -2272,6 +3308,14 @@
         <title>Longines Global Champions Tour - Cannes Jumping - Round 2 Competition Team</title>
         <category>الفروسية</category>
     </programme>
+    <programme start="20261011210000 +0300" stop="20261011224500 +0300" channel="beINMOVIES1">
+        <title>الشيء ذو الريش</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011210000 +0300" stop="20261011220000 +0300" channel="beINSERIES1">
+        <title>E16 | S2 ماتلوك</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261011210000 +0300" stop="20261011230000 +0300" channel="beINSPORTS7">
         <title>M3 - ATP 1000 Rolex Shanghai Masters 2026</title>
         <category>الرياضة العام</category>
@@ -2279,6 +3323,10 @@
     <programme start="20261011210000 +0300" stop="20261012000000 +0300" channel="beINSPORTS8">
         <title>Main Race - F1 Singapore Grand Prix - 2026</title>
         <category>بطولة العالم للفورمولا وان</category>
+    </programme>
+    <programme start="20261011213000 +0300" stop="20261011230000 +0300" channel="beINMOVIES3">
+        <title>كريسماس والتز</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261011213000 +0300" stop="20261011220000 +0300" channel="beINSPORTS1">
         <title>UEFA UCL Magazine2026/2027 - Special</title>
@@ -2296,9 +3344,21 @@
         <title>Longines Global Champions Tour - Cannes Jumping - Against The Clock With Jump Off</title>
         <category>الفروسية</category>
     </programme>
+    <programme start="20261011215900 +0300" stop="20261012000000 +0300" channel="beINMOVIES2">
+        <title>الرهينة</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011220000 +0300" stop="20261011230000 +0300" channel="beINSERIES1">
+        <title>E7 | S1 الأخت الأخرى من عائلة بينيت</title>
+        <category>مسلسلات</category>
+    </programme>
     <programme start="20261011220000 +0300" stop="20261011223000 +0300" channel="beINSPORTS1">
         <title>EPL Stories 2026/2027 EP.13</title>
         <category>الدوري الإنجليزي الممتاز</category>
+    </programme>
+    <programme start="20261011221400 +0300" stop="20261012000000 +0300" channel="beINMOVIES4">
+        <title>السنافر 2</title>
+        <category>أفلام</category>
     </programme>
     <programme start="20261011221500 +0300" stop="20261012000000 +0300" channel="beINSPORTS4">
         <title>Lens vs Lyon - French Ligue 1 2026/2027 - Week 6</title>
@@ -2307,6 +3367,18 @@
     <programme start="20261011223000 +0300" stop="20261011233000 +0300" channel="beINSPORTS1">
         <title>UEL/UECL Magazine 2026/2027-UEL MD1 Review+ MD2 Preview +UECL MD1 Preview</title>
         <category>الرياضة العام</category>
+    </programme>
+    <programme start="20261011224500 +0300" stop="20261012003000 +0300" channel="beINMOVIES1">
+        <title>القبض عليه يسرق</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011230000 +0300" stop="20261012013000 +0300" channel="beINMOVIES3">
+        <title>Memoirs of a Geisha</title>
+        <category>أفلام</category>
+    </programme>
+    <programme start="20261011230000 +0300" stop="20261012000000 +0300" channel="beINSERIES1">
+        <title>E5 | S1 الزوجة المصغرة</title>
+        <category>مسلسلات</category>
     </programme>
     <programme start="20261011230000 +0300" stop="20261012010000 +0300" channel="beINSPORTS7">
         <title>M4 - ATP 1000 Rolex Shanghai Masters 2026</title>
