@@ -1,71 +1,71 @@
 ﻿Category,beIN Site ID,Channel Name,Suggested tvg-id,Programs
-sports,1,beINSPORTS1,bein.beinsports1,86
-sports,2,beINSPORTS2,bein.beinsports2,26
-sports,3,beINSPORTS3,bein.beinsports3,26
-sports,4,beINSPORT4,bein.beinsport4,32
-sports,5,beINSPORTS5,bein.beinsports5,38
-sports,6,beINSPORTS6,bein.beinsports6,30
-sports,7,beINSPORTS7,bein.beinsports7,26
-sports,8,beINSPORTS8,bein.beinsports8,26
-sports,9,beINSPORTS9,bein.beinsports9,29
-sports,10,beINSPORTSNews,bein.beinsportsnews,86
-sports,11,beINSPORTS,bein.beinsports,32
-sports,12,beINSPORTS1EN,bein.beinsports1en,67
-sports,13,beINSPORTS2EN,bein.beinsports2en,28
-sports,14,beINSPORTS1FR,bein.beinsports1fr,16
-sports,15,beINSPORTS2FR,bein.beinsports2fr,14
-sports,16,16,bein.16,25
-sports,17,beINSPORTSXTRA1,bein.beinsportsxtra1,48
-sports,18,beINSPORTSXTRA2,bein.beinsportsxtra2,48
-sports,19,beINSPORTSXTRA3,bein.beinsportsxtra3,48
-sports,20,beINSPORTSXTRA4,bein.beinsportsxtra4,48
-sports,21,beINSPORTSXTRA5,bein.beinsportsxtra5,48
-sports,22,beINSPORTSXTRA6,bein.beinsportsxtra6,48
-sports,23,beINSPORTSXTRA7,bein.beinsportsxtra7,48
-sports,24,beINSPORTSXTRA8,bein.beinsportsxtra8,48
-sports,25,beINSPORTSXTRA9,bein.beinsportsxtra9,48
-sports,26,beINSPORTSMAX1,bein.beinsportsmax1,24
-sports,27,beINSPORTSMAX2,bein.beinsportsmax2,24
-sports,28,beINSPORTSMAX3,bein.beinsportsmax3,24
-sports,29,beINSPORTSMAX4,bein.beinsportsmax4,24
-sports,30,beINSPORTSMAX5,bein.beinsportsmax5,24
-sports,31,beINSPORTSMAX6,bein.beinsportsmax6,24
-sports,32,32,bein.32,22
-sports,33,33,bein.33,25
-sports,34,34,bein.34,22
-sports,35,35,bein.35,22
-sports,36,36,bein.36,23
-sports,37,37,bein.37,16
-sports,38,38,bein.38,19
-sports,39,39,bein.39,15
-entertainment,1,beINMOVIES1,bein.beinmovies1,28
-entertainment,2,beINMOVIES2,bein.beinmovies2,26
-entertainment,3,beINMOVIES3,bein.beinmovies3,29
-entertainment,4,beINMOVIES4,bein.beinmovies4,29
-entertainment,5,5,bein.5,32
-entertainment,6,6,bein.6,24
-entertainment,7,7,bein.7,16
-entertainment,8,8,bein.8,14
-entertainment,9,beINSERIES1,bein.beinseries1,40
-entertainment,10,beINSERIES2,bein.beinseries2,56
-entertainment,11,beINDRAMA,bein.beindrama,48
-entertainment,12,beINGOURMET,bein.beingourmet,48
-entertainment,13,13,bein.13,30
-entertainment,14,14,bein.14,43
-entertainment,15,15,bein.15,30
-entertainment,16,16,bein.16,21
-entertainment,17,17,bein.17,31
-entertainment,18,18,bein.18,33
-entertainment,19,19,bein.19,31
-entertainment,20,20,bein.20,23
-entertainment,21,21,bein.21,76
-entertainment,22,22,bein.22,30
-entertainment,23,beINJUNIOR,bein.beinjunior,266
-entertainment,24,JeemTV,bein.jeemtv,218
-entertainment,25,BaraemTV,bein.baraemtv,238
-entertainment,26,26,bein.26,37
-entertainment,27,27,bein.27,24
-entertainment,28,28,bein.28,66
-entertainment,29,29,bein.29,100
-entertainment,30,30,bein.30,317
-entertainment,31,31,bein.31,126
+entertainment,1,beIN MOVIES 1,beINMovies1Premiere.qa@SD,28
+entertainment,2,beIN MOVIES 2,beINMovies2Action.qa@SD,26
+entertainment,3,beIN MOVIES 3,beINMovies3Drama.qa@SD,29
+entertainment,4,beIN MOVIES 4,beINMovies4Family.qa@SD,29
+entertainment,5,FOX Movies Middle East,FoxMoviesMiddleEast.us@SD,32
+entertainment,6,FOX Action Movies MENA,FoxActionMoviesMENA.hk@SD,24
+entertainment,7,Star Movies Middle East,StarMoviesMiddleEast.ae@SD,16
+entertainment,8,Entertainment - Site 8,bein.entertainment.8,14
+entertainment,9,beIN SERIES 1,beINSERIES1,40
+entertainment,10,beIN SERIES 2,beINSERIES2,56
+entertainment,11,beIN DRAMA,beINDRAMA,48
+entertainment,12,beIN GOURMET,beINGOURMET,48
+entertainment,13,FOX Arabia,FoxArabia.ae@SD,30
+entertainment,14,Food Network,FoodNetworkEMEA.us@SD,43
+entertainment,15,HGTV Arabia,HGTVArabia.us@SD,30
+entertainment,16,Star World,StarWorldMiddleEast.ae@SD,21
+entertainment,17,Fatafeat,Fatafeat.ae@SD,31
+entertainment,18,FOX Life,FoxLifeMiddleEast.ae@SD,33
+entertainment,19,MTV 80s,MTV80s.uk@SD,31
+entertainment,20,MTV 90s,MTV90s.uk@SD,23
+entertainment,21,Club MTV,ClubMTVEurope.uk@SD,76
+entertainment,22,Bloomberg TV,BloombergTV.us@MiddleEast,30
+entertainment,23,beIN JUNIOR,beINJUNIOR,266
+entertainment,24,Jeem TV,JeemTV.qa@SD,221
+entertainment,25,Baraem TV,Baraem.qa@SD,238
+entertainment,26,CNN Arabic,CNNArabic.ae@SD,37
+entertainment,27,Euronews English,EuronewsEnglish.fr@SD,24
+entertainment,28,Discovery Channel,DiscoveryChannelMiddleEastAfrica.us@SD,66
+entertainment,29,beJunior,BeJunior.qa@SD,100
+entertainment,30,Jeem TV - Site 30,JeemTV.qa@SD.site30,317
+entertainment,31,Entertainment - Site 31,bein.entertainment.31,126
+sports,1,beIN SPORTS 1,beINSports1.qa@MENA,86
+sports,2,beIN SPORTS 2,beINSports2.qa@MENA,26
+sports,3,beIN SPORTS 3,beINSports3.qa@MENA,26
+sports,4,beIN SPORTS 4,beINSPORT4.qa@MENA,33
+sports,5,beIN SPORTS 5,beINSports5.qa@MENA,38
+sports,6,beIN SPORTS 6,beINSports6.qa@MENA,30
+sports,7,beIN SPORTS 7,beINSports7.qa@MENA,26
+sports,8,beIN SPORTS 8,beINSports8.qa@MENA,30
+sports,9,beIN SPORTS 9,beINSports9.qa@MENA,29
+sports,10,beIN SPORTS NEWS,beINSportsNews.qa@SD,86
+sports,11,beIN SPORTS,beINSports.qa@MENA,32
+sports,12,beIN SPORTS EN 1,beinsports1en.qa,67
+sports,13,beIN SPORTS EN 2,beinsports2en.qa,28
+sports,14,beIN SPORTS FR 1,beinsports1fr.qa,16
+sports,15,beIN SPORTS FR 2,beinsports2fr.qa,14
+sports,16,beIN SPORTS - Site 16,bein.sports.16,25
+sports,17,beIN SPORTS XTRA 1,beINSportsXtra1.qa@SD,48
+sports,18,beIN SPORTS XTRA 2,beINSportsXtra2.qa@SD,48
+sports,19,beIN SPORTS XTRA 3,beINSportsXtra3.qa,48
+sports,20,beIN SPORTS XTRA 4,beINSportsXtra4.qa,48
+sports,21,beIN SPORTS XTRA 5,beINSportsXtra5.qa,48
+sports,22,beIN SPORTS XTRA 6,beINSportsXtra6.qa,48
+sports,23,beIN SPORTS XTRA 7,beINSportsXtra7.qa,48
+sports,24,beIN SPORTS XTRA 8,beINSportsXtra8.qa,48
+sports,25,beIN SPORTS XTRA 9,beINSportsXtra9.qa,48
+sports,26,beIN 4K HDR,beINSports4KHDR.qa,24
+sports,27,beIN SPORTS MAX 1,beINSportsMax1.qa@MENA,24
+sports,28,beIN SPORTS MAX 2,beINSportsMax2.qa@MENA,24
+sports,29,beIN SPORTS MAX 3,beINSportsMax3.qa@MENA,24
+sports,30,beIN SPORTS MAX 4,beINSportsMax4.qa@MENA,24
+sports,31,beIN SPORTS MAX 5,beINSportsMax5.qa@MENA,24
+sports,32,beIN SPORTS MAX 6,beINSportsMax6.qa@MENA,22
+sports,33,Alkass One HD,AlkassOne.qa@SD,25
+sports,34,Alkass Two HD,AlkassTwo.qa@SD,22
+sports,35,Alkass Three HD,AlkassThree.qa@SD,22
+sports,36,Alkass Four HD,AlkassFour.qa@SD,23
+sports,37,Alkass Five HD,AlkassFive.qa@SD,16
+sports,38,Alkass Six HD,AlkassSix.qa@SD,19
+sports,39,Alkass Seven HD,AlkassSeven.qa@SD,15
