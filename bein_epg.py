@@ -654,9 +654,12 @@ def main():
     return 0
 
 
+
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except Exception as error:
-        print(f"ERROR: {error}", file=sys.stderr)
+    except Exception:
+        import traceback
+
+        traceback.print_exc()
         sys.exit(2)
