@@ -300,6 +300,10 @@
     <display-name lang="en">Maspero Zaman</display-name>
     <icon src="https://media0106.elcinema.com/tvguide/1336_1.png" />
   </channel>
+  <channel id="elcinema.1130">
+    <display-name lang="en">MBC Action</display-name>
+    <icon src="https://media0106.elcinema.com/tvguide/1130_1.png" />
+  </channel>
   <channel id="elcinema.1159">
     <display-name lang="en">Nile Life</display-name>
     <icon src="https://media0106.elcinema.com/tvguide/1159_1.png" />
@@ -12816,6 +12820,147 @@
   </programme>
   <programme channel="elcinema.1336" start="20261012060000 +0100" stop="20261012070000 +0100">
     <title lang="en">برنامج</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261009185500 +0100" stop="20261009223500 +0100">
+    <title lang="en">ملخص ايل اوف مان</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261009223500 +0100" stop="20261009233000 +0100">
+    <title lang="en">الجمعة</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261009233000 +0100" stop="20261010003000 +0100">
+    <title lang="en">Kingdom</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010003000 +0100" stop="20261010021000 +0100">
+    <title lang="en">ملخص ايل اوف مان</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010021000 +0100" stop="20261010030000 +0100">
+    <title lang="en">برنامج سبورتس كويست</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010030000 +0100" stop="20261010040500 +0100">
+    <title lang="en">Kingdom</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010040500 +0100" stop="20261010050000 +0100">
+    <title lang="en">برنامج motor city masters</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010050000 +0100" stop="20261010060000 +0100">
+    <title lang="en">برنامج هيروينز</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010060000 +0100" stop="20261010063000 +0100">
+    <title lang="en">برنامج the inside line</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010063000 +0100" stop="20261010070000 +0100">
+    <title lang="en">برنامج the football review</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010070000 +0100" stop="20261010080000 +0100">
+    <title lang="en">برنامج car issuse</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010080000 +0100" stop="20261010090000 +0100">
+    <title lang="en">Kingdom</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010090000 +0100" stop="20261010095500 +0100">
+    <title lang="en">برنامج نادينا</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010095500 +0100" stop="20261010121500 +0100">
+    <title lang="en">FIFA Intercontinental Cup 2026</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010121500 +0100" stop="20261010140000 +0100">
+    <title lang="en">الدوري الممتاز للسيدات 2026</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010140000 +0100" stop="20261010145500 +0100">
+    <title lang="en">Kingdom</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010145500 +0100" stop="20261010173000 +0100">
+    <title lang="en">FIFA Intercontinental Cup 2026</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010173000 +0100" stop="20261010180000 +0100">
+    <title lang="en">Kingdom</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010180000 +0100" stop="20261010183000 +0100">
+    <title lang="en">برنامج the inside line</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010183000 +0100" stop="20261010190500 +0100">
+    <title lang="en">برنامج the football review</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010190500 +0100" stop="20261010200000 +0100">
+    <title lang="en">برنامج police 24/7</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010200000 +0100" stop="20261010205500 +0100">
+    <title lang="en">برنامج lego masters</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261010205500 +0100" stop="20261011030000 +0100">
+    <title lang="en">ملخص ايل اوف مان</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011030000 +0100" stop="20261011040500 +0100">
+    <title lang="en">Kingdom</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011040500 +0100" stop="20261011050000 +0100">
+    <title lang="en">برنامج motor city masters</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011050000 +0100" stop="20261011060000 +0100">
+    <title lang="en">برنامج هيروينز</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011060000 +0100" stop="20261011063000 +0100">
+    <title lang="en">برنامج the inside line</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011063000 +0100" stop="20261011070000 +0100">
+    <title lang="en">برنامج the football review</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011070000 +0100" stop="20261011080000 +0100">
+    <title lang="en">برنامج car issuse</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011080000 +0100" stop="20261011090000 +0100">
+    <title lang="en">Kingdom</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011090000 +0100" stop="20261011095500 +0100">
+    <title lang="en">برنامج نادينا</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011095500 +0100" stop="20261011121600 +0100">
+    <title lang="en">FIFA Intercontinental Cup 2026</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011121600 +0100" stop="20261011123200 +0100">
+    <title lang="en">برنامج نادينا</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011123200 +0100" stop="20261011130000 +0100">
+    <title lang="en">Ridiculousness</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011130000 +0100" stop="20261011132500 +0100">
+    <title lang="en">برنامج بروفايل أندية البوندسليغا 2026</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011132500 +0100" stop="20261011153000 +0100">
+    <title lang="en">FIFA Intercontinental Cup 2026</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011153000 +0100" stop="20261011160000 +0100">
+    <title lang="en">Kingdom</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011160000 +0100" stop="20261011170000 +0100">
+    <title lang="en">برنامج The Summit</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011170000 +0100" stop="20261011173000 +0100">
+    <title lang="en">Kingdom</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011173000 +0100" stop="20261011191500 +0100">
+    <title lang="en">ملخص ايل اوف مان</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011191500 +0100" stop="20261011202000 +0100">
+    <title lang="en">برنامج The Summit</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011202000 +0100" stop="20261011205000 +0100">
+    <title lang="en">Ridiculousness</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261011205000 +0100" stop="20261012030000 +0100">
+    <title lang="en">ملخص ايل اوف مان</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261012030000 +0100" stop="20261012040500 +0100">
+    <title lang="en">Kingdom</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261012040500 +0100" stop="20261012050000 +0100">
+    <title lang="en">برنامج motor city masters</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261012050000 +0100" stop="20261012060000 +0100">
+    <title lang="en">برنامج هيروينز</title>
+  </programme>
+  <programme channel="elcinema.1130" start="20261012060000 +0100" stop="20261012063000 +0100">
+    <title lang="en">برنامج the inside line</title>
   </programme>
   <programme channel="elcinema.1159" start="20261009200000 +0100" stop="20261009220000 +0100">
     <title lang="en">Naharuk Saeid</title>
