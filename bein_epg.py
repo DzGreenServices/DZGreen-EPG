@@ -592,70 +592,60 @@ def main():
 
                     prog_count = prog_blocks.count()
 
-                    for prog_index in range(prog_count):
 
-                        prog = prog_blocks.nth(prog_index)
+for prog_index in range(prog_count):
+    prog = prog_blocks.nth(prog_index)
 
-                        title = clean_text(
-                            prog.get_attribute(
-                                "data-full-title"
-                            )
-                            or ""
-                        )
+    try:
+        title = clean_text(
+            prog.get_attribute("data-full-title", timeout=5000) or ""
+        )
+        category = clean_text(
+            prog.get_attribute("data-full-category", timeout=5000) or ""
+        )
+        start_ms = prog.get_attribute("data-start-ms", timeout=5000)
+        end_ms = prog.get_attribute("data-end-ms", timeout=5000)
 
-                        category = clean_text(
-                            prog.get_attribute(
-                                "data-full-category"
-                            )
-                            or ""
-                        )
+    except Exception as e:
+        print(
+            f"WARNING: Skipping unreadable program "
+            f"row={row_index + 1}, program={prog_index + 1}: {e}"
+        )
+        continue
 
-                        start_ms = prog.get_attribute(
-                            "data-start-ms"
-                        )
+    if not title or not start_ms or not end_ms:
+        continue
 
-                        end_ms = prog.get_attribute(
-                            "data-end-ms"
-                        )
+    try:
+        start_ms_int = int(start_ms)
+        end_ms_int = int(end_ms)
+    except (ValueError, TypeError):
+        continue
 
-                        if not title:
-                            continue
+    if end_ms_int <= start_ms_int:
+        continue
 
-                        if not start_ms or not end_ms:
-                            continue
+    program_key = (
+        channel_id,
+        start_ms_int,
+        end_ms_int,
+        title,
+    )
 
-                        try:
-                            start_ms_int = int(start_ms)
-                            end_ms_int = int(end_ms)
+    if program_key in program_keys:
+        continue
 
-                        except ValueError:
-                            continue
+    program_keys.add(program_key)
 
-                        # ------------------------------------------------
-                        # Unique program key
-                        # ------------------------------------------------
+    programs.append({
+        "channel_id": channel_id,
+        "title": title,
+        "category": category,
+        "start_ms": start_ms_int,
+        "end_ms": end_ms_int,
+    })
 
-                        program_key = (
-                            channel_id,
-                            start_ms_int,
-                            end_ms_int,
-                            title,
-                        )
-
-                        if program_key in program_keys:
-                            continue
-
-                        program_keys.add(program_key)
-
-                        programs.append({
-                            "channel_id": channel_id,
-                            "title": title,
-                            "category": category,
-                            "start_ms": start_ms_int,
-                            "end_ms": end_ms_int,
-                        })
-
-                        programs_this_date += 1
+    programs_this_date += 1
 
                 print(
                     "New channels:",
