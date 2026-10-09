@@ -2607,13 +2607,145 @@
   <programme start="20261012223000 +0300" stop="20261013000000 +0300" channel="beINSPORTS">
     <title lang="ar">Paris vs Toulouse - Daikin StarLigue - French Handball - 2026</title>
   </programme>
+  <programme start="20261009000000 +0300" stop="20261009003000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Ligue 1 Show - 2026/2027</title>
+  </programme>
+  <programme start="20261009003000 +0300" stop="20261009010000 +0300" channel="beINSPORTS1">
+    <title lang="ar">The Big Interview 2026-2027</title>
+  </programme>
+  <programme start="20261009010000 +0300" stop="20261009013300 +0300" channel="beINSPORTS1">
+    <title lang="ar">Croatia vs Spain -UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009013300 +0300" stop="20261009020000 +0300" channel="beINSPORTS1">
+    <title lang="ar">South Sudan vs Egypt - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
+  </programme>
+  <programme start="20261009020000 +0300" stop="20261009023000 +0300" channel="beINSPORTS1">
+    <title lang="ar">England vs Czechia - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009023000 +0300" stop="20261009030100 +0300" channel="beINSPORTS1">
+    <title lang="ar">Uganda vs Libya - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
+  </programme>
+  <programme start="20261009030100 +0300" stop="20261009033000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Scotland vs Slovenia - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009033000 +0300" stop="20261009040300 +0300" channel="beINSPORTS1">
+    <title lang="ar">Botswana vs Tunisia - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
+  </programme>
+  <programme start="20261009040300 +0300" stop="20261009043200 +0300" channel="beINSPORTS1">
+    <title lang="ar">France vs Belgium - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009043200 +0300" stop="20261009050000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Burundi vs Algeria - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
+  </programme>
+  <programme start="20261009050000 +0300" stop="20261009053400 +0300" channel="beINSPORTS1">
+    <title lang="ar">Italy vs Türkiye - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009053400 +0300" stop="20261009060000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Lesotho vs Morocco - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
+  </programme>
+  <programme start="20261009060000 +0300" stop="20261009063000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Bosnia-Herzegovina vs Poland - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009063000 +0300" stop="20261009070000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Ligue 1 Show - 2026/2027</title>
+  </programme>
+  <programme start="20261009070000 +0300" stop="20261009073200 +0300" channel="beINSPORTS1">
+    <title lang="ar">Greece vs Germany - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009073200 +0300" stop="20261009080000 +0300" channel="beINSPORTS1">
+    <title lang="ar">The Big Interview 2026-2027</title>
+  </programme>
+  <programme start="20261009080000 +0300" stop="20261009082700 +0300" channel="beINSPORTS1">
+    <title lang="ar">Netherlands vs Serbia - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009082700 +0300" stop="20261009090100 +0300" channel="beINSPORTS1">
+    <title lang="ar">In The Footsteps Of Fabian Ruiz</title>
+  </programme>
+  <programme start="20261009090100 +0300" stop="20261009093000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Wales vs Denmark - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009093000 +0300" stop="20261009100000 +0300" channel="beINSPORTS1">
+    <title lang="ar">UEFA UCL Magazine 2026/2027- MD2 Review</title>
+  </programme>
+  <programme start="20261009100000 +0300" stop="20261009103000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Portugal vs Norway - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009103000 +0300" stop="20261009110000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Croatia vs Spain -UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009110000 +0300" stop="20261009113000 +0300" channel="beINSPORTS1">
+    <title lang="ar">South Sudan vs Egypt - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
+  </programme>
+  <programme start="20261009113000 +0300" stop="20261009115700 +0300" channel="beINSPORTS1">
+    <title lang="ar">England vs Czechia - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009115700 +0300" stop="20261009123100 +0300" channel="beINSPORTS1">
+    <title lang="ar">Uganda vs Libya - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
+  </programme>
+  <programme start="20261009123100 +0300" stop="20261009125900 +0300" channel="beINSPORTS1">
+    <title lang="ar">Scotland vs Slovenia - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009125900 +0300" stop="20261009133000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Botswana vs Tunisia - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
+  </programme>
+  <programme start="20261009133000 +0300" stop="20261009140000 +0300" channel="beINSPORTS1">
+    <title lang="ar">France vs Belgium - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009140000 +0300" stop="20261009143000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Burundi vs Algeria - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
+  </programme>
+  <programme start="20261009143000 +0300" stop="20261009150000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Italy vs Türkiye - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009150000 +0300" stop="20261009152800 +0300" channel="beINSPORTS1">
+    <title lang="ar">Lesotho vs Morocco - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
+  </programme>
+  <programme start="20261009152800 +0300" stop="20261009160000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Bosnia-Herzegovina vs Poland - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009160000 +0300" stop="20261009163000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Ligue 1 Show - 2026/2027</title>
+  </programme>
+  <programme start="20261009163000 +0300" stop="20261009170300 +0300" channel="beINSPORTS1">
+    <title lang="ar">Greece vs Germany - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009170300 +0300" stop="20261009173000 +0300" channel="beINSPORTS1">
+    <title lang="ar">The Big Interview 2026-2027</title>
+  </programme>
+  <programme start="20261009173000 +0300" stop="20261009180000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Netherlands vs Serbia - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009180000 +0300" stop="20261009182700 +0300" channel="beINSPORTS1">
+    <title lang="ar">UEFA UCL Magazine 2026/2027- MD2 Review</title>
+  </programme>
+  <programme start="20261009182700 +0300" stop="20261009185500 +0300" channel="beINSPORTS1">
+    <title lang="ar">ATP Tour - Magazine 2026</title>
+  </programme>
+  <programme start="20261009185500 +0300" stop="20261009195000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Review Show - Laver Cup 2026</title>
+  </programme>
+  <programme start="20261009195000 +0300" stop="20261009220000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Galatasaray A.Ş. vs Kasımpaşa A.Ş. - Turkish Super League 2027 - MD7</title>
+  </programme>
+  <programme start="20261009220000 +0300" stop="20261009223000 +0300" channel="beINSPORTS1">
+    <title lang="ar">Croatia vs Spain -UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261009223000 +0300" stop="20261009230000 +0300" channel="beINSPORTS1">
+    <title lang="ar">The talented Isack Hadjar</title>
+  </programme>
+  <programme start="20261009230000 +0300" stop="20261009233000 +0300" channel="beINSPORTS1">
+    <title lang="ar">The talented Isack Hadjar</title>
+  </programme>
+  <programme start="20261009233000 +0300" stop="20261010000000 +0300" channel="beINSPORTS1">
+    <title lang="ar">The talented Isack Hadjar</title>
+  </programme>
   <programme start="20261010000000 +0300" stop="20261010003000 +0300" channel="beINSPORTS1">
     <title lang="ar">Scotland vs Slovenia - UEFA Nations League 2026/27 - Match Day 4</title>
   </programme>
-  <programme start="20261010003000 +0300" stop="20261010023000 +0300" channel="beINSPORTS1">
+  <programme start="20261010003000 +0300" stop="20261010023100 +0300" channel="beINSPORTS1">
     <title lang="ar">Galatasaray A.Ş. vs Kasımpaşa A.Ş. - Turkish Super League 2027 - MD7</title>
   </programme>
-  <programme start="20261010023000 +0300" stop="20261010030000 +0300" channel="beINSPORTS1">
+  <programme start="20261010023100 +0300" stop="20261010030000 +0300" channel="beINSPORTS1">
     <title lang="ar">Wales vs Denmark - UEFA Nations League 2026/27 - Match Day 4</title>
   </programme>
   <programme start="20261010030000 +0300" stop="20261010033000 +0300" channel="beINSPORTS1">
@@ -2622,22 +2754,22 @@
   <programme start="20261010033000 +0300" stop="20261010040000 +0300" channel="beINSPORTS1">
     <title lang="ar">Portugal vs Norway - UEFA Nations League 2026/27 - Match Day 4</title>
   </programme>
-  <programme start="20261010040000 +0300" stop="20261010043000 +0300" channel="beINSPORTS1">
+  <programme start="20261010040000 +0300" stop="20261010043100 +0300" channel="beINSPORTS1">
     <title lang="ar">Uganda vs Libya - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
   </programme>
-  <programme start="20261010043000 +0300" stop="20261010050000 +0300" channel="beINSPORTS1">
+  <programme start="20261010043100 +0300" stop="20261010050000 +0300" channel="beINSPORTS1">
     <title lang="ar">Netherlands vs Serbia - UEFA Nations League 2026/27 - Match Day 4</title>
   </programme>
-  <programme start="20261010050000 +0300" stop="20261010053000 +0300" channel="beINSPORTS1">
+  <programme start="20261010050000 +0300" stop="20261010053200 +0300" channel="beINSPORTS1">
     <title lang="ar">Botswana vs Tunisia - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
   </programme>
-  <programme start="20261010053000 +0300" stop="20261010060000 +0300" channel="beINSPORTS1">
+  <programme start="20261010053200 +0300" stop="20261010060000 +0300" channel="beINSPORTS1">
     <title lang="ar">Greece vs Germany - UEFA Nations League 2026/27 - Match Day 4</title>
   </programme>
-  <programme start="20261010060000 +0300" stop="20261010063000 +0300" channel="beINSPORTS1">
+  <programme start="20261010060000 +0300" stop="20261010063300 +0300" channel="beINSPORTS1">
     <title lang="ar">Burundi vs Algeria - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
   </programme>
-  <programme start="20261010063000 +0300" stop="20261010070000 +0300" channel="beINSPORTS1">
+  <programme start="20261010063300 +0300" stop="20261010070000 +0300" channel="beINSPORTS1">
     <title lang="ar">Bosnia-Herzegovina vs Poland - UEFA Nations League 2026/27 - Match Day 4</title>
   </programme>
   <programme start="20261010070000 +0300" stop="20261010073000 +0300" channel="beINSPORTS1">
@@ -2991,14 +3123,17 @@
   <programme start="20261009215000 +0300" stop="20261010000000 +0300" channel="beINSPORTS3">
     <title lang="ar">West Ham vs QPR - EFL - English Football League SkyBet - Championship 2026/2027</title>
   </programme>
-  <programme start="20261010000000 +0300" stop="20261010014500 +0300" channel="beINSPORTS3">
+  <programme start="20261010000000 +0300" stop="20261010014700 +0300" channel="beINSPORTS3">
     <title lang="ar">Albania vs San Marino - UEFA Nations League 2026/27 - Match Day 4</title>
   </programme>
-  <programme start="20261010014500 +0300" stop="20261010034500 +0300" channel="beINSPORTS3">
+  <programme start="20261010014700 +0300" stop="20261010033100 +0300" channel="beINSPORTS3">
     <title lang="ar">Moldova vs Slovakia - UEFA Nations League 2026/27 - Match Day 4</title>
   </programme>
-  <programme start="20261010034500 +0300" stop="20261010054500 +0300" channel="beINSPORTS3">
+  <programme start="20261010033100 +0300" stop="20261010051500 +0300" channel="beINSPORTS3">
     <title lang="ar">West Ham vs QPR - EFL - English Football League SkyBet - Championship 2026/2027</title>
+  </programme>
+  <programme start="20261010051500 +0300" stop="20261010054500 +0300" channel="beINSPORTS3">
+    <title lang="ar">The Big Interview 2026-2027</title>
   </programme>
   <programme start="20261010054500 +0300" stop="20261010073000 +0300" channel="beINSPORTS3">
     <title lang="ar">Roma vs Barcelona - UEFA Women’s Champions League 2026/2027 - MD2</title>
@@ -3024,8 +3159,11 @@
   <programme start="20261010190000 +0300" stop="20261010204500 +0300" channel="beINSPORTS3">
     <title lang="ar">West Ham vs QPR - EFL - English Football League SkyBet - Championship 2026/2027</title>
   </programme>
-  <programme start="20261010204500 +0300" stop="20261010215000 +0300" channel="beINSPORTS3">
+  <programme start="20261010204500 +0300" stop="20261010211500 +0300" channel="beINSPORTS3">
     <title lang="ar">Portugal vs Norway - UEFA Nations League 2026/27 - Match Day 4</title>
+  </programme>
+  <programme start="20261010211500 +0300" stop="20261010215000 +0300" channel="beINSPORTS3">
+    <title lang="ar">Croatia vs Spain -UEFA Nations League 2026/27 - Match Day 4</title>
   </programme>
   <programme start="20261010215000 +0300" stop="20261010223000 +0300" channel="beINSPORTS3">
     <title lang="ar">Lesotho vs Morocco - Africa Cup of Nations ( AFCON ) Qualification 2026/2027- MD2</title>
@@ -3501,14 +3639,14 @@
   <programme start="20261009051500 +0300" stop="20261009070000 +0300" channel="beINSPORTS7">
     <title lang="ar">Mariano Navone (ARG) vs Pablo Carreno Busta (ESP) - ATP 1000 Rolex Shanghai Masters 2026</title>
   </programme>
-  <programme start="20261009070000 +0300" stop="20261009090000 +0300" channel="beINSPORTS7">
+  <programme start="20261009070000 +0300" stop="20261009092500 +0300" channel="beINSPORTS7">
     <title lang="ar">Ben Shelton (USA) vs Daniel Altmaier (GER) - ATP 1000 Rolex Shanghai Masters 2026</title>
   </programme>
-  <programme start="20261009090000 +0300" stop="20261009110000 +0300" channel="beINSPORTS7">
+  <programme start="20261009092500 +0300" stop="20261009113000 +0300" channel="beINSPORTS7">
     <title lang="ar">Alexander Zverev (GER) vs Yibing Wu (CHN) - ATP 1000 Rolex Shanghai Masters 2026</title>
   </programme>
-  <programme start="20261009110000 +0300" stop="20261009130000 +0300" channel="beINSPORTS7">
-    <title lang="ar">Alex De Minaur (AUS) vs Alex Molcan (SVK) - ATP 1000 Rolex Shanghai Masters 2026</title>
+  <programme start="20261009113000 +0300" stop="20261009130000 +0300" channel="beINSPORTS7">
+    <title lang="ar">Karen Khachanov vs Arthur Fery - ATP 1000 Rolex Shanghai Masters 2026</title>
   </programme>
   <programme start="20261009130000 +0300" stop="20261009150000 +0300" channel="beINSPORTS7">
     <title lang="ar">Novak Djokovic (SRB) vs Hubert Hurkacz (POL) - ATP 1000 Rolex Shanghai Masters 2026</title>
@@ -3523,7 +3661,7 @@
     <title lang="ar">Alexander Zverev (GER) vs Yibing Wu (CHN) - ATP 1000 Rolex Shanghai Masters 2026</title>
   </programme>
   <programme start="20261009210000 +0300" stop="20261009230000 +0300" channel="beINSPORTS7">
-    <title lang="ar">Alex De Minaur (AUS) vs Alex Molcan (SVK) - ATP 1000 Rolex Shanghai Masters 2026</title>
+    <title lang="ar">Karen Khachanov vs Arthur Fery - ATP 1000 Rolex Shanghai Masters 2026</title>
   </programme>
   <programme start="20261009230000 +0300" stop="20261010010000 +0300" channel="beINSPORTS7">
     <title lang="ar">Novak Djokovic (SRB) vs Hubert Hurkacz (POL) - ATP 1000 Rolex Shanghai Masters 2026</title>
