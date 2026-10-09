@@ -258,8 +258,9 @@ def wait_for_content_change(
 # CATEGORY SELECTION
 # ============================================================
 
+
 def activate_category(page, category):
-    """Activate Sports or Entertainment."""
+    """Activate a category and wait for valid programme data."""
 
     selector = f'.category-tab[data-category="{category}"]'
     button = page.locator(selector)
@@ -269,50 +270,84 @@ def activate_category(page, category):
             f"Category button not found: {category}"
         )
 
-    if "active" in (
+    root = page.locator("#channelRows")
+
+    previous_html = root.inner_html()
+
+    is_active = "active" in (
         button.get_attribute("class") or ""
-    ).split():
-        page.wait_for_selector(
-            "#channelRows .channel-row",
-            timeout=CONTENT_TIMEOUT_MS,
-        )
-        return
+    ).split()
 
-    previous_html = page.locator(
-        "#channelRows"
-    ).inner_html()
-
-    button.click()
+    if not is_active:
+        button.click()
 
     try:
-        wait_for_content_change(
-            page,
-            previous_html,
-            selector,
-            None,
-            None,
-            CONTENT_TIMEOUT_MS,
+        page.wait_for_function(
+            """arg => {
+                const button = document.querySelector(arg.selector);
+                const root = document.querySelector("#channelRows");
+
+                if (
+                    !button ||
+                    !button.classList.contains("active") ||
+                    !root
+                ) {
+                    return false;
+                }
+
+                const rows = root.querySelectorAll(".channel-row");
+                const programmes = root.querySelectorAll(
+                    '.prog-block[data-start-ms][data-end-ms]'
+                );
+
+                if (rows.length === 0 || programmes.length === 0) {
+                    return false;
+                }
+
+                return button.dataset.category === arg.category
+                    && (
+                        arg.wasActive
+                        || root.innerHTML !== arg.previousHtml
+                    );
+            }""",
+            arg={
+                "selector": selector,
+                "category": category,
+                "wasActive": is_active,
+                "previousHtml": previous_html,
+            },
+            timeout=CONTENT_TIMEOUT_MS,
         )
 
     except PlaywrightTimeoutError:
-        # The guide may retain similar HTML between categories.
-        page.wait_for_function(
-            """selector => {
-                const button = document.querySelector(selector);
-                const root = document.querySelector("#channelRows");
+        # If the category was already active, valid programmes
+        # may already be loaded without an HTML change.
+        if is_active:
+            page.wait_for_function(
+                """arg => {
+                    const button = document.querySelector(arg.selector);
+                    const root = document.querySelector("#channelRows");
 
-                return button
-                    && button.classList.contains("active")
-                    && root
-                    && root.querySelector(
-                        '.prog-block[data-start-ms][data-end-ms]'
-                    );
-            }""",
-            arg=selector,
-            timeout=CONTENT_TIMEOUT_MS,
-        )
+                    return button
+                        && button.classList.contains("active")
+                        && root
+                        && root.querySelector(
+                            '.prog-block[data-start-ms][data-end-ms]'
+                        );
+                }""",
+                arg={"selector": selector},
+                timeout=CONTENT_TIMEOUT_MS,
+            )
+        else:
+            raise
 
-    print(f"Category activated: {category}")
+    print(
+        f"Category activated: {category} | "
+        f"Channels: {root.locator('.channel-row').count()} | "
+        f"Programmes: {root.locator('.prog-block[data-start-ms][data-end-ms]').count()}",
+        flush=True,
+    )
+
 
 
 # ============================================================
