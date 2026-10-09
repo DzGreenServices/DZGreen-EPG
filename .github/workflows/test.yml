@@ -1,3 +1,4 @@
+
 name: Update beIN EPG
 
 on:
@@ -23,7 +24,12 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: python -m pip install -r requirements-bein-epg.txt
+        run: |
+          python -m pip install -r requirements-bein-epg.txt
+          python -m playwright install --with-deps chromium
+
+      - name: Check Python syntax
+        run: python -m py_compile bein_epg.py
 
       - name: Generate EPG
         run: python bein_epg.py
