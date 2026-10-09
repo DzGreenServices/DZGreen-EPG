@@ -690,11 +690,25 @@ def main():
 
 
 
-if __name__ == "__main__":
-    try:
-        sys.exit(main())
-    except Exception:
-        import traceback
 
-        traceback.print_exc()
-        sys.exit(2)
+if __name__ == "__main__":
+    import traceback
+
+    try:
+        result = main()
+        sys.exit(result)
+
+    except BaseException:
+        print(
+            "\n========== FULL ERROR TRACEBACK ==========",
+            file=sys.stderr,
+            flush=True,
+        )
+        traceback.print_exc(file=sys.stderr)
+        print(
+            "========== END ERROR TRACEBACK ==========\n",
+            file=sys.stderr,
+            flush=True,
+        )
+        raise
+
