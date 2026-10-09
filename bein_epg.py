@@ -26,6 +26,7 @@ from urllib.parse import urlparse, unquote
 
 import requests
 from bs4 import BeautifulSoup
+from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 
 PAGE_URL = "https://www.bein.com/en/tv-guide/?c=dz&"
 AJAX_URL = "https://www.bein.com/en/epg-ajax-template/"
@@ -381,96 +382,309 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="Fetch beIN TV guide and create an XMLTV file plus a tvg-id CSV mapping."
     )
-    parser.add_argument("--days", type=int, default=4, help="عدد الأيام (الافتراضي 4).")
-    parser.add_argument("--start-date", default="", help="تاريخ البداية بصيغة YYYY-MM-DD؛ الافتراضي اليوم.")
-    parser.add_argument("--output-dir", default="docs", help="مجلد حفظ XML وCSV؛ الافتراضي docs.")
-    parser.add_argument("--timeout", type=int, default=30, help="مهلة طلب الموقع بالثواني.")
+   def wait_for_content_change(
+    page, previous_html, active_selector, attribute, value, timeout_ms
+):
+    page.wait_for_function(
+        """arg => {
+            const root = document.querySelector('#channelRows');
+            const active = document.querySelector(arg.activeSelector);
+
+            return root
+                && active
+                && active.getAttribute(arg.attribute) === arg.value
+                && root.innerHTML !== arg.previousHtml
+                && root.querySelector('.prog-block');
+        }""",
+        {
+            "previousHtml": previous_html,
+            "activeSelector": active_selector,
+            "attribute": attribute,
+            "value": value,
+        },
+        timeout=timeout_ms,
+    )
+
+
+def activate_category(page, category, timeout_ms):
+    tab = page.locator(
+        f'.category-tab[data-category="{category}"]'
+    ).first
+
+    if tab.count() == 0:
+        raise RuntimeError(f"Category tab not found: {category}")
+
+    classes = (tab.get_attribute("class") or "").split()
+
+    if "active" in classes:
+        return
+
+    previous_html = page.locator("#channelRows").inner_html()
+    tab.click()
+
+    wait_for_content_change(
+        page,
+        previous_html,
+        ".category-tab.active",
+        "data-category",
+        category,
+        timeout_ms,
+    )
+
+
+def activate_date(page, date_value, timeout_ms):
+    cell = page.locator(
+        f'.day-cell[data-date="{date_value}"]'
+    ).first
+
+    if cell.count() == 0:
+        raise RuntimeError(f"Date not found: {date_value}")
+
+    classes = (cell.get_attribute("class") or "").split()
+
+    if "active" in classes:
+        return
+
+    previous_html = page.locator("#channelRows").inner_html()
+    cell.click()
+
+    wait_for_content_change(
+        page,
+        previous_html,
+        ".day-cell.active",
+        "data-date",
+        date_value,
+        timeout_ms,
+    )
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Generate beIN XMLTV and channel mapping CSV."
+    )
+    parser.add_argument("--days", type=int, default=4)
+    parser.add_argument("--start-date", default="")
+    parser.add_argument("--output-dir", default="docs")
+    parser.add_argument("--timeout", type=int, default=60)
     args = parser.parse_args()
 
-    if args.days < 1 or args.days > 14:
-        parser.error("--days يجب أن يكون بين 1 و14.")
-    if args.timeout < 5:
-        parser.error("--timeout يجب أن يكون 5 ثوانٍ أو أكثر.")
-    try:
-        start_day = date.fromisoformat(args.start_date) if args.start_date else datetime.now(ZoneInfo("Africa/Algiers")).date()
-    except ValueError:
-        parser.error("--start-date يجب أن يكون بصيغة YYYY-MM-DD.")
+    if not 1 <= args.days <= 14:
+        parser.error("--days must be between 1 and 14.")
 
+    if args.timeout < 10:
+        parser.error("--timeout must be at least 10 seconds.")
+
+    requested_start = ""
+
+    if args.start_date:
+        try:
+            requested_start = date.fromisoformat(
+                args.start_date
+            ).isoformat()
+        except ValueError:
+            parser.error("--start-date must use YYYY-MM-DD.")
+
+    timeout_ms = args.timeout * 1000
     output_dir = Path(args.output_dir).expanduser().resolve()
-    all_channels: dict[str, Channel] = {}
-    all_programmes: dict[tuple[str, str, str, str], Programme] = {}
 
-    session = requests.Session()
-    session.headers.update(HEADERS)
+    all_channels = {}
+    all_programmes = {}
+    warnings = []
 
-    total_requests = args.days * len(CATEGORIES)
-    request_index = 0
-    for day_offset in range(args.days):
-        day = start_day + timedelta(days=day_offset)
-        for category in CATEGORIES:
-            request_index += 1
-            print(f"[{request_index}/{total_requests}] تحميل {category} — {day.isoformat()} ...")
+    try:
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(headless=True)
+
             try:
-                html = fetch_page_html(session, category, day, args.timeout)
-            except (requests.RequestException, RuntimeError) as exc:
-                print(f"خطأ: {exc}", file=sys.stderr)
-                return 2
-
-            channels, programmes = parse_channel_rows(html, category)
-            if not channels:
-                print(f"تنبيه: لم تُكتشف قنوات في {category} بتاريخ {day}.", file=sys.stderr)
-
-            for tvg_id, channel in channels.items():
-                if tvg_id not in all_channels:
-                    all_channels[tvg_id] = channel
-                else:
-                    old = all_channels[tvg_id]
-                    if not old.logo and channel.logo:
-                        old.logo = channel.logo
-                    if not old.channel_url and channel.channel_url:
-                        old.channel_url = channel.channel_url
-                    if old.group_title != channel.group_title and channel.group_title:
-                        groups = set(filter(None, old.group_title.split(" / ")))
-                        groups.add(channel.group_title)
-                        old.group_title = " / ".join(sorted(groups))
-
-            for programme in programmes:
-                key = (
-                    programme.channel_id,
-                    xmltv_timestamp(programme.start),
-                    xmltv_timestamp(programme.stop),
-                    programme.title,
+                context = browser.new_context(
+                    viewport={"width": 1600, "height": 1200},
+                    locale="en-US",
+                    timezone_id="Africa/Algiers",
                 )
-                all_programmes[key] = programme
-            # Avoid hammering the server; small pause between requests.
-            time.sleep(0.35)
 
-    if not all_channels:
-        print("لم يتم اكتشاف أي قناة؛ لم تُنشأ ملفات فارغة.", file=sys.stderr)
+                page = context.new_page()
+
+                print("Opening the beIN TV Guide...")
+                page.goto(
+                    PAGE_URL,
+                    wait_until="domcontentloaded",
+                    timeout=timeout_ms,
+                )
+
+                page.wait_for_selector(
+                    ".category-tab",
+                    timeout=timeout_ms,
+                )
+                page.wait_for_selector(
+                    ".day-cell",
+                    timeout=timeout_ms,
+                )
+                page.wait_for_selector(
+                    "#channelRows .channel-row",
+                    timeout=timeout_ms,
+                )
+
+                available_dates = page.locator(
+                    ".day-cell"
+                ).evaluate_all(
+                    """cells => [...new Set(
+                        cells
+                            .map(c => c.getAttribute('data-date'))
+                            .filter(Boolean)
+                    )]"""
+                )
+
+                if not available_dates:
+                    raise RuntimeError("No dates found on the page.")
+
+                if requested_start:
+                    if requested_start not in available_dates:
+                        raise RuntimeError(
+                            f"Date {requested_start} is not visible. "
+                            f"Available dates: {available_dates}"
+                        )
+
+                    start_index = available_dates.index(
+                        requested_start
+                    )
+                    available_dates = available_dates[start_index:]
+
+                dates = available_dates[:args.days]
+
+                if len(dates) < args.days:
+                    print(
+                        f"Warning: only {len(dates)} dates "
+                        "are available on the page."
+                    )
+
+                total = len(dates) * len(CATEGORIES)
+                request_number = 0
+
+                for category in CATEGORIES:
+                    print(f"\\n=== {category.upper()} ===")
+
+                    activate_category(
+                        page, category, timeout_ms
+                    )
+
+                    for date_value in dates:
+                        request_number += 1
+
+                        print(
+                            f"[{request_number}/{total}] "
+                            f"{category} - {date_value}"
+                        )
+
+                        activate_date(
+                            page, date_value, timeout_ms
+                        )
+
+                        html = page.content()
+
+                        channels, programmes = parse_channel_rows(
+                            html,
+                            category,
+                        )
+
+                        print(
+                            f"  Channels: {len(channels)}"
+                            f" | Programmes: {len(programmes)}"
+                        )
+
+                        if not channels:
+                            warnings.append(
+                                f"No channels: {category}, {date_value}"
+                            )
+
+                        for channel_id, channel in channels.items():
+                            if channel_id not in all_channels:
+                                all_channels[channel_id] = channel
+                            else:
+                                existing = all_channels[channel_id]
+
+                                if not existing.logo and channel.logo:
+                                    existing.logo = channel.logo
+
+                                if (
+                                    not existing.channel_url
+                                    and channel.channel_url
+                                ):
+                                    existing.channel_url = (
+                                        channel.channel_url
+                                    )
+
+                                groups = set(
+                                    filter(
+                                        None,
+                                        existing.group_title.split(" / "),
+                                    )
+                                )
+                                if channel.group_title:
+                                    groups.add(channel.group_title)
+
+                                existing.group_title = " / ".join(
+                                    sorted(groups)
+                                )
+
+                        for programme in programmes:
+                            key = (
+                                programme.channel_id,
+                                xmltv_timestamp(programme.start),
+                                xmltv_timestamp(programme.stop),
+                                programme.title,
+                            )
+                            all_programmes[key] = programme
+
+                context.close()
+
+            finally:
+                browser.close()
+
+    except Exception as exc:
+        print(f"Error reading the beIN TV Guide: {exc}", file=sys.stderr)
+        print(
+            "No new XML or CSV files were written.",
+            file=sys.stderr,
+        )
+        return 2
+
+    if not all_channels or not all_programmes:
+        print(
+            "No usable channels or programmes were collected.",
+            file=sys.stderr,
+        )
         return 3
 
     programme_list = list(all_programmes.values())
-    counts: dict[str, int] = {}
-    for programme in programme_list:
-        counts[programme.channel_id] = counts.get(programme.channel_id, 0) + 1
 
-    xml_path = output_dir / XML_FILENAME
-    csv_path = output_dir / CSV_FILENAME
+    counts = {}
+    for programme in programme_list:
+        counts[programme.channel_id] = (
+            counts.get(programme.channel_id, 0) + 1
+        )
+
     try:
-        programme_count = write_xml(xml_path, all_channels, programme_list)
+        xml_path = output_dir / XML_FILENAME
+        csv_path = output_dir / CSV_FILENAME
+
+        write_xml(xml_path, all_channels, programme_list)
         write_csv(csv_path, all_channels, counts)
+
     except OSError as exc:
-        print(f"تعذر حفظ الملفات: {exc}", file=sys.stderr)
+        print(f"Error saving output files: {exc}", file=sys.stderr)
         return 4
 
-    print("\nاكتمل التصدير:")
-    print(f"القنوات: {len(all_channels)}")
-    print(f"البرامج: {programme_count}")
+    print("\\nExport completed.")
+    print("Sections: Sports and Entertainment")
+    print(f"Channels: {len(all_channels)}")
+    print(f"Programmes: {len(programme_list)}")
     print(f"XMLTV: {xml_path}")
-    print(f"CSV:   {csv_path}")
-    print("تذكير: يجب أن يطابق tvg-id في قائمة M3U قيمة id في عنصر channel داخل XML.")
-    return 0
+    print(f"CSV: {csv_path}")
 
+    for warning in warnings:
+        print(f"Warning: {warning}")
+
+    return 0
 
 if __name__ == "__main__":
     raise SystemExit(main())
