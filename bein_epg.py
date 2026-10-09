@@ -9,7 +9,7 @@ from urllib.parse import urlparse, unquote
 
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 
-BASE_URL = "https://www.bein.com/en/tv-guide/?c=dz&"
+BASE_URL = "https://www.bein.com/ar/tv-guide/?c=dz&"
 OUTPUT_DIR = Path(__file__).resolve().parent
 OUTPUT_XML = OUTPUT_DIR / "BeIN-EPG.xml"
 OUTPUT_CSV = OUTPUT_DIR / "BeIN-Channels.csv"
@@ -106,17 +106,25 @@ def create_xml(channels, programs):
         if ch.get("logo_url"):
             lines.append(f'    <icon src="{xml_escape(ch["logo_url"])}"/>')
         lines.append("  </channel>")
+
     for p in sorted(programs, key=lambda x: (x["channel_id"].casefold(), x["start_ms"])):
         start = xmltv_datetime(ms_to_datetime(p["start_ms"]))
         stop = xmltv_datetime(ms_to_datetime(p["end_ms"]))
-        lines.append(f'  <programme start="{start}" stop="{stop}" channel="{xml_escape(p["channel_id"])}">')
+
+        if not p.get("title") or p["end_ms"] <= p["start_ms"]:
+            continue
+
+        lines.append(
+            f'  <programme start="{start}" stop="{stop}" '
+            f'channel="{xml_escape(p["channel_id"])}">'
+        )
         lines.append(f'    <title lang="en">{xml_escape(p["title"])}</title>')
-        if p.get("category"):
-            lines.append(f'    <category lang="en">{xml_escape(p["category"])}</category>')
-        lines.append("  </programme>")
-    lines.append("</tv>")
-    OUTPUT_XML.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"Created {OUTPUT_XML}: {len(channels)} channels, {len(programs)} programmes")
+
+        category = clean_text(p.get("category"))
+        if category:
+            lines.append(f'    <category lang="en">{xml_escape(category)}</category>')
+
+        lines.append('  </programme>')
 
 
 def create_csv(channels):
