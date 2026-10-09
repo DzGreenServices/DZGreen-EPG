@@ -13,7 +13,7 @@ from playwright.sync_api import sync_playwright
 # Source: Official beIN TV Guide
 # ============================================================
 
-BASE_URL = "https://www.bein.com/ar/%d8%ac%d8%af%d9%88%d9%84-%d8%a7%d9%84%d8%a8%d8%ab/?c=dz&"
+BASE_URL = "https://www.bein.com/en/tv-guide/?c=dz&"
 
 OUTPUT_XML = "BeIN-EPG.xml"
 OUTPUT_CSV = "BeIN-Channels.csv"
