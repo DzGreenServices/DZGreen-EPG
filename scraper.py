@@ -1,3 +1,4 @@
+
 import csv
 import os
 import re
@@ -11,11 +12,17 @@ import requests
 from bs4 import BeautifulSoup
 
 
+# =========================================================
+# DZGreen ElCinema EPG
+# =========================================================
+
 BASE_URL = "https://elcinema.com"
 GUIDE_URL = "https://elcinema.com/en/tvguide"
 
 OUTPUT_XML = "ElCinema-EPG.xml"
 OUTPUT_CSV = "ElCinema-Channel-Mapping.csv"
+
+TIMEZONE = "+0100"
 
 HEADERS = {
     "User-Agent": (
@@ -26,6 +33,11 @@ HEADERS = {
     "Accept-Language": "en-US,en;q=0.9,ar;q=0.8",
     "Referer": "https://elcinema.com/",
 }
+
+REQUEST_DELAY = 0.5
+
+# Cache work descriptions during this execution.
+DESCRIPTION_CACHE = {}
 
 
 MONTHS = {
@@ -45,74 +57,61 @@ MONTHS = {
     "نوفمبر": 11,
     "ديسمبر": 12,
 
-    "January": 1,
-    "February": 2,
-    "March": 3,
-    "April": 4,
-    "May": 5,
-    "June": 6,
-    "July": 7,
-    "August": 8,
-    "September": 9,
-    "October": 10,
-    "November": 11,
-    "December": 12,
+    "january": 1,
+    "february": 2,
+    "march": 3,
+    "april": 4,
+    "may": 5,
+    "june": 6,
+    "july": 7,
+    "august": 8,
+    "september": 9,
+    "october": 10,
+    "november": 11,
+    "december": 12,
 }
 
+
+# =========================================================
+# TEXT UTILITIES
+# =========================================================
 
 def clean_text(text):
     if not text:
         return ""
 
-    return " ".join(
-        str(text).split()
-    )
+    text = unicodedata.normalize("NFC", str(text))
+    return " ".join(text.split())
 
 
 def remove_diacritics(text):
-    text = unicodedata.normalize(
-        "NFKD",
-        text
-    )
+    text = unicodedata.normalize("NFKD", text)
 
     return "".join(
-        character
-        for character in text
-        if not unicodedata.combining(character)
+        char for char in text
+        if not unicodedata.combining(char)
     )
 
 
 def create_session():
-
     session = requests.Session()
-
-    session.headers.update(
-        HEADERS
-    )
-
+    session.headers.update(HEADERS)
     return session
 
 
-def get_page(
-    session,
-    url,
-    retries=3
-):
+# =========================================================
+# HTTP
+# =========================================================
 
-    for attempt in range(
-        1,
-        retries + 1
-    ):
-
+def get_page(session, url, retries=3):
+    for attempt in range(1, retries + 1):
         try:
-
             response = session.get(
                 url,
-                timeout=30
+                timeout=25
             )
 
             if response.status_code == 200:
-
                 return response
 
             print(
@@ -125,7 +124,6 @@ def get_page(
             )
 
         except requests.RequestException as error:
-
             print(
                 "خطأ اتصال | محاولة",
                 attempt,
@@ -134,32 +132,24 @@ def get_page(
             )
 
         if attempt < retries:
-
-            time.sleep(3)
+            time.sleep(2)
 
     return None
 
 
+# =========================================================
+# CHANNEL DISCOVERY
+# =========================================================
+
 def discover_channels(session):
-
     print()
-    print(
-        "==================================="
-    )
-    print(
-        "اكتشاف قنوات ElCinema"
-    )
-    print(
-        "==================================="
-    )
+    print("===================================")
+    print("اكتشاف قنوات ElCinema")
+    print("===================================")
 
-    response = get_page(
-        session,
-        GUIDE_URL
-    )
+    response = get_page(session, GUIDE_URL)
 
     if not response:
-
         raise RuntimeError(
             "تعذر الوصول إلى دليل ElCinema."
         )
@@ -171,14 +161,8 @@ def discover_channels(session):
 
     channels = {}
 
-    for link in soup.find_all(
-        "a",
-        href=True
-    ):
-
-        href = link[
-            "href"
-        ].strip()
+    for link in soup.find_all("a", href=True):
+        href = link["href"].strip()
 
         match = re.search(
             r"/tvguide/(\d+)/?$",
@@ -186,562 +170,428 @@ def discover_channels(session):
         )
 
         if not match:
-
             continue
 
-        channel_id = match.group(
-            1
+        channel_id = match.group(1)
+
+        name = clean_text(
+            link.get("title", "")
         )
 
-        name = ""
-
-        title_value = link.get(
-            "title"
-        )
-
-        if title_value:
-
+        if not name:
             name = clean_text(
-                title_value
+                link.get("aria-label", "")
             )
 
         if not name:
-
-            aria_value = link.get(
-                "aria-label"
-            )
-
-            if aria_value:
-
-                name = clean_text(
-                    aria_value
-                )
-
-        if not name:
-
-            image = link.find(
-                "img"
-            )
+            image = link.find("img")
 
             if image:
-
                 name = clean_text(
-                    image.get(
-                        "alt",
-                        ""
-                    )
+                    image.get("alt", "")
                 )
 
                 if not name:
-
                     name = clean_text(
-                        image.get(
-                            "title",
-                            ""
-                        )
+                        image.get("title", "")
                     )
 
         if not name:
-
             name = clean_text(
-                link.get_text(
-                    " ",
-                    strip=True
-                )
+                link.get_text(" ", strip=True)
             )
 
         if not name:
-
             continue
 
-        channels[
-            channel_id
-        ] = {
+        channels[channel_id] = {
             "id": channel_id,
             "name": name,
-            "url": urljoin(
-                BASE_URL,
-                href
-            )
+            "url": urljoin(BASE_URL, href)
         }
 
-    print(
-        "القنوات المكتشفة:",
-        len(channels)
-    )
+    result = list(channels.values())
 
-    return list(
-        channels.values()
-    )
+    print("القنوات المكتشفة:", len(result))
 
+    return result
+
+
+# =========================================================
+# DATE AND TIME PARSING
+# =========================================================
 
 def parse_date(text):
-
-    text = clean_text(
-        text
-    )
+    text = clean_text(text)
 
     if not text:
-
         return None
 
+    normalized = remove_diacritics(text).lower()
+
     match = re.search(
-        r"(\d{1,2})\s+([^\s]+)",
-        text
+        r"(\d{1,2})\s+([^\s,]+)",
+        normalized
     )
 
     if not match:
-
         return None
 
-    day = int(
-        match.group(
-            1
-        )
-    )
+    day = int(match.group(1))
+    month_name = match.group(2).strip(".,،")
 
-    month_name = match.group(
-        2
-    )
-
-    month = MONTHS.get(
-        month_name
-    )
+    month = MONTHS.get(month_name)
 
     if not month:
-
         return None
 
     now = datetime.now()
-
-    # ElCinema displays the schedule around the current date.
-    # We choose the closest matching year.
-    possible = []
+    candidates = []
 
     for year in (
         now.year - 1,
         now.year,
         now.year + 1
     ):
-
         try:
-
-            value = datetime(
-                year,
-                month,
-                day
+            candidates.append(
+                datetime(year, month, day)
             )
-
-            possible.append(
-                value
-            )
-
         except ValueError:
-
             pass
 
-    if not possible:
-
+    if not candidates:
         return None
 
-    result = min(
-        possible,
+    return min(
+        candidates,
         key=lambda value: abs(
             (value - now).total_seconds()
         )
     )
 
-    return result
-
 
 def parse_time(text):
-
-    text = clean_text(
-        text
-    )
+    text = clean_text(text)
 
     if not text:
-
         return None
 
-    # English format:
-    # 10:30 AM / 10:30 PM
     match = re.search(
-        r"(\d{1,2}):(\d{2})\s*(AM|PM)",
+        r"\b(\d{1,2}):(\d{2})\s*(AM|PM)\b",
         text,
         re.IGNORECASE
     )
 
     if match:
+        hour = int(match.group(1))
+        minute = int(match.group(2))
+        meridiem = match.group(3).upper()
 
-        hour = int(
-            match.group(
-                1
-            )
-        )
-
-        minute = int(
-            match.group(
-                2
-            )
-        )
-
-        meridiem = match.group(
-            3
-        ).upper()
+        if not (1 <= hour <= 12 and 0 <= minute <= 59):
+            return None
 
         if meridiem == "AM":
-
-            if hour == 12:
-
-                hour = 0
-
+            hour = 0 if hour == 12 else hour
         else:
+            hour = hour if hour == 12 else hour + 12
 
-            if hour != 12:
+        return hour, minute
 
-                hour += 12
-
-        return (
-            hour,
-            minute
-        )
-
-    # 24-hour fallback:
-    # 10:30
     match = re.search(
         r"\b(\d{1,2}):(\d{2})\b",
         text
     )
 
     if match:
+        hour = int(match.group(1))
+        minute = int(match.group(2))
 
-        hour = int(
-            match.group(
-                1
-            )
-        )
-
-        minute = int(
-            match.group(
-                2
-            )
-        )
-
-        if (
-            0 <= hour <= 23
-            and
-            0 <= minute <= 59
-        ):
-
-            return (
-                hour,
-                minute
-            )
+        if 0 <= hour <= 23 and 0 <= minute <= 59:
+            return hour, minute
 
     return None
 
 
 def parse_duration(text):
-
-    text = clean_text(
-        text
-    )
+    text = clean_text(text)
 
     if not text:
-
         return None
 
     patterns = [
+        r"(\d+)\s*hours?\s*(\d+)\s*minutes?",
+        r"(\d+)\s*hrs?\s*(\d+)\s*mins?",
         r"(\d+)\s*minutes?",
         r"(\d+)\s*mins?",
         r"(\d+)\s*دقيقة",
-        r"(\d+)\s*دقائق"
+        r"(\d+)\s*دقائق",
     ]
 
-    for pattern in patterns:
-
+    for index, pattern in enumerate(patterns):
         match = re.search(
             pattern,
             text,
             re.IGNORECASE
         )
 
-        if match:
-
-            value = int(
-                match.group(
-                    1
-                )
-            )
-
-            if (
-                value > 0
-                and
-                value <= 1440
-            ):
-
-                return value
-
-    # Fallback: first integer.
-    match = re.search(
-        r"(\d+)",
-        text
-    )
-
-    if match:
-
-        value = int(
-            match.group(
-                1
-            )
-        )
-
-        if (
-            value > 0
-            and
-            value <= 1440
-        ):
-
-            return value
-
-    return None
-
-
-def is_date_candidate(
-    text
-):
-
-    text = clean_text(
-        text
-    )
-
-    if not text:
-
-        return False
-
-    if not re.search(
-        r"\d{1,2}\s+[^\s]+",
-        text
-    ):
-
-        return False
-
-    return parse_date(
-        text
-    ) is not None
-
-
-def find_date_before(
-    node
-):
-
-    # Search backwards for the closest visible date.
-    previous_nodes = node.find_all_previous(
-        [
-            "div",
-            "p",
-            "h1",
-            "h2",
-            "h3",
-            "h4",
-            "h5",
-            "h6"
-        ],
-        limit=120
-    )
-
-    for previous in previous_nodes:
-
-        text = clean_text(
-            previous.get_text(
-                " ",
-                strip=True
-            )
-        )
-
-        if not is_date_candidate(
-            text
-        ):
-
+        if not match:
             continue
 
-        value = parse_date(
-            text
-        )
+        if index in (0, 1):
+            value = (
+                int(match.group(1)) * 60
+                + int(match.group(2))
+            )
+        else:
+            value = int(match.group(1))
 
-        if value:
-
+        if 0 < value <= 1440:
             return value
 
     return None
 
 
-def extract_programs(
-    soup,
-    channel_id
-):
+# =========================================================
+# DESCRIPTION EXTRACTION
+# =========================================================
 
-    programs = []
+def extract_work_description(session, url):
+    """
+    Retrieve a fuller description from a work page.
+    Results, including empty results, are cached for this run.
+    """
 
-    seen = set()
+    if not url:
+        return ""
 
-    # -------------------------------------------------
-    # ElCinema TV Grid
-    # -------------------------------------------------
+    if url in DESCRIPTION_CACHE:
+        return DESCRIPTION_CACHE[url]
 
-    tvgrid = soup.select_one(
-        "div.tvgrid"
+    response = get_page(session, url)
+
+    if not response:
+        DESCRIPTION_CACHE[url] = ""
+        return ""
+
+    soup = BeautifulSoup(
+        response.text,
+        "html.parser"
     )
 
-    if not tvgrid:
+    description = ""
 
-        # Some pages may use a class combination.
-        tvgrid = soup.select_one(
-            ".tvgrid"
+    # First: metadata descriptions.
+    for selector in (
+        'meta[property="og:description"]',
+        'meta[name="description"]',
+        'meta[name="twitter:description"]',
+    ):
+        element = soup.select_one(selector)
+
+        if not element:
+            continue
+
+        candidate = clean_text(
+            element.get("content", "")
         )
 
-    if not tvgrid:
+        if len(candidate) > len(description):
+            description = candidate
 
+    # Second: visible description areas.
+    selectors = [
+        "[itemprop='description']",
+        ".movie-summary",
+        ".work-summary",
+        ".story .description",
+        ".description",
+        ".synopsis",
+        "article p",
+    ]
+
+    for selector in selectors:
+        for element in soup.select(selector):
+            candidate = clean_text(
+                element.get_text(" ", strip=True)
+            )
+
+            if len(candidate) > len(description):
+                description = candidate
+
+    # Remove common read-more labels.
+    description = re.sub(
+        r"\s*(?:Read more|اقرأ المزيد)\s*",
+        " ",
+        description,
+        flags=re.IGNORECASE
+    )
+
+    description = clean_text(description)
+
+    DESCRIPTION_CACHE[url] = description
+
+    return description
+
+
+def extract_program_description(session, node, title):
+    """
+    Try the guide card first, then the linked work page.
+    """
+
+    candidates = []
+
+    selectors = [
+        "[class*='description']",
+        "[class*='synopsis']",
+        "[class*='summary']",
+        "[itemprop='description']",
+        "p",
+    ]
+
+    for selector in selectors:
+        for element in node.select(selector):
+            candidate = clean_text(
+                element.get_text(" ", strip=True)
+            )
+
+            candidate = re.sub(
+                r"\s*(?:Read more|اقرأ المزيد)\s*",
+                " ",
+                candidate,
+                flags=re.IGNORECASE
+            )
+
+            candidate = clean_text(candidate)
+
+            if not candidate:
+                continue
+
+            if candidate.casefold() == title.casefold():
+                continue
+
+            # Ignore short fragments likely to be labels.
+            if len(candidate) >= 40:
+                candidates.append(candidate)
+
+    description = (
+        max(candidates, key=len)
+        if candidates
+        else ""
+    )
+
+    # If no useful description was found, or it is short,
+    # try retrieving details from the work page.
+    if len(description) < 100:
+        link = node.select_one("a[href*='/work/']")
+
+        if link:
+            work_url = urljoin(
+                BASE_URL,
+                link.get("href", "")
+            )
+
+            full_description = extract_work_description(
+                session,
+                work_url
+            )
+
+            if len(full_description) > len(description):
+                description = full_description
+
+    return clean_text(description)
+
+
+# =========================================================
+# PROGRAM EXTRACTION
+# =========================================================
+
+def extract_programs(soup, channel_id, session):
+    programs = []
+    seen = set()
+
+    tvgrid = soup.select_one(".tvgrid")
+
+    if not tvgrid:
         print(
             "تحذير: لم يتم العثور على tvgrid |",
             channel_id
         )
-
         return programs
 
     current_date = None
-
     previous_start = None
 
-    # Process the grid in document order.
-    for node in tvgrid.find_all(
-        True
-    ):
+    for node in tvgrid.find_all(True):
+        classes = node.get("class", [])
 
-        classes = node.get(
-            "class",
-            []
-        )
-
-        # -------------------------------------------------
-        # Date separator
-        # -------------------------------------------------
-
-        if (
-            node.name == "div"
-            and
-            "dates" in classes
-        ):
-
+        # Date separators.
+        if node.name == "div" and "dates" in classes:
             date_value = parse_date(
-                node.get_text(
-                    " ",
-                    strip=True
-                )
+                node.get_text(" ", strip=True)
             )
 
             if date_value:
-
                 current_date = date_value
                 previous_start = None
 
             continue
 
         if not current_date:
-
             continue
 
-        # -------------------------------------------------
-        # Only top-level program cards
-        # -------------------------------------------------
-
+        # Identify programme cards.
         is_program_card = any(
-            str(item).startswith(
-                "boxed-category-"
-            )
+            str(item).startswith("boxed-category-")
             for item in classes
         )
 
         if not is_program_card:
-
             continue
 
-        # Do not process nested cards.
+        # Skip nested programme cards.
         parent = node.parent
-
         nested = False
 
-        while (
-            parent is not None
-            and
-            parent is not tvgrid
-        ):
-
-            parent_classes = parent.get(
-                "class",
-                []
-            )
+        while parent is not None and parent is not tvgrid:
+            parent_classes = parent.get("class", [])
 
             if any(
-                str(item).startswith(
-                    "boxed-category-"
-                )
+                str(item).startswith("boxed-category-")
                 for item in parent_classes
             ):
-
                 nested = True
-
                 break
 
             parent = parent.parent
 
         if nested:
-
             continue
 
-        # -------------------------------------------------
         # TITLE
-        # -------------------------------------------------
+        title_link = node.select_one("a[href*='/work/']")
 
         title = ""
 
-        title_link = node.select_one(
-            "a[href^='/work/']"
-        )
-
         if title_link:
-
             title = clean_text(
-                title_link.get_text(
-                    " ",
-                    strip=True
-                )
+                title_link.get_text(" ", strip=True)
             )
 
         if not title:
-
             title_node = node.select_one(
                 "ul.unstyled.no-margin li:first-child"
             )
 
             if title_node:
-
                 title = clean_text(
-                    title_node.get_text(
-                        " ",
-                        strip=True
-                    )
+                    title_node.get_text(" ", strip=True)
                 )
 
         if not title:
-
             continue
 
-        # -------------------------------------------------
         # TIME
-        # -------------------------------------------------
-
         time_value = None
 
         time_node = node.select_one(
@@ -749,38 +599,26 @@ def extract_programs(
         )
 
         if time_node:
-
             time_value = parse_time(
-                time_node.get_text(
-                    " ",
-                    strip=True
-                )
+                time_node.get_text(" ", strip=True)
             )
 
-        # Special first card layout.
         if not time_value:
-
             items = node.select(
                 "ul.unstyled.no-margin li"
             )
 
-            if len(items) >= 2:
-
+            for item in items:
                 time_value = parse_time(
-                    items[1].get_text(
-                        " ",
-                        strip=True
-                    )
+                    item.get_text(" ", strip=True)
                 )
 
-        # Whole-card fallback.
+                if time_value:
+                    break
+
         if not time_value:
-
             card_text = clean_text(
-                node.get_text(
-                    " ",
-                    strip=True
-                )
+                node.get_text(" ", strip=True)
             )
 
             time_match = re.search(
@@ -790,67 +628,34 @@ def extract_programs(
             )
 
             if time_match:
-
                 time_value = parse_time(
-                    time_match.group(
-                        0
-                    )
+                    time_match.group(0)
                 )
 
         if not time_value:
-
             continue
 
-        # -------------------------------------------------
         # DURATION
-        # -------------------------------------------------
-
         duration = None
 
-        duration_node = node.select_one(
-            "span.subheader"
-        )
+        duration_node = node.select_one("span.subheader")
 
         if duration_node:
-
             duration = parse_duration(
-                duration_node.get_text(
-                    " ",
-                    strip=True
-                )
+                duration_node.get_text(" ", strip=True)
             )
 
         if not duration:
-
             card_text = clean_text(
-                node.get_text(
-                    " ",
-                    strip=True
-                )
+                node.get_text(" ", strip=True)
             )
 
-            duration_match = re.search(
-                r"\b(\d+)\s*(?:minutes?|mins?|دقيقة|دقائق)\b",
-                card_text,
-                re.IGNORECASE
-            )
-
-            if duration_match:
-
-                duration = int(
-                    duration_match.group(
-                        1
-                    )
-                )
+            duration = parse_duration(card_text)
 
         if not duration:
-
             continue
 
-        # -------------------------------------------------
         # DATETIME
-        # -------------------------------------------------
-
         hour, minute = time_value
 
         start = current_date.replace(
@@ -860,49 +665,40 @@ def extract_programs(
             microsecond=0
         )
 
-        # Midnight rollover.
-        if (
-            previous_start is not None
-            and
-            start < previous_start
-        ):
+        # Handle midnight rollover.
+        if previous_start is not None and start < previous_start:
+            start += timedelta(days=1)
 
-            start += timedelta(
-                days=1
-            )
-
-        stop = (
-            start
-            + timedelta(
-                minutes=duration
-            )
-        )
+        stop = start + timedelta(minutes=duration)
 
         previous_start = start
 
-        # -------------------------------------------------
-        # DUPLICATES
-        # -------------------------------------------------
-
-        key = (
-            start,
-            stop,
+        # DESCRIPTION
+        description = extract_program_description(
+            session,
+            node,
             title
         )
 
-        if key in seen:
-
-            continue
-
-        seen.add(
-            key
+        # DUPLICATE CHECK
+        key = (
+            start,
+            stop,
+            title.casefold()
         )
 
+        if key in seen:
+            continue
+
+        seen.add(key)
+
+        # IMPORTANT: append stays inside the card loop.
         programs.append({
             "channel_id": channel_id,
             "title": title,
+            "description": description,
             "start": start,
-            "stop": stop
+            "stop": stop,
         })
 
     programs.sort(
@@ -912,58 +708,52 @@ def extract_programs(
     return programs
 
 
-def extract_logo(
-    soup
-):
+# =========================================================
+# CHANNEL LOGO
+# =========================================================
 
-    # Prefer the TV Guide logo.
-    for image in soup.find_all(
-        "img"
-    ):
-
-        src = image.get(
-            "src"
-        )
+def extract_logo(soup):
+    for image in soup.find_all("img"):
+        src = image.get("src")
 
         if not src:
-
             continue
 
         if "/tvguide/" in src:
+            return urljoin(BASE_URL, src)
 
-            return urljoin(
-                BASE_URL,
-                src
-            )
+    # Fallback: Open Graph image.
+    og_image = soup.select_one(
+        'meta[property="og:image"]'
+    )
+
+    if og_image:
+        src = og_image.get("content", "")
+
+        if src:
+            return urljoin(BASE_URL, src)
 
     return ""
 
 
-def suggested_tvg_id(
-    channel_id
-):
-
-    return (
-        "elcinema."
-        + str(channel_id)
-    )
+def suggested_tvg_id(channel_id):
+    return "elcinema." + str(channel_id)
 
 
-def process_channel(
-    session,
-    channel
-):
+# =========================================================
+# PROCESS ONE CHANNEL
+# =========================================================
 
+def process_channel(session, channel):
     response = get_page(
         session,
         channel["url"]
     )
 
     if not response:
-
         return {
             "logo": "",
-            "programs": []
+            "programs": [],
         }
 
     soup = BeautifulSoup(
@@ -971,69 +761,48 @@ def process_channel(
         "html.parser"
     )
 
-    logo = extract_logo(
-        soup
-    )
+    logo = extract_logo(soup)
 
     programs = extract_programs(
         soup,
-        channel["id"]
+        channel["id"],
+        session
     )
 
     return {
         "logo": logo,
-        "programs": programs
+        "programs": programs,
     }
 
 
-def create_mapping_csv(
-    channels,
-    results
-):
+# =========================================================
+# CHANNEL MAPPING CSV
+# =========================================================
 
+def create_mapping_csv(channels, results):
     rows = []
 
     for channel in channels:
-
-        channel_id = channel[
-            "id"
-        ]
-
-        result = results.get(
-            channel_id,
-            {}
-        )
-
-        programs = result.get(
-            "programs",
-            []
-        )
-
-        logo = result.get(
-            "logo",
-            ""
-        )
+        channel_id = channel["id"]
+        result = results.get(channel_id, {})
+        programs = result.get("programs", [])
 
         rows.append({
             "ElCinema_ID": channel_id,
-            "Channel_Name": channel[
-                "name"
-            ],
-            "Suggested_tvg_id": suggested_tvg_id(
-                channel_id
-            ),
-            "Logo": logo,
-            "Guide_URL": channel[
-                "url"
-            ],
-            "Programs": len(
-                programs
+            "Channel_Name": channel["name"],
+            "Suggested_tvg_id": suggested_tvg_id(channel_id),
+            "Logo": result.get("logo", ""),
+            "Guide_URL": channel["url"],
+            "Programs": len(programs),
+            "Programs_With_Description": sum(
+                1 for program in programs
+                if program.get("description")
             ),
             "Status": (
                 "HAS_PROGRAMS"
                 if programs
                 else "NO_PROGRAMS"
-            )
+            ),
         })
 
     rows.sort(
@@ -1043,13 +812,14 @@ def create_mapping_csv(
         )
     )
 
+    temporary_file = OUTPUT_CSV + ".tmp"
+
     with open(
-        OUTPUT_CSV,
+        temporary_file,
         "w",
         newline="",
         encoding="utf-8-sig"
     ) as file:
-
         writer = csv.DictWriter(
             file,
             fieldnames=[
@@ -1059,234 +829,192 @@ def create_mapping_csv(
                 "Logo",
                 "Guide_URL",
                 "Programs",
-                "Status"
+                "Programs_With_Description",
+                "Status",
             ]
         )
 
         writer.writeheader()
+        writer.writerows(rows)
 
-        writer.writerows(
-            rows
-        )
+    os.replace(temporary_file, OUTPUT_CSV)
 
 
-def create_xml(
-    channels,
-    results
-):
+# =========================================================
+# XMLTV GENERATION
+# =========================================================
 
+def create_xml(channels, results):
     tv = ET.Element(
         "tv",
         {
-            "generator-info-name":
-                "DZGreen ElCinema EPG",
+            "generator-info-name": "DZGreen ElCinema EPG",
             "generator-info-url":
                 "https://github.com/DzGreenServices/DZGreen-EPG",
             "source-info-url":
-                "https://elcinema.com/en/tvguide"
+                "https://elcinema.com/en/tvguide",
         }
     )
 
     active_channels = []
-
     total_programs = 0
+    total_descriptions = 0
 
-    # -------------------------------------------------
-    # CHANNELS FIRST
-    # -------------------------------------------------
-
+    # Add channels that have programmes.
     for channel in channels:
-
-        channel_id = channel[
-            "id"
-        ]
-
-        result = results.get(
-            channel_id,
-            {}
-        )
-
-        programs = result.get(
-            "programs",
-            []
-        )
+        channel_id = channel["id"]
+        result = results.get(channel_id, {})
+        programs = result.get("programs", [])
 
         if not programs:
-
             continue
 
-        active_channels.append(
-            (
-                channel,
-                result
-            )
-        )
-
-        tvg_id = suggested_tvg_id(
-            channel_id
-        )
+        active_channels.append((channel, result))
 
         channel_element = ET.SubElement(
             tv,
             "channel",
-            {
-                "id": tvg_id
-            }
+            {"id": suggested_tvg_id(channel_id)}
         )
 
         display_name = ET.SubElement(
             channel_element,
             "display-name",
-            {
-                "lang": "en"
-            }
+            {"lang": "en"}
         )
 
-        display_name.text = channel[
-            "name"
-        ]
+        display_name.text = channel["name"]
 
-        logo = result.get(
-            "logo",
-            ""
-        )
+        logo = result.get("logo", "")
 
         if logo:
-
             ET.SubElement(
                 channel_element,
                 "icon",
-                {
-                    "src": logo
-                }
+                {"src": logo}
             )
 
-    # -------------------------------------------------
-    # PROGRAMMES AFTER ALL CHANNELS
-    # -------------------------------------------------
-
+    # Add programmes only after all channels.
     for channel, result in active_channels:
+        tvg_id = suggested_tvg_id(channel["id"])
 
-        tvg_id = suggested_tvg_id(
-            channel["id"]
-        )
+        for program in result.get("programs", []):
+            start = program.get("start")
+            stop = program.get("stop")
+            program_title = clean_text(
+                program.get("title", "")
+            )
 
-        programs = result.get(
-            "programs",
-            []
-        )
+            if not start or not stop or not program_title:
+                continue
 
-        for program in programs:
-
-            total_programs += 1
+            if stop <= start:
+                continue
 
             programme = ET.SubElement(
                 tv,
                 "programme",
                 {
                     "channel": tvg_id,
-                    "start": program[
-                        "start"
-                    ].strftime(
-                        "%Y%m%d%H%M%S +0100"
+                    "start": start.strftime(
+                        "%Y%m%d%H%M%S " + TIMEZONE
                     ),
-                    "stop": program[
-                        "stop"
-                    ].strftime(
-                        "%Y%m%d%H%M%S +0100"
-                    )
+                    "stop": stop.strftime(
+                        "%Y%m%d%H%M%S " + TIMEZONE
+                    ),
                 }
             )
 
-            title = ET.SubElement(
+            title_element = ET.SubElement(
                 programme,
                 "title",
-                {
-                    "lang": "en"
-                }
+                {"lang": "en"}
             )
 
-            title.text = program[
-                "title"
-            ]
+            title_element.text = program_title
 
+            description = clean_text(
+                program.get("description", "")
+            )
+
+            if description:
+                desc_element = ET.SubElement(
+                    programme,
+                    "desc",
+                    {"lang": "en"}
+                )
+
+                desc_element.text = description
+                total_descriptions += 1
+
+            total_programs += 1
+
+    # Never replace the previous XML with an empty guide.
     if total_programs == 0:
-
         raise RuntimeError(
-            "لم يتم استخراج أي برنامج."
+            "لم يتم استخراج أي برنامج. "
+            "لم يتم استبدال ملف XML السابق."
         )
 
-    ET.indent(
-        tv,
-        space="  "
-    )
+    ET.indent(tv, space="  ")
 
-    temporary_file = (
-        OUTPUT_XML
-        + ".tmp"
-    )
+    temporary_file = OUTPUT_XML + ".tmp"
 
-    tree = ET.ElementTree(
-        tv
-    )
+    try:
+        tree = ET.ElementTree(tv)
 
-    tree.write(
-        temporary_file,
-        encoding="utf-8",
-        xml_declaration=True
-    )
+        tree.write(
+            temporary_file,
+            encoding="utf-8",
+            xml_declaration=True
+        )
 
-    os.replace(
-        temporary_file,
-        OUTPUT_XML
-    )
+        # Verify the temporary XML before replacing the old file.
+        ET.parse(temporary_file)
+
+        os.replace(
+            temporary_file,
+            OUTPUT_XML
+        )
+
+    finally:
+        if os.path.exists(temporary_file):
+            os.remove(temporary_file)
 
     return (
         len(active_channels),
-        total_programs
+        total_programs,
+        total_descriptions
     )
 
+
+# =========================================================
+# MAIN
+# =========================================================
 
 def main():
+    DESCRIPTION_CACHE.clear()
 
     print()
-    print(
-        "==================================="
-    )
-    print(
-        "DZGreen ElCinema MASTER EPG"
-    )
-    print(
-        "==================================="
-    )
+    print("===================================")
+    print("DZGreen ElCinema MASTER EPG")
+    print("===================================")
 
     session = create_session()
 
-    channels = discover_channels(
-        session
-    )
+    channels = discover_channels(session)
 
     if not channels:
-
         raise RuntimeError(
             "لم يتم العثور على قنوات."
         )
 
     results = {}
 
+    total_channels = len(channels)
     successful_channels = 0
 
-    total_programs = 0
-
-    total_channels = len(
-        channels
-    )
-
-    for index, channel in enumerate(
-        channels,
-        start=1
-    ):
-
+    for index, channel in enumerate(channels, start=1):
         print()
         print(
             "[",
@@ -1300,105 +1028,72 @@ def main():
         )
 
         try:
-
             result = process_channel(
                 session,
                 channel
             )
 
-            results[
-                channel["id"]
-            ] = result
+            results[channel["id"]] = result
 
-            count = len(
-                result["programs"]
+            programs = result["programs"]
+            count = len(programs)
+
+            descriptions = sum(
+                1 for program in programs
+                if program.get("description")
             )
 
-            print(
-                "البرامج:",
-                count
-            )
+            print("البرامج:", count)
+            print("البرامج ذات الوصف:", descriptions)
 
-            if count > 0:
-
+            if count:
                 successful_channels += 1
 
-                total_programs += count
-
         except Exception as error:
+            print("خطأ:", error)
 
-            print(
-                "خطأ:",
-                error
-            )
-
-            results[
-                channel["id"]
-            ] = {
+            results[channel["id"]] = {
                 "logo": "",
-                "programs": []
+                "programs": [],
             }
 
-        time.sleep(
-            0.5
-        )
+        time.sleep(REQUEST_DELAY)
 
     create_mapping_csv(
         channels,
         results
     )
 
-    channels_count, xml_programs = create_xml(
+    channels_count, xml_programs, xml_descriptions = create_xml(
         channels,
         results
     )
 
     print()
-    print(
-        "==================================="
-    )
-    print(
-        "النتيجة النهائية"
-    )
-    print(
-        "==================================="
-    )
+    print("===================================")
+    print("النتيجة النهائية")
+    print("===================================")
 
-    print(
-        "القنوات المكتشفة:",
-        total_channels
-    )
+    print("القنوات المكتشفة:", total_channels)
+    print("القنوات التي لها برامج:", successful_channels)
+    print("القنوات داخل XML:", channels_count)
+    print("إجمالي البرامج:", xml_programs)
+    print("البرامج التي لها وصف:", xml_descriptions)
+    print("صفحات الأعمال المخزنة مؤقتًا:", len(DESCRIPTION_CACHE))
+    print("CSV:", OUTPUT_CSV)
+    print("XML:", OUTPUT_XML)
 
-    print(
-        "القنوات التي لها برامج:",
-        successful_channels
-    )
+    if xml_descriptions == 0:
+        print()
+        print(
+            "تنبيه: لم يتم استخراج أي وصف. "
+            "يجب فحص HTML الخاص ببطاقات البرامج وصفحات الأعمال."
+        )
 
-    print(
-        "القنوات داخل XML:",
-        channels_count
-    )
+    print("===================================")
 
-    print(
-        "إجمالي البرامج:",
-        xml_programs
-    )
-
-    print(
-        "CSV:",
-        OUTPUT_CSV
-    )
-
-    print(
-        "XML:",
-        OUTPUT_XML
-    )
-
-    print(
-        "==================================="
-    )
+    session.close()
 
 
 if __name__ == "__main__":
-
     main()
