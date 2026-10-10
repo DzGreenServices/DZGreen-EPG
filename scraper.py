@@ -1,4 +1,3 @@
-
 import csv
 import re
 import time
@@ -7,7 +6,6 @@ from datetime import datetime, date, time as dt_time, timedelta, timezone
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import local
-from urllib.parse import urljoin
 from zoneinfo import ZoneInfo
 
 import requests
@@ -40,6 +38,27 @@ USER_AGENT = (
 CAIRO = ZoneInfo("Africa/Cairo")
 ALGIERS = ZoneInfo("Africa/Algiers")
 
+
+# ============================================================
+# CHANNEL NAME OVERRIDES
+# ============================================================
+# أضف هنا أسماء القنوات التي تريد تثبيتها يدويًا.
+# المفتاح هو رقم قناة ElCinema، وليس اسم القناة.
+#
+# مثال:
+# قناة ElCinema رقم 1127 يجب أن يظهر اسمها MBC 1
+#
+# لا تضف اسم قناة إلا إذا كنت متأكدًا من مطابقته.
+
+CHANNEL_NAME_OVERRIDES = {
+    "1127": "MBC 1",
+}
+
+
+# ============================================================
+# REGULAR EXPRESSIONS
+# ============================================================
+
 TIME_RE = re.compile(
     r"(\d{1,2}:\d{2})\s*"
     r"(AM|PM|صباحًا|صباحاً|مساءً|مساءاً|صباحا|مساء)?",
@@ -51,7 +70,10 @@ DURATION_RE = re.compile(
     re.IGNORECASE,
 )
 
-CHANNEL_RE = re.compile(r"/(?:en/)?tvguide/(\d+)/?")
+CHANNEL_RE = re.compile(
+    r"/(?:en/)?tvguide/(\d+)/?"
+)
+
 DATE_RE = re.compile(
     r"(\d{1,2})\s+([A-Za-z]+)",
     re.IGNORECASE,
@@ -72,6 +94,11 @@ MONTHS = {
     "december": 12,
 }
 
+
+# ============================================================
+# LOGGING
+# ============================================================
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(message)s",
@@ -86,7 +113,11 @@ _thread_local = local()
 # ============================================================
 
 def get_session():
-    session = getattr(_thread_local, "session", None)
+    session = getattr(
+        _thread_local,
+        "session",
+        None,
+    )
 
     if session is None:
         session = requests.Session()
@@ -96,7 +127,13 @@ def get_session():
             connect=3,
             read=2,
             backoff_factor=0.7,
-            status_forcelist=(429, 500, 502, 503, 504),
+            status_forcelist=(
+                429,
+                500,
+                502,
+                503,
+                504,
+            ),
             allowed_methods=frozenset(["GET"]),
             respect_retry_after_header=True,
         )
@@ -107,8 +144,15 @@ def get_session():
             pool_maxsize=4,
         )
 
-        session.mount("https://", adapter)
-        session.mount("http://", adapter)
+        session.mount(
+            "https://",
+            adapter,
+        )
+
+        session.mount(
+            "http://",
+            adapter,
+        )
 
         session.headers.update({
             "User-Agent": USER_AGENT,
@@ -160,11 +204,16 @@ def discover_channels():
             "Cannot download the main TV guide."
         )
 
-    soup = BeautifulSoup(html, "html.parser")
+    soup = BeautifulSoup(
+        html,
+        "html.parser",
+    )
+
     channels = {}
 
     for link in soup.select("a[href]"):
         href = link.get("href", "")
+
         match = CHANNEL_RE.search(href)
 
         if not match:
@@ -173,7 +222,8 @@ def discover_channels():
         channel_number = match.group(1)
 
         channels[channel_number] = (
-            f"{BASE_URL}/en/tvguide/{channel_number}/"
+            f"{BASE_URL}/en/tvguide/"
+            f"{channel_number}/"
         )
 
     log.info(
@@ -189,19 +239,23 @@ def discover_channels():
 # ============================================================
 
 def parse_guide_date(text):
-    match = DATE_RE.search(text.strip())
+    match = DATE_RE.search(
+        text.strip()
+    )
 
     if not match:
         return None
 
     day = int(match.group(1))
     month_name = match.group(2).lower()
+
     month = MONTHS.get(month_name)
 
     if not month:
         return None
 
     today = datetime.now(CAIRO).date()
+
     candidates = []
 
     for year in (
@@ -210,7 +264,13 @@ def parse_guide_date(text):
         today.year + 1,
     ):
         try:
-            candidates.append(date(year, month, day))
+            candidates.append(
+                date(
+                    year,
+                    month,
+                    day,
+                )
+            )
         except ValueError:
             pass
 
@@ -232,37 +292,62 @@ def parse_start_datetime(date_value, time_text):
         return None
 
     hour_minute = match.group(1)
-    period = (match.group(2) or "").strip().lower()
+
+    period = (
+        match.group(2) or ""
+    ).strip().lower()
 
     try:
         parsed_time = datetime.strptime(
             hour_minute,
             "%I:%M",
         ).time()
+
     except ValueError:
         return None
 
     hour = parsed_time.hour
     minute = parsed_time.minute
 
-    if period in ("pm", "مساءً", "مساءاً", "مساء"):
+    if period in (
+        "pm",
+        "مساءً",
+        "مساءاً",
+        "مساء",
+    ):
         if hour < 12:
             hour += 12
 
-    elif period in ("am", "صباحًا", "صباحاً", "صباحا"):
+    elif period in (
+        "am",
+        "صباحًا",
+        "صباحاً",
+        "صباحا",
+    ):
         if hour == 12:
             hour = 0
 
     return datetime.combine(
         date_value,
-        dt_time(hour, minute),
+        dt_time(
+            hour,
+            minute,
+        ),
         tzinfo=CAIRO,
     )
 
 
 def xmltv_timestamp(value):
-    # Keep all programme times in Algeria local time.
-    return value.astimezone(ALGIERS).strftime(
+    """
+    Convert programme times to Algeria local time.
+
+    Output example:
+    20261010180000 +0100
+    """
+
+    return value.astimezone(
+        ALGIERS
+    ).strftime(
         "%Y%m%d%H%M%S %z"
     )
 
@@ -279,32 +364,35 @@ def clean_channel_name(name):
     ).strip()
 
 
-def channel_name_aliases(name):
+def get_channel_display_name(channel):
     """
-    Preserve the original channel name and add a simplified
-    alias when the name ends with 'Channel'.
+    Return one display name for each XMLTV channel.
+
+    Explicit overrides take priority.
+    Otherwise use the channel heading from ElCinema.
     """
-    name = clean_channel_name(name)
 
-    if not name:
-        return []
+    channel_number = str(
+        channel["number"]
+    )
 
-    aliases = [name]
+    override = CHANNEL_NAME_OVERRIDES.get(
+        channel_number
+    )
 
-    simplified = re.sub(
-        r"\s+channel$",
-        "",
-        name,
-        flags=re.IGNORECASE,
-    ).strip()
+    if override:
+        return clean_channel_name(
+            override
+        )
 
-    if (
-        simplified
-        and simplified.casefold() != name.casefold()
-    ):
-        aliases.append(simplified)
+    name = clean_channel_name(
+        channel.get("name", "")
+    )
 
-    return aliases
+    if name:
+        return name
+
+    return channel_number
 
 
 # ============================================================
@@ -333,12 +421,16 @@ def parse_program_card(card, guide_date):
         strip=True,
     )
 
-    duration_match = DURATION_RE.search(duration_text)
+    duration_match = DURATION_RE.search(
+        duration_text
+    )
 
     if not duration_match:
         return None
 
-    duration = int(duration_match.group(1))
+    duration = int(
+        duration_match.group(1)
+    )
 
     if duration <= 0 or duration > 1440:
         return None
@@ -353,30 +445,44 @@ def parse_program_card(card, guide_date):
 
     title_link = None
 
-    for link in card.select("a[href*='/work/']"):
-        if link.get_text(" ", strip=True):
+    for link in card.select(
+        "a[href*='/work/']"
+    ):
+        if link.get_text(
+            " ",
+            strip=True,
+        ):
             title_link = link
             break
 
     if not title_link:
         return None
 
-    title = title_link.get_text(
-        " ",
-        strip=True,
+    title = clean_channel_name(
+        title_link.get_text(
+            " ",
+            strip=True,
+        )
     )
 
     if not title:
         return None
 
-    start_utc = start_cairo.astimezone(timezone.utc)
+    start_utc = start_cairo.astimezone(
+        timezone.utc
+    )
 
     end_utc = start_utc + timedelta(
         minutes=duration
     )
 
-    start_algiers = start_utc.astimezone(ALGIERS)
-    end_algiers = end_utc.astimezone(ALGIERS)
+    start_algiers = start_utc.astimezone(
+        ALGIERS
+    )
+
+    end_algiers = end_utc.astimezone(
+        ALGIERS
+    )
 
     return {
         "title": title,
@@ -412,7 +518,10 @@ def parse_channel_page(item):
     )
 
     channel_name = clean_channel_name(
-        heading.get_text(" ", strip=True)
+        heading.get_text(
+            " ",
+            strip=True,
+        )
         if heading
         else channel_number
     )
@@ -424,9 +533,15 @@ def parse_channel_page(item):
     for element in soup.select(
         "div.dates, div.row"
     ):
-        if "dates" in element.get("class", []):
+        if "dates" in element.get(
+            "class",
+            [],
+        ):
             parsed_date = parse_guide_date(
-                element.get_text(" ", strip=True)
+                element.get_text(
+                    " ",
+                    strip=True,
+                )
             )
 
             if parsed_date:
@@ -451,7 +566,10 @@ def parse_channel_page(item):
                 for link in element.select(
                     "a[href*='/work/']"
                 )
-                if link.get_text(" ", strip=True)
+                if link.get_text(
+                    " ",
+                    strip=True,
+                )
             ),
             None,
         )
@@ -463,14 +581,20 @@ def parse_channel_page(item):
         ):
             continue
 
-        if not TIME_RE.search(
-            time_element.get_text(" ", strip=True)
-        ):
+        time_text = time_element.get_text(
+            " ",
+            strip=True,
+        )
+
+        duration_text = duration_element.get_text(
+            " ",
+            strip=True,
+        )
+
+        if not TIME_RE.search(time_text):
             continue
 
-        if not DURATION_RE.search(
-            duration_element.get_text(" ", strip=True)
-        ):
+        if not DURATION_RE.search(duration_text):
             continue
 
         programme = parse_program_card(
@@ -490,7 +614,10 @@ def parse_channel_page(item):
             continue
 
         seen.add(unique_key)
-        programmes.append(programme)
+
+        programmes.append(
+            programme
+        )
 
     programmes.sort(
         key=lambda programme: programme["start"]
@@ -511,7 +638,8 @@ def parse_channel_page(item):
 
 
 # ============================================================
-# XMLTV GENERATION — MATCH SUCCESSFUL TEST.XML
+# XMLTV GENERATION
+# MATCH SUCCESSFUL SIPTV TEST STRUCTURE
 # ============================================================
 
 def add_text(parent, tag, value, **attributes):
@@ -528,7 +656,7 @@ def add_text(parent, tag, value, **attributes):
 
 
 def write_xmltv(channel_results):
-    # Match the successful test.xml top-level structure.
+    # Root element follows the successful test.
     tv = ET.Element(
         "tv",
         {
@@ -538,45 +666,63 @@ def write_xmltv(channel_results):
 
     known_channel_ids = set()
 
-    # 1. Write channel definitions.
+    # --------------------------------------------------------
+    # 1. CHANNEL DEFINITIONS
+    # --------------------------------------------------------
+
     for channel in channel_results:
-        channel_id = f"elcinema.{channel['number']}"
+        channel_id = (
+            f"elcinema.{channel['number']}"
+        )
 
         if channel_id in known_channel_ids:
             continue
 
-        known_channel_ids.add(channel_id)
+        known_channel_ids.add(
+            channel_id
+        )
 
         channel_element = ET.SubElement(
             tv,
             "channel",
-            {"id": channel_id},
+            {
+                "id": channel_id,
+            },
         )
 
-        aliases = channel_name_aliases(
-            channel["name"]
+        # Exactly ONE display-name per channel.
+        display_name = get_channel_display_name(
+            channel
         )
 
-        for alias in aliases:
-            add_text(
-                channel_element,
-                "display-name",
-                alias,
-                lang="en",
-            )
+        add_text(
+            channel_element,
+            "display-name",
+            display_name,
+            lang="en",
+        )
 
-    # 2. Write programme entries.
+    # --------------------------------------------------------
+    # 2. PROGRAMMES
+    # --------------------------------------------------------
+
     total_programmes = 0
     invalid_programmes = 0
 
     for channel in channel_results:
-        channel_id = f"elcinema.{channel['number']}"
+        channel_id = (
+            f"elcinema.{channel['number']}"
+        )
 
         for programme in channel["programmes"]:
             start = programme.get("start")
             end = programme.get("end")
+
             title = clean_channel_name(
-                programme.get("title", "")
+                programme.get(
+                    "title",
+                    "",
+                )
             )
 
             if not start or not end or not title:
@@ -597,7 +743,7 @@ def write_xmltv(channel_results):
                 },
             )
 
-            # Same title structure as successful test.xml.
+            # Same programme title structure as the test.
             add_text(
                 programme_element,
                 "title",
@@ -607,13 +753,23 @@ def write_xmltv(channel_results):
 
             total_programmes += 1
 
-    # 3. Write the XML file.
+    # --------------------------------------------------------
+    # 3. WRITE XML FILE
+    # --------------------------------------------------------
+
+    OUTPUT_DIR.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
     ET.indent(
         tv,
         space="  ",
     )
 
-    tree = ET.ElementTree(tv)
+    tree = ET.ElementTree(
+        tv
+    )
 
     tree.write(
         XML_FILE,
@@ -621,41 +777,127 @@ def write_xmltv(channel_results):
         xml_declaration=True,
     )
 
-    # 4. Validate XML syntax and channel references.
-    parsed_root = ET.parse(XML_FILE).getroot()
+    # --------------------------------------------------------
+    # 4. VALIDATE GENERATED XML
+    # --------------------------------------------------------
+
+    parsed_root = ET.parse(
+        XML_FILE
+    ).getroot()
+
+    if parsed_root.tag != "tv":
+        raise RuntimeError(
+            "Invalid XMLTV root element."
+        )
+
+    if parsed_root.get(
+        "generator-info-name"
+    ) != "DZGreen Test":
+        raise RuntimeError(
+            "Unexpected XMLTV generator name."
+        )
+
+    parsed_channels = parsed_root.findall(
+        "channel"
+    )
+
+    parsed_programmes = parsed_root.findall(
+        "programme"
+    )
 
     parsed_channel_ids = {
         channel.get("id")
-        for channel in parsed_root.findall("channel")
+        for channel in parsed_channels
     }
 
+    # Check duplicate channel IDs.
+    if len(parsed_channel_ids) != len(
+        parsed_channels
+    ):
+        raise RuntimeError(
+            "Duplicate channel IDs found in XMLTV."
+        )
+
+    # Check one display-name per channel.
+    for channel in parsed_channels:
+        display_names = channel.findall(
+            "display-name"
+        )
+
+        if len(display_names) != 1:
+            raise RuntimeError(
+                "Each channel must contain exactly "
+                "one display-name: "
+                + str(channel.get("id"))
+            )
+
+    # Check programme references and required fields.
     missing_channel_references = []
 
-    for programme in parsed_root.findall("programme"):
-        channel_id = programme.get("channel")
+    for programme in parsed_programmes:
+        channel_id = programme.get(
+            "channel"
+        )
 
         if channel_id not in parsed_channel_ids:
-            missing_channel_references.append(channel_id)
+            missing_channel_references.append(
+                channel_id
+            )
+
+        if not programme.get("start"):
+            raise RuntimeError(
+                "Programme without start timestamp."
+            )
+
+        if not programme.get("stop"):
+            raise RuntimeError(
+                "Programme without stop timestamp."
+            )
+
+        titles = programme.findall(
+            "title"
+        )
+
+        if not titles or not any(
+            (title.text or "").strip()
+            for title in titles
+        ):
+            raise RuntimeError(
+                "Programme without a valid title."
+            )
 
     if missing_channel_references:
         raise RuntimeError(
-            "XMLTV contains programmes referencing "
-            "undefined channels: "
+            "Programmes reference undefined channels: "
             + ", ".join(
-                sorted(set(missing_channel_references))
+                sorted(
+                    set(missing_channel_references)
+                )
             )
         )
 
-    if total_programmes == 0:
+    if not parsed_programmes:
         raise RuntimeError(
             "XMLTV contains no valid programmes."
         )
 
     log.info("")
     log.info("XML validation passed.")
-    log.info("Defined channels: %s", len(parsed_channel_ids))
-    log.info("Written programmes: %s", total_programmes)
-    log.info("Skipped invalid programmes: %s", invalid_programmes)
+    log.info(
+        "Defined channels: %s",
+        len(parsed_channels),
+    )
+    log.info(
+        "Written programmes: %s",
+        len(parsed_programmes),
+    )
+    log.info(
+        "Skipped invalid programmes: %s",
+        invalid_programmes,
+    )
+    log.info(
+        "XMLTV structure: compatible with the test layout."
+    )
 
 
 # ============================================================
@@ -663,11 +905,17 @@ def write_xmltv(channel_results):
 # ============================================================
 
 def write_csv(channel_results):
+    OUTPUT_DIR.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
     with CSV_FILE.open(
         "w",
         newline="",
         encoding="utf-8-sig",
     ) as file:
+
         writer = csv.DictWriter(
             file,
             fieldnames=[
@@ -675,6 +923,7 @@ def write_csv(channel_results):
                 "channel_name",
                 "tvguide_url",
                 "xmltv_id",
+                "display_name",
                 "programmes_count",
             ],
         )
@@ -686,7 +935,12 @@ def write_csv(channel_results):
                 "channel_id": channel["number"],
                 "channel_name": channel["name"],
                 "tvguide_url": channel["url"],
-                "xmltv_id": f"elcinema.{channel['number']}",
+                "xmltv_id": (
+                    f"elcinema.{channel['number']}"
+                ),
+                "display_name": (
+                    get_channel_display_name(channel)
+                ),
                 "programmes_count": len(
                     channel["programmes"]
                 ),
@@ -717,6 +971,7 @@ def main():
     with ThreadPoolExecutor(
         max_workers=MAX_WORKERS
     ) as executor:
+
         futures = {
             executor.submit(
                 parse_channel_page,
@@ -726,17 +981,23 @@ def main():
         }
 
         for future in as_completed(futures):
+            channel_number = futures[future]
+
             try:
-                results.append(future.result())
+                results.append(
+                    future.result()
+                )
 
             except Exception:
                 log.exception(
                     "Channel processing failed: %s",
-                    futures[future],
+                    channel_number,
                 )
 
     results.sort(
-        key=lambda channel: int(channel["number"])
+        key=lambda channel: int(
+            channel["number"]
+        )
     )
 
     total_programmes = sum(
@@ -750,18 +1011,38 @@ def main():
             "XMLTV was not generated."
         )
 
-    write_xmltv(results)
-    write_csv(results)
+    write_xmltv(
+        results
+    )
+
+    write_csv(
+        results
+    )
 
     elapsed = time.monotonic() - started
 
     log.info("")
     log.info("Finished successfully.")
-    log.info("Channels processed: %s", len(results))
-    log.info("Programmes extracted: %s", total_programmes)
-    log.info("XMLTV: %s", XML_FILE)
-    log.info("CSV: %s", CSV_FILE)
-    log.info("Elapsed: %.1f seconds", elapsed)
+    log.info(
+        "Channels processed: %s",
+        len(results),
+    )
+    log.info(
+        "Programmes extracted: %s",
+        total_programmes,
+    )
+    log.info(
+        "XMLTV: %s",
+        XML_FILE,
+    )
+    log.info(
+        "CSV: %s",
+        CSV_FILE,
+    )
+    log.info(
+        "Elapsed: %.1f seconds",
+        elapsed,
+    )
 
 
 if __name__ == "__main__":
