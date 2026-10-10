@@ -1,4 +1,4 @@
-
+```python
 import csv
 import re
 import time
@@ -51,7 +51,6 @@ DURATION_RE = re.compile(
     re.IGNORECASE,
 )
 
-WORK_RE = re.compile(r"/(?:en/)?work/(\d+)/?")
 CHANNEL_RE = re.compile(r"/(?:en/)?tvguide/(\d+)/?")
 DATE_RE = re.compile(
     r"(\d{1,2})\s+([A-Za-z]+)",
@@ -211,9 +210,7 @@ def parse_guide_date(text):
         today.year + 1,
     ):
         try:
-            candidates.append(
-                date(year, month, day)
-            )
+            candidates.append(date(year, month, day))
         except ValueError:
             pass
 
@@ -264,45 +261,52 @@ def parse_start_datetime(date_value, time_text):
 
 
 def xmltv_timestamp(value):
-    return value.strftime("%Y%m%d%H%M%S %z")
+    # All timestamps are written in Algeria local time.
+    return value.astimezone(ALGIERS).strftime(
+        "%Y%m%d%H%M%S %z"
+    )
+
+
+# ============================================================
+# CHANNEL NAME HELPERS
+# ============================================================
+
+def clean_channel_name(name):
+    name = re.sub(r"\s+", " ", name or "").strip()
+    return name
+
+
+def channel_name_aliases(name):
+    """
+    Keep the original name and add a simpler alias when
+    the name ends with the word 'Channel'.
+
+    Example:
+        MBC 1 Channel -> MBC 1 Channel + MBC 1
+    """
+    name = clean_channel_name(name)
+
+    if not name:
+        return []
+
+    aliases = [name]
+
+    simplified = re.sub(
+        r"\s+channel$",
+        "",
+        name,
+        flags=re.IGNORECASE,
+    ).strip()
+
+    if simplified and simplified.casefold() != name.casefold():
+        aliases.append(simplified)
+
+    return aliases
 
 
 # ============================================================
 # PROGRAM CARD
 # ============================================================
-
-def find_program_card(link):
-    card = link.find_parent(
-        "div",
-        class_="row",
-    )
-
-    if not card:
-        return None
-
-    time_element = card.select_one(
-        "ul.unstyled.text-center > li:first-child"
-    )
-
-    duration_element = card.select_one(
-        "ul.unstyled.text-center span.subheader"
-    )
-
-    if not time_element or not duration_element:
-        return None
-
-    if not TIME_RE.search(
-        time_element.get_text(" ", strip=True)
-    ):
-        return None
-
-    if not DURATION_RE.search(
-        duration_element.get_text(" ", strip=True)
-    ):
-        return None
-
-    return card
-
 
 def parse_program_card(card, guide_date):
     time_element = card.select_one(
@@ -344,7 +348,6 @@ def parse_program_card(card, guide_date):
     if not start_cairo:
         return None
 
-    # Use the text link, not the poster link.
     title_link = None
 
     for link in card.select("a[href*='/work/']"):
@@ -363,8 +366,6 @@ def parse_program_card(card, guide_date):
     if not title:
         return None
 
-    # Convert Cairo time to Algeria time.
-    # Calculate the end in UTC to handle DST transitions.
     start_utc = start_cairo.astimezone(timezone.utc)
 
     end_utc = start_utc + timedelta(
@@ -378,6 +379,7 @@ def parse_program_card(card, guide_date):
         "title": title,
         "start": start_algiers,
         "end": end_algiers,
+        "category": "Entertainment",
     }
 
 
@@ -407,7 +409,7 @@ def parse_channel_page(item):
         "div.panel.jumbo h1"
     )
 
-    channel_name = (
+    channel_name = clean_channel_name(
         heading.get_text(" ", strip=True)
         if heading
         else channel_number
@@ -417,8 +419,6 @@ def parse_channel_page(item):
     seen = set()
     current_date = None
 
-    # Process date headings and programme rows
-    # in document order.
     for element in soup.select(
         "div.dates, div.row"
     ):
@@ -509,7 +509,7 @@ def parse_channel_page(item):
 
 
 # ============================================================
-# XMLTV GENERATION - SIMPLIFIED
+# XMLTV GENERATION
 # ============================================================
 
 def add_text(parent, tag, value, **attributes):
@@ -519,23 +519,32 @@ def add_text(parent, tag, value, **attributes):
         attributes,
     )
 
-    if value:
+    if value is not None:
         element.text = str(value)
 
     return element
 
 
 def write_xmltv(channel_results):
-    tv = ET.Element("tv", {
-        "source-info-name": "ElCinema",
-        "generator-info-name": "DZGreen-EPG",
-    })
+    tv = ET.Element(
+        "tv",
+        {
+            "source-info-name": "ElCinema",
+            "generator-info-name": "DZGreen-EPG",
+            "generator-info-url": GUIDE_URL,
+        },
+    )
 
-    # 1. Write ALL channel definitions first.
+    known_channel_ids = set()
+
+    # 1. Write all channel definitions first.
     for channel in channel_results:
-        channel_id = (
-            f"elcinema.{channel['number']}"
-        )
+        channel_id = f"elcinema.{channel['number']}"
+
+        if channel_id in known_channel_ids:
+            continue
+
+        known_channel_ids.add(channel_id)
 
         channel_element = ET.SubElement(
             tv,
@@ -543,43 +552,75 @@ def write_xmltv(channel_results):
             {"id": channel_id},
         )
 
-        add_text(
-            channel_element,
-            "display-name",
-            channel["name"],
-            lang="en",
+        aliases = channel_name_aliases(
+            channel["name"]
         )
 
-    # 2. Write programmes with only:
-    # start, stop, channel and title.
+        for alias in aliases:
+            add_text(
+                channel_element,
+                "display-name",
+                alias,
+                lang="en",
+            )
+
+    # 2. Write all programme records.
+    total_programmes = 0
+    invalid_programmes = 0
+
     for channel in channel_results:
-        channel_id = (
-            f"elcinema.{channel['number']}"
-        )
+        channel_id = f"elcinema.{channel['number']}"
+
+        if channel_id not in known_channel_ids:
+            continue
 
         for programme in channel["programmes"]:
-            ET.SubElement(
+            start = programme.get("start")
+            end = programme.get("end")
+            title = clean_channel_name(
+                programme.get("title", "")
+            )
+
+            if not start or not end or not title:
+                invalid_programmes += 1
+                continue
+
+            if end <= start:
+                invalid_programmes += 1
+                continue
+
+            programme_element = ET.SubElement(
                 tv,
                 "programme",
                 {
-                    "start": xmltv_timestamp(
-                        programme["start"]
-                    ),
-                    "stop": xmltv_timestamp(
-                        programme["end"]
-                    ),
+                    "start": xmltv_timestamp(start),
+                    "stop": xmltv_timestamp(end),
                     "channel": channel_id,
                 },
             )
 
-            # The only programme metadata retained is the title.
-            title_element = tv[-1]
             add_text(
-                title_element,
+                programme_element,
                 "title",
-                programme["title"],
+                title,
                 lang="en",
             )
+
+            add_text(
+                programme_element,
+                "desc",
+                "Programme information from ElCinema.",
+                lang="en",
+            )
+
+            add_text(
+                programme_element,
+                "category",
+                programme.get("category", "Entertainment"),
+                lang="en",
+            )
+
+            total_programmes += 1
 
     ET.indent(
         tv,
@@ -594,13 +635,39 @@ def write_xmltv(channel_results):
         xml_declaration=True,
     )
 
-    # Verify that the generated XML can be parsed.
-    ET.parse(XML_FILE)
+    # 3. Verify XML syntax and channel references.
+    parsed_root = ET.parse(XML_FILE).getroot()
 
-    log.info(
-        "XML validation passed: %s",
-        XML_FILE,
-    )
+    parsed_channel_ids = {
+        channel.get("id")
+        for channel in parsed_root.findall("channel")
+    }
+
+    missing_channel_references = []
+
+    for programme in parsed_root.findall("programme"):
+        channel_id = programme.get("channel")
+
+        if channel_id not in parsed_channel_ids:
+            missing_channel_references.append(channel_id)
+
+    if missing_channel_references:
+        raise RuntimeError(
+            "XMLTV contains programmes referencing "
+            "undefined channels: "
+            + ", ".join(sorted(set(missing_channel_references)))
+        )
+
+    if total_programmes == 0:
+        raise RuntimeError(
+            "XMLTV contains no valid programmes."
+        )
+
+    log.info("")
+    log.info("XML validation passed.")
+    log.info("Defined channels: %s", len(parsed_channel_ids))
+    log.info("Written programmes: %s", total_programmes)
+    log.info("Skipped invalid programmes: %s", invalid_programmes)
 
 
 # ============================================================
@@ -631,9 +698,7 @@ def write_csv(channel_results):
                 "channel_id": channel["number"],
                 "channel_name": channel["name"],
                 "tvguide_url": channel["url"],
-                "xmltv_id": (
-                    f"elcinema.{channel['number']}"
-                ),
+                "xmltv_id": f"elcinema.{channel['number']}",
                 "programmes_count": len(
                     channel["programmes"]
                 ),
@@ -674,9 +739,7 @@ def main():
 
         for future in as_completed(futures):
             try:
-                results.append(
-                    future.result()
-                )
+                results.append(future.result())
 
             except Exception:
                 log.exception(
@@ -685,9 +748,7 @@ def main():
                 )
 
     results.sort(
-        key=lambda channel: int(
-            channel["number"]
-        )
+        key=lambda channel: int(channel["number"])
     )
 
     total_programmes = sum(
@@ -708,27 +769,13 @@ def main():
 
     log.info("")
     log.info("Finished successfully.")
-    log.info(
-        "Channels processed: %s",
-        len(results),
-    )
-    log.info(
-        "Programmes extracted: %s",
-        total_programmes,
-    )
-    log.info(
-        "XMLTV: %s",
-        XML_FILE,
-    )
-    log.info(
-        "CSV: %s",
-        CSV_FILE,
-    )
-    log.info(
-        "Elapsed: %.1f seconds",
-        elapsed,
-    )
+    log.info("Channels processed: %s", len(results))
+    log.info("Programmes extracted: %s", total_programmes)
+    log.info("XMLTV: %s", XML_FILE)
+    log.info("CSV: %s", CSV_FILE)
+    log.info("Elapsed: %.1f seconds", elapsed)
 
 
 if __name__ == "__main__":
     main()
+```
