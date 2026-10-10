@@ -2,18 +2,17 @@
 import csv
 import re
 import sys
-import traceback
+import time
+import requests
 import xml.etree.ElementTree as ET
 
-from datetime import date, datetime, timedelta
+from datetime import datetime, date, time as dt_time, timedelta
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from urllib.parse import urljoin, urlparse
 from zoneinfo import ZoneInfo
 
 from bs4 import BeautifulSoup
-from playwright.sync_api import (
-    sync_playwright,
-    TimeoutError as PlaywrightTimeoutError,
-)
 
 
 # ============================================================
@@ -21,587 +20,447 @@ from playwright.sync_api import (
 # ============================================================
 
 BASE_URL = "https://elcinema.com"
-GUIDE_URL = "https://elcinema.com/en/tvguide"
+GUIDE_URL = "https://elcinema.com/en/tvguide/"
 
-# مجلد المشروع الحالي، مع وضع النتائج داخل docs
-PROJECT_DIR = Path(__file__).resolve().parent
-DOCS_DIR = PROJECT_DIR / "docs"
+OUTPUT_DIR = Path("docs")
+XML_FILE = OUTPUT_DIR / "ElCinema-EPG.xml"
+CSV_FILE = OUTPUT_DIR / "ElCinema-Channel-Mapping.csv"
 
-XML_OUTPUT = DOCS_DIR / "ElCinema-EPG.xml"
-CSV_OUTPUT = DOCS_DIR / "ElCinema-Channel-Mapping.csv"
+MAX_WORKERS = 12
+REQUEST_TIMEOUT = 12
 
-# المنطقة الزمنية التي يعرض بها الموقع البرامج
 EGYPT_TZ = ZoneInfo("Africa/Cairo")
-
-# المنطقة الزمنية التي نريد إظهار البرامج بها
 ALGERIA_TZ = ZoneInfo("Africa/Algiers")
 
-# إذا كان لديك رابط صفحة دليل قناة محددة، ضعه هنا.
-# اترك القائمة فارغة لمحاولة اكتشاف روابط القنوات من صفحة الدليل.
-CHANNEL_URLS = []
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/129.0.0.0 Safari/537.36"
+    ),
+    "Accept-Language": "en-US,en;q=0.9",
+}
 
-# مهلة انتظار تحميل الصفحة بالميلي ثانية
-PAGE_TIMEOUT = 60000
+CHANNEL_URL_RE = re.compile(
+    r"/(?:en/)?tvguide/(\d+)/?"
+)
 
-# تشغيل المتصفح دون نافذة
-HEADLESS = True
+TIME_RE = re.compile(
+    r"\b(\d{1,2}:\d{2}\s*(?:AM|PM))\b",
+    re.IGNORECASE,
+)
 
-# معرّف ثابت اختياري لقناة واحدة عند استعمال PAGE_URL مباشرة.
-# اتركه None إذا أردت استخراج المعرّف من رابط القناة.
-SINGLE_CHANNEL_ID = None
+DURATION_RE = re.compile(
+    r"\[(\d+)\s*minutes?\]",
+    re.IGNORECASE,
+)
 
-USER_AGENT = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-    "AppleWebKit/537.36 (KHTML, like Gecko) "
-    "Chrome/130.0.0.0 Safari/537.36"
+DATE_RE = re.compile(
+    r"(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)?"
+    r"\s*,?\s*(\d{1,2})\s+"
+    r"(January|February|March|April|May|June|July|August|"
+    r"September|October|November|December)",
+    re.IGNORECASE,
 )
 
 
 # ============================================================
-# GENERAL HELPERS
+# HTTP
 # ============================================================
 
-def log(message):
-    print(f"[ElCinema EPG] {message}", flush=True)
-
-
-def normalize_space(value):
-    if not value:
-        return ""
-    return re.sub(r"\s+", " ", value).strip()
-
-
-def absolute_url(url):
-    if not url:
-        return ""
-    if url.startswith("//"):
-        return "https:" + url
-    if url.startswith("/"):
-        return BASE_URL + url
-    return url
-
-
-def extract_channel_id(url):
-    """
-    يحاول استخراج رقم القناة من رابط الصفحة.
-    يمكن تعديل هذه الدالة إذا كانت روابط القنوات في الموقع
-    تستخدم صيغة مختلفة.
-    """
-    if SINGLE_CHANNEL_ID:
-        return str(SINGLE_CHANNEL_ID)
-
-    parsed = re.search(r"/tvguide/([^/?#]+)", url, re.I)
-    if parsed:
-        return parsed.group(1)
-
-    parsed = re.search(r"/channel/([^/?#]+)", url, re.I)
-    if parsed:
-        return parsed.group(1)
-
-    parsed = re.search(r"/(\d+)/?(?:\?.*)?$", url)
-    if parsed:
-        return parsed.group(1)
-
-    return re.sub(r"[^a-zA-Z0-9_.-]+", "_", url.rstrip("/"))
-
-
-def make_xml_channel_id(channel_id):
-    """
-    يوحّد المعرّف الذي سيستخدمه XMLTV.
-    حافظ على نفس المعرّف في قائمة M3U.
-    """
-    channel_id = normalize_space(str(channel_id))
-
-    if not channel_id.startswith("elcinema."):
-        channel_id = "elcinema." + channel_id
-
-    return channel_id
-
-
-# ============================================================
-# BROADCAST DATE PARSING
-# ============================================================
-
-MONTHS = {
-    "january": 1,
-    "february": 2,
-    "march": 3,
-    "april": 4,
-    "may": 5,
-    "june": 6,
-    "july": 7,
-    "august": 8,
-    "september": 9,
-    "october": 10,
-    "november": 11,
-    "december": 12,
-}
-
-WEEKDAYS = {
-    "monday": 0,
-    "tuesday": 1,
-    "wednesday": 2,
-    "thursday": 3,
-    "friday": 4,
-    "saturday": 5,
-    "sunday": 6,
-}
-
-
-def parse_broadcast_date(text, reference_date=None, previous_date=None):
-    """
-    يقرأ عناوين مثل:
-        Saturday 10 October
-        Sunday 11 October
-
-    السنة غير موجودة في HTML، لذلك يتم تحديدها بالتحقق
-    من يوم الأسبوع الفعلي.
-
-    previous_date يساعد في إبقاء التواريخ متتابعة عند
-    الانتقال بين الأيام أو نهاية السنة.
-    """
-    text = normalize_space(text).lower()
-
-    match = re.search(
-        r"\b(monday|tuesday|wednesday|thursday|friday|"
-        r"saturday|sunday)\s+(\d{1,2})\s+"
-        r"(january|february|march|april|may|june|july|"
-        r"august|september|october|november|december)\b",
-        text,
-        re.I,
-    )
-
-    if not match:
-        return None
-
-    weekday_name = match.group(1).lower()
-    day = int(match.group(2))
-    month = MONTHS[match.group(3).lower()]
-    expected_weekday = WEEKDAYS[weekday_name]
-
-    reference_date = reference_date or date.today()
-
-    candidates = []
-
-    for year in range(reference_date.year - 1, reference_date.year + 3):
-        try:
-            candidate = date(year, month, day)
-        except ValueError:
-            continue
-
-        if candidate.weekday() != expected_weekday:
-            continue
-
-        if previous_date is not None:
-            # يسمح بالتواريخ المتتابعة عبر نهاية السنة.
-            if candidate < previous_date:
-                continue
-
-            if (candidate - previous_date).days > 10:
-                continue
-
-            candidates.append(candidate)
-        else:
-            candidates.append(candidate)
-
-    if not candidates:
-        log(f"تعذر تحديد السنة للتاريخ: {text}")
-        return None
-
-    if previous_date is not None:
-        return min(candidates, key=lambda d: abs((d - previous_date).days))
-
-    # اختيار أقرب تاريخ مناسب إلى اليوم الحالي.
-    return min(candidates, key=lambda d: abs((d - reference_date).days))
-
-
-def find_date_sections(soup):
-    """
-    يعيد أقسام التاريخ حسب ترتيبها في الصفحة.
-    يفترض أن كل عنوان .dates يتبعه محتوى برامج ذلك اليوم.
-    """
-    date_elements = soup.select("div.dates")
-    sections = []
-
-    for element in date_elements:
-        sections.append({
-            "element": element,
-            "label": normalize_space(element.get_text(" ", strip=True)),
-        })
-
-    return sections
-
-
-def assign_dates_to_cards(soup):
-    """
-    يربط البطاقات بالتاريخ الذي تظهر تحته في DOM.
-
-    عند عدم وجود حاوية يوم واضحة، يعتمد على ترتيب عناوين
-    .dates وبطاقات البرامج.
-    """
-    results = []
-    current_date = None
-    previous_date = None
-    reference_date = date.today()
-
-    # كل العناوين والبطاقات مرتبة بحسب ظهورها في الصفحة.
-    items = soup.select("div.dates, div.boxed-category-1.padded-half")
-
-    for item in items:
-        classes = item.get("class", [])
-
-        if "dates" in classes:
-            label = normalize_space(item.get_text(" ", strip=True))
-
-            parsed_date = parse_broadcast_date(
-                label,
-                reference_date=reference_date,
-                previous_date=previous_date,
-            )
-
-            if parsed_date is not None:
-                current_date = parsed_date
-                previous_date = parsed_date
-
-        elif (
-            "boxed-category-1" in classes
-            and current_date is not None
-        ):
-            results.append((item, current_date))
-
-    return results
-
-
-# ============================================================
-# PROGRAM CARD EXTRACTION
-# ============================================================
-
-def extract_time_text(card):
-    """
-    وقت البرنامج عادةً موجود في أول li داخل أول عمود.
-    """
-    columns = card.select(":scope > .row > .columns")
-
-    if columns:
-        first_column = columns[0]
-        first_li = first_column.select_one("li")
-
-        if first_li:
-            text = normalize_space(first_li.get_text(" ", strip=True))
-            match = re.search(
-                r"\b(\d{1,2}:\d{2}\s*(?:AM|PM))\b",
-                text,
-                re.I,
-            )
-            if match:
-                return normalize_space(match.group(1)).upper()
-
-    # احتياط إذا اختلف ترتيب الأعمدة.
-    text = normalize_space(card.get_text(" ", strip=True))
-    match = re.search(
-        r"\b(\d{1,2}:\d{2}\s*(?:AM|PM))\b",
-        text,
-        re.I,
-    )
-
-    return normalize_space(match.group(1)).upper() if match else ""
-
-
-def extract_duration(card):
-    text = normalize_space(card.get_text(" ", strip=True))
-    match = re.search(r"\[(\d+)\s*minutes?\]", text, re.I)
-
-    if match:
-        return int(match.group(1))
-
-    return 0
-
-
-def extract_title(card):
-    link = card.select_one('a[href*="/work/"]')
-
-    if link:
-        title = normalize_space(link.get_text(" ", strip=True))
-        if title:
-            return title
-
-    # احتياط إذا لم يظهر الرابط المتوقع.
-    for selector in ("h1", "h2", "h3", "h4", ".title"):
-        element = card.select_one(selector)
-        if element:
-            title = normalize_space(element.get_text(" ", strip=True))
-            if title:
-                return title
-
-    return ""
-
-
-def extract_image(card):
-    image = card.select_one("img[src]")
-
-    if image:
-        return absolute_url(
-            image.get("src")
-            or image.get("data-src")
-            or ""
-        )
-
-    image = card.select_one("img[data-src]")
-
-    if image:
-        return absolute_url(image.get("data-src", ""))
-
-    return ""
-
-
-def extract_year(card):
-    text = normalize_space(card.get_text(" ", strip=True))
-
-    # مثال: Movie (2023)
-    match = re.search(r"\b(?:Movie|Series|Show)\s*\((\d{4})\)", text, re.I)
-
-    if not match:
-        match = re.search(r"\b(19\d{2}|20\d{2})\b", text)
-
-    return match.group(1) if match else ""
-
-
-def extract_rating(card):
-    rating_element = card.select_one(".stars-rating-lg")
-
-    if not rating_element:
-        return ""
-
-    possible_values = [
-        rating_element.get("title", ""),
-        rating_element.get("data-rating", ""),
-        rating_element.get_text(" ", strip=True),
-    ]
-
-    for value in possible_values:
-        match = re.search(
-            r"(?:التقييم\s*:\s*)?(\d+(?:\.\d+)?)",
-            value or "",
-        )
-        if match:
-            return match.group(1)
-
-    return ""
-
-
-def extract_actors(card):
-    actors = []
-    seen = set()
-
-    for link in card.select('a[href*="/person/"]'):
-        name = normalize_space(link.get_text(" ", strip=True))
-
-        if name and name not in seen:
-            seen.add(name)
-            actors.append(name)
-
-    return ", ".join(actors)
-
-
-def extract_description(card):
-    """
-    يقرأ الوصف الظاهر والمخفي في span.hide،
-    ويحذف رابط read-more دون حذف النص المخفي.
-    """
-    candidates = card.select("li")
-
-    for element in candidates:
-        if not element.select_one("a#read-more"):
-            continue
-
-        clone = BeautifulSoup(str(element), "html.parser")
-
-        for link in clone.select("a#read-more"):
-            link.decompose()
-
-        # إزالة العناصر غير النصية التي قد تضيف ضجيجًا.
-        for node in clone.select("script, style"):
-            node.decompose()
-
-        return normalize_space(clone.get_text(" ", strip=True))
-
-    # احتياط لبعض صفحات الموقع.
-    for selector in (
-        ".description",
-        ".plot",
-        ".synopsis",
-        "[itemprop='description']",
-    ):
-        element = card.select_one(selector)
-        if element:
-            return normalize_space(element.get_text(" ", strip=True))
-
-    return ""
-
-
-def cairo_time_to_algeria(broadcast_date, time_text):
-    """
-    يحول وقت البث من توقيت مصر إلى توقيت الجزائر.
-
-    يتم تحويل التاريخ والوقت معًا؛ لذلك قد يتغير يوم البث
-    بعد التحويل.
-    """
-    if not broadcast_date or not time_text:
-        return None
-
+def fetch_page(url):
     try:
-        naive_datetime = datetime.strptime(
-            f"{broadcast_date.isoformat()} {time_text}",
-            "%Y-%m-%d %I:%M %p",
-        )
-    except ValueError:
-        log(f"وقت غير صالح: {broadcast_date} {time_text}")
-        return None
-
-    egypt_datetime = naive_datetime.replace(tzinfo=EGYPT_TZ)
-
-    return egypt_datetime.astimezone(ALGERIA_TZ)
-
-
-def extract_program(card, broadcast_date, channel_id, channel_name, page_url):
-    title = extract_title(card)
-    time_text = extract_time_text(card)
-    duration = extract_duration(card)
-
-    if not title:
-        return None
-
-    if not time_text:
-        log(f"تجاهل برنامج بلا وقت: {title}")
-        return None
-
-    if duration <= 0:
-        log(f"تجاهل برنامج بلا مدة صحيحة: {title}")
-        return None
-
-    start = cairo_time_to_algeria(broadcast_date, time_text)
-
-    if start is None:
-        return None
-
-    stop = start + timedelta(minutes=duration)
-
-    return {
-        "channel_id": channel_id,
-        "channel_name": channel_name,
-        "title": title,
-        "start": start,
-        "stop": stop,
-        "duration_minutes": duration,
-        "description": extract_description(card),
-        "image": extract_image(card),
-        "year": extract_year(card),
-        "rating": extract_rating(card),
-        "actors": extract_actors(card),
-        "source_url": page_url,
-        "source_time": time_text,
-        "source_date": broadcast_date.isoformat(),
-    }
-
-
-def extract_channel_name(soup, page_url):
-    for selector in (
-        "h1",
-        ".channel-name",
-        ".tv-channel-name",
-        "[itemprop='name']",
-    ):
-        element = soup.select_one(selector)
-
-        if element:
-            name = normalize_space(element.get_text(" ", strip=True))
-            if name:
-                return name
-
-    return extract_channel_id(page_url)
-
-
-def extract_programs_from_page(soup, page_url):
-    channel_id = make_xml_channel_id(extract_channel_id(page_url))
-    channel_name = extract_channel_name(soup, page_url)
-
-    programs = []
-    dated_cards = assign_dates_to_cards(soup)
-
-    if not dated_cards:
-        log(
-            "لم أجد بطاقات مرتبطة بعناوين تاريخ "
-            f"في الصفحة: {page_url}"
-        )
-        return channel_name, channel_id, programs
-
-    for card, broadcast_date in dated_cards:
-        program = extract_program(
-            card=card,
-            broadcast_date=broadcast_date,
-            channel_id=channel_id,
-            channel_name=channel_name,
-            page_url=page_url,
+        response = requests.get(
+            url,
+            headers=HEADERS,
+            timeout=REQUEST_TIMEOUT,
         )
 
-        if program:
-            programs.append(program)
+        response.encoding = response.apparent_encoding
 
-    return channel_name, channel_id, programs
+        return {
+            "url": url,
+            "final_url": response.url,
+            "status": response.status_code,
+            "html": response.text if response.ok else "",
+            "error": None,
+        }
+
+    except requests.RequestException as exc:
+        return {
+            "url": url,
+            "final_url": url,
+            "status": 0,
+            "html": "",
+            "error": str(exc),
+        }
 
 
 # ============================================================
 # CHANNEL DISCOVERY
 # ============================================================
 
-def discover_channel_urls(page, guide_url):
-    """
-    يحاول اكتشاف روابط صفحات القنوات من صفحة الدليل.
-    إذا لم تتوافق روابط الموقع مع المرشحات أدناه، ضع الروابط
-    الصحيحة يدويًا في CHANNEL_URLS.
-    """
-    log(f"فتح صفحة الدليل: {guide_url}")
-    page.goto(
-        guide_url,
-        wait_until="domcontentloaded",
-        timeout=PAGE_TIMEOUT,
+def discover_channels():
+    print("[ElCinema EPG] Reading main TV guide...", flush=True)
+
+    result = fetch_page(GUIDE_URL)
+
+    if not result["html"]:
+        raise RuntimeError(
+            "Could not download the main TV guide. "
+            f"HTTP status: {result['status']}. "
+            f"Error: {result['error']}"
+        )
+
+    soup = BeautifulSoup(result["html"], "html.parser")
+    channels = {}
+
+    for link in soup.find_all("a", href=True):
+        href = link["href"].strip()
+        absolute_url = urljoin(BASE_URL, href)
+        path = urlparse(absolute_url).path
+
+        match = CHANNEL_URL_RE.fullmatch(path)
+
+        if not match:
+            continue
+
+        channel_number = match.group(1)
+
+        # Normalize every channel URL.
+        channel_url = (
+            f"{BASE_URL}/en/tvguide/{channel_number}/"
+        )
+
+        channels[channel_number] = channel_url
+
+    print(
+        f"[ElCinema EPG] HTTP {result['status']} | "
+        f"HTML size: {len(result['html'])} characters",
+        flush=True,
     )
+
+    print(
+        f"[ElCinema EPG] Channels discovered: {len(channels)}",
+        flush=True,
+    )
+
+    if not channels:
+        raise RuntimeError(
+            "No channel links were found on the main guide page. "
+            "The website HTML may have changed or blocked the request."
+        )
+
+    return channels
+
+
+# ============================================================
+# DATE PARSING
+# ============================================================
+
+def parse_guide_date(text):
+    match = DATE_RE.search(text or "")
+
+    if not match:
+        return None
+
+    day = int(match.group(1))
+    month_name = match.group(2).title()
+
+    today = datetime.now(EGYPT_TZ).date()
+    candidates = []
+
+    for year in (today.year - 1, today.year, today.year + 1):
+        try:
+            candidate = datetime.strptime(
+                f"{day} {month_name} {year}",
+                "%d %B %Y",
+            ).date()
+
+            candidates.append(candidate)
+
+        except ValueError:
+            continue
+
+    if not candidates:
+        return None
+
+    return min(
+        candidates,
+        key=lambda candidate: abs((candidate - today).days),
+    )
+
+
+# ============================================================
+# PROGRAM CARD PARSING
+# ============================================================
+
+def get_card_title(card):
+    link = card.select_one('a[href*="/work/"]')
+
+    if not link:
+        return None, None
+
+    title = link.get_text(" ", strip=True)
+    url = urljoin(BASE_URL, link.get("href", ""))
+
+    if not title:
+        return None, None
+
+    return title, url
+
+
+def get_program_time(card):
+    text = card.get_text(" ", strip=True)
+    match = TIME_RE.search(text)
+
+    if not match:
+        # Some page versions may place the time in a separate element.
+        for selector in (
+            ".time",
+            ".date",
+            "time",
+        ):
+            element = card.select_one(selector)
+
+            if element:
+                match = TIME_RE.search(
+                    element.get_text(" ", strip=True)
+                )
+
+                if match:
+                    break
+
+    if not match:
+        return None
 
     try:
-        page.wait_for_load_state("networkidle", timeout=15000)
-    except PlaywrightTimeoutError:
-        pass
+        return datetime.strptime(
+            re.sub(r"\s+", " ", match.group(1).strip()).upper(),
+            "%I:%M %p",
+        ).time()
 
-    page.wait_for_timeout(2000)
+    except ValueError:
+        return None
 
-    links = page.locator("a[href]").evaluate_all(
-        """
-        elements => elements.map(a => ({
-            href: a.href,
-            text: (a.innerText || a.textContent || '').trim()
-        }))
-        """
+
+def get_duration(card):
+    text = card.get_text(" ", strip=True)
+    match = DURATION_RE.search(text)
+
+    if match:
+        return int(match.group(1))
+
+    return None
+
+
+def get_description(card):
+    # The supplied HTML uses a hidden span for the full description.
+    hidden = card.select_one("span.hide")
+
+    if hidden:
+        description = hidden.get_text(" ", strip=True)
+
+        if description:
+            return description
+
+    read_more = card.select_one("a#read-more")
+
+    if read_more:
+        parent = read_more.find_parent("li")
+
+        if parent:
+            description = parent.get_text(" ", strip=True)
+            description = re.sub(
+                r"\bread more\b",
+                "",
+                description,
+                flags=re.IGNORECASE,
+            ).strip()
+
+            if description:
+                return description
+
+    return ""
+
+
+def get_rating(card):
+    element = card.select_one(".stars-rating-lg")
+
+    if not element:
+        return ""
+
+    rating_text = (
+        element.get("title")
+        or element.get_text(" ", strip=True)
     )
 
-    urls = []
-    seen = set()
+    match = re.search(r"(\d+(?:\.\d+)?)", rating_text)
 
-    for item in links:
-        href = item.get("href", "")
+    return match.group(1) if match else ""
 
-        if not href.startswith(BASE_URL):
+
+def get_actors(card):
+    actors = []
+
+    for link in card.select('a[href*="/person/"]'):
+        name = link.get_text(" ", strip=True)
+
+        if name and name not in actors:
+            actors.append(name)
+
+    return ", ".join(actors)
+
+
+def get_category(card):
+    for item in card.find_all("li"):
+        text = item.get_text(" ", strip=True)
+
+        if re.search(
+            r"\b(?:Movie|Series|TV Show|Program|Episode)\b",
+            text,
+            re.IGNORECASE,
+        ):
+            return text
+
+    return ""
+
+
+def get_program_image(card):
+    image = card.select_one("img[src]")
+
+    if not image:
+        return ""
+
+    return urljoin(BASE_URL, image.get("src", ""))
+
+
+# ============================================================
+# CHANNEL PAGE PARSING
+# ============================================================
+
+def parse_channel_page(channel_number, url, result):
+    channel_id = f"elcinema.{channel_number}"
+
+    page_info = {
+        "id": channel_id,
+        "name": f"ElCinema {channel_number}",
+        "url": url,
+        "program_count": 0,
+        "status": result["status"],
+        "html_size": len(result["html"]),
+        "error": result["error"] or "",
+    }
+
+    if not result["html"]:
+        return page_info, []
+
+    soup = BeautifulSoup(result["html"], "html.parser")
+
+    heading = soup.select_one("h1")
+
+    if heading:
+        heading_text = heading.get_text(" ", strip=True)
+
+        if heading_text:
+            page_info["name"] = heading_text
+
+    elif soup.title:
+        title_text = soup.title.get_text(" ", strip=True)
+
+        if title_text:
+            page_info["name"] = title_text
+
+    # These selectors come from the HTML supplied by the user.
+    cards = soup.select("div.boxed-category-1.padded-half")
+    date_elements = soup.select("div.dates")
+
+    # Keep date headings and program cards in their document order.
+    ordered_elements = soup.select(
+        "div.dates, div.boxed-category-1.padded-half"
+    )
+
+    current_date = None
+    programmes = []
+
+    for element in ordered_elements:
+
+        if "dates" in element.get("class", []):
+            parsed_date = parse_guide_date(
+                element.get_text(" ", strip=True)
+            )
+
+            if parsed_date:
+                current_date = parsed_date
+
             continue
 
-        if "/tvguide/" not in href and "/channel/" not in href:
+        title, program_url = get_card_title(element)
+
+        if not title:
             continue
 
-        href = href.split("#", 1)[0]
+        program_time = get_program_time(element)
 
-        if href not in seen:
-            seen.add(href)
-            urls.append(href)
+        if not program_time or not current_date:
+            continue
 
-    return urls
+        duration = get_duration(element)
+
+        if not duration or duration <= 0:
+            continue
+
+        start_local = datetime.combine(
+            current_date,
+            program_time,
+            tzinfo=EGYPT_TZ,
+        )
+
+        stop_local = start_local + timedelta(minutes=duration)
+
+        # Convert actual local datetimes, not a fixed time difference.
+        start_algeria = start_local.astimezone(ALGERIA_TZ)
+        stop_algeria = stop_local.astimezone(ALGERIA_TZ)
+
+        programmes.append({
+            "channel": channel_id,
+            "title": title,
+            "start": start_algeria,
+            "stop": stop_algeria,
+            "description": get_description(element),
+            "category": get_category(element),
+            "rating": get_rating(element),
+            "actors": get_actors(element),
+            "icon": get_program_image(element),
+            "url": program_url,
+        })
+
+    page_info["program_count"] = len(programmes)
+
+    if not programmes:
+        print(
+            f"[ElCinema EPG] No programmes: {url} | "
+            f"HTTP {result['status']} | "
+            f"HTML {len(result['html'])} chars | "
+            f"dates={len(date_elements)} | cards={len(cards)}",
+            flush=True,
+        )
+
+        if result["final_url"] != url:
+            print(
+                f"[ElCinema EPG] Redirected to: "
+                f"{result['final_url']}",
+                flush=True,
+            )
+
+    else:
+        print(
+            f"[ElCinema EPG] {page_info['name']}: "
+            f"{len(programmes)} programmes",
+            flush=True,
+        )
+
+    return page_info, programmes
 
 
 # ============================================================
@@ -609,87 +468,101 @@ def discover_channel_urls(page, guide_url):
 # ============================================================
 
 def xmltv_timestamp(value):
-    """
-    يكتب الوقت المحلي للجزائر مع الإزاحة الصحيحة.
-    XMLTV format: YYYYMMDDHHMMSS +0100
-    """
-    local_value = value.astimezone(ALGERIA_TZ)
-    offset = local_value.strftime("%z")
-
-    return local_value.strftime("%Y%m%d%H%M%S ") + offset
+    return value.strftime("%Y%m%d%H%M%S %z")
 
 
-def add_text_element(parent, tag, text, attributes=None):
-    element = ET.SubElement(parent, tag, attributes or {})
-    element.text = text or ""
-    return element
+def add_text_element(parent, tag, value):
+    if value is None:
+        return
+
+    value = str(value).strip()
+
+    if value:
+        ET.SubElement(parent, tag).text = value
 
 
-def write_xmltv(programs, channel_names, output_path):
-    tv = ET.Element("tv", {
-        "generator-info-name": "DZGreen ElCinema EPG",
-        "generator-info-url": GUIDE_URL,
-    })
+def write_xml(channels, programmes):
+    tv = ET.Element(
+        "tv",
+        {
+            "source-info-name": "ElCinema",
+            "source-info-url": GUIDE_URL,
+            "generator-info-name": "DZGreen ElCinema EPG",
+        },
+    )
 
-    for channel_id, channel_name in sorted(channel_names.items()):
-        channel = ET.SubElement(tv, "channel", {"id": channel_id})
-
-        add_text_element(channel, "display-name", channel_name, {
-            "lang": "en"
-        })
-
-    # منع تكرار البرنامج نفسه للقناة والوقت نفسيهما.
-    seen = set()
-
-    for program in sorted(
-        programs,
-        key=lambda item: (item["start"], item["channel_id"], item["title"]),
-    ):
-        key = (
-            program["channel_id"],
-            program["start"].isoformat(),
-            program["title"],
+    for channel in channels:
+        element = ET.SubElement(
+            tv,
+            "channel",
+            {"id": channel["id"]},
         )
 
-        if key in seen:
-            continue
+        ET.SubElement(
+            element,
+            "display-name",
+            {"lang": "en"},
+        ).text = channel["name"]
 
-        seen.add(key)
+    for programme in sorted(
+        programmes,
+        key=lambda item: item["start"],
+    ):
+        element = ET.SubElement(
+            tv,
+            "programme",
+            {
+                "start": xmltv_timestamp(programme["start"]),
+                "stop": xmltv_timestamp(programme["stop"]),
+                "channel": programme["channel"],
+            },
+        )
 
-        node = ET.SubElement(tv, "programme", {
-            "start": xmltv_timestamp(program["start"]),
-            "stop": xmltv_timestamp(program["stop"]),
-            "channel": program["channel_id"],
-        })
+        add_text_element(
+            element,
+            "title",
+            programme["title"],
+        )
 
-        add_text_element(node, "title", program["title"], {
-            "lang": "en"
-        })
+        add_text_element(
+            element,
+            "desc",
+            programme["description"],
+        )
 
-        if program["description"]:
-            add_text_element(node, "desc", program["description"], {
-                "lang": "en"
-            })
+        add_text_element(
+            element,
+            "category",
+            programme["category"],
+        )
 
-        if program["year"]:
-            add_text_element(node, "date", program["year"])
+        if programme["rating"]:
+            rating = ET.SubElement(element, "rating")
 
-        if program["image"]:
-            add_text_element(node, "icon", "", {
-                "src": program["image"]
-            })
+            ET.SubElement(
+                rating,
+                "value",
+            ).text = programme["rating"]
 
-        if program["actors"]:
-            credits = ET.SubElement(node, "credits")
+        if programme["actors"]:
+            credits = ET.SubElement(element, "credits")
 
-            for actor in program["actors"].split(", "):
+            for actor in programme["actors"].split(", "):
                 add_text_element(credits, "actor", actor)
 
-        if program["rating"]:
-            rating = ET.SubElement(node, "rating", {
-                "system": "ElCinema"
-            })
-            add_text_element(rating, "value", program["rating"])
+        if programme["icon"]:
+            ET.SubElement(
+                element,
+                "icon",
+                {"src": programme["icon"]},
+            )
+
+        if programme["url"]:
+            add_text_element(
+                element,
+                "url",
+                programme["url"],
+            )
 
     tree = ET.ElementTree(tv)
 
@@ -698,63 +571,45 @@ def write_xmltv(programs, channel_names, output_path):
     except AttributeError:
         pass
 
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
     tree.write(
-        str(output_path),
+        XML_FILE,
         encoding="utf-8",
         xml_declaration=True,
     )
-
-    log(f"XMLTV محفوظ: {output_path}")
-    log(f"عدد البرامج المكتوبة: {len(seen)}")
 
 
 # ============================================================
 # CSV OUTPUT
 # ============================================================
 
-def write_csv(programs, channel_names, output_path):
-    """
-    ملف CSV لمطابقة القنوات مع معرّفات XMLTV.
-    """
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    with output_path.open(
+def write_csv(channels):
+    with CSV_FILE.open(
         "w",
         newline="",
         encoding="utf-8-sig",
-    ) as file:
-        writer = csv.writer(file)
+    ) as csv_file:
 
-        writer.writerow([
-            "channel_id",
-            "channel_name",
-            "source_url",
-            "program_count",
-        ])
+        writer = csv.DictWriter(
+            csv_file,
+            fieldnames=[
+                "tvg-id",
+                "channel_name",
+                "source_url",
+                "program_count",
+                "http_status",
+            ],
+        )
 
-        counts = {}
+        writer.writeheader()
 
-        for program in programs:
-            channel_id = program["channel_id"]
-            counts[channel_id] = counts.get(channel_id, 0) + 1
-
-        for channel_id, channel_name in sorted(channel_names.items()):
-            urls = sorted({
-                program["source_url"]
-                for program in programs
-                if program["channel_id"] == channel_id
+        for channel in channels:
+            writer.writerow({
+                "tvg-id": channel["id"],
+                "channel_name": channel["name"],
+                "source_url": channel["url"],
+                "program_count": channel["program_count"],
+                "http_status": channel["status"],
             })
-
-            writer.writerow([
-                channel_id,
-                channel_name,
-                urls[0] if urls else "",
-                counts.get(channel_id, 0),
-            ])
-
-    log(f"CSV محفوظ: {output_path}")
 
 
 # ============================================================
@@ -762,141 +617,94 @@ def write_csv(programs, channel_names, output_path):
 # ============================================================
 
 def main():
-    DOCS_DIR.mkdir(parents=True, exist_ok=True)
+    started = time.monotonic()
 
-    all_programs = []
-    channel_names = {}
-
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=HEADLESS)
-
-        context = browser.new_context(
-            user_agent=USER_AGENT,
-            locale="en-US",
-            timezone_id="Africa/Cairo",
-        )
-
-        page = context.new_page()
-        page.set_default_timeout(PAGE_TIMEOUT)
-
-        if CHANNEL_URLS:
-            channel_urls = CHANNEL_URLS[:]
-        else:
-            channel_urls = discover_channel_urls(page, GUIDE_URL)
-
-        # إذا لم تُكتشف روابط قنوات، نستخدم صفحة الدليل نفسها.
-        if not channel_urls:
-            log(
-                "لم يتم اكتشاف روابط قنوات مستقلة. "
-                "سأحاول قراءة صفحة الدليل مباشرة."
-            )
-            channel_urls = [GUIDE_URL]
-
-        log(f"عدد صفحات القنوات المرشحة: {len(channel_urls)}")
-
-        visited = set()
-
-        for index, channel_url in enumerate(channel_urls, start=1):
-            if channel_url in visited:
-                continue
-
-            visited.add(channel_url)
-
-            log(
-                f"[{index}/{len(channel_urls)}] "
-                f"قراءة: {channel_url}"
-            )
-
-            try:
-                page.goto(
-                    channel_url,
-                    wait_until="domcontentloaded",
-                    timeout=PAGE_TIMEOUT,
-                )
-
-                try:
-                    page.wait_for_load_state(
-                        "networkidle",
-                        timeout=15000,
-                    )
-                except PlaywrightTimeoutError:
-                    pass
-
-                page.wait_for_timeout(1500)
-
-                # نعيد قراءة HTML بعد تنفيذ JavaScript.
-                html = page.content()
-                soup = BeautifulSoup(html, "html.parser")
-
-                channel_name, channel_id, programs = (
-                    extract_programs_from_page(soup, channel_url)
-                )
-
-                if programs:
-                    channel_names[channel_id] = channel_name
-                    all_programs.extend(programs)
-
-                    log(
-                        f"تم استخراج {len(programs)} برنامج "
-                        f"من {channel_name}"
-                    )
-                else:
-                    log(f"لم تُستخرج برامج من: {channel_url}")
-
-            except Exception as exc:
-                log(f"خطأ في الصفحة {channel_url}: {exc}")
-                traceback.print_exc()
-
-        browser.close()
-
-    # إزالة التكرار النهائي.
-    unique_programs = []
-    seen = set()
-
-    for program in all_programs:
-        key = (
-            program["channel_id"],
-            program["start"].isoformat(),
-            program["title"],
-        )
-
-        if key in seen:
-            continue
-
-        seen.add(key)
-        unique_programs.append(program)
-
-    if not unique_programs:
-        log("تحذير: لم يتم استخراج أي برامج.")
-        log(
-            "تحقق من روابط القنوات ومحددات HTML "
-            "في الموقع قبل الاعتماد على الملفات."
-        )
-
-    write_xmltv(
-        programs=unique_programs,
-        channel_names=channel_names,
-        output_path=XML_OUTPUT,
+    OUTPUT_DIR.mkdir(
+        parents=True,
+        exist_ok=True,
     )
 
-    write_csv(
-        programs=unique_programs,
-        channel_names=channel_names,
-        output_path=CSV_OUTPUT,
+    channel_map = discover_channels()
+    channel_items = list(channel_map.items())
+
+    all_channels = []
+    all_programmes = []
+
+    print(
+        f"[ElCinema EPG] Fetching {len(channel_items)} pages "
+        f"with {MAX_WORKERS} workers...",
+        flush=True,
     )
 
-    log("انتهى السكريبت.")
-    log(f"XML: {XML_OUTPUT}")
-    log(f"CSV: {CSV_OUTPUT}")
+    results = {}
+
+    with ThreadPoolExecutor(
+        max_workers=MAX_WORKERS
+    ) as executor:
+
+        future_to_channel = {
+            executor.submit(fetch_page, url): (
+                channel_number,
+                url,
+            )
+            for channel_number, url in channel_items
+        }
+
+        completed = 0
+        total = len(future_to_channel)
+
+        for future in as_completed(future_to_channel):
+            channel_number, url = future_to_channel[future]
+            result = future.result()
+
+            results[channel_number] = (url, result)
+
+            completed += 1
+
+            print(
+                f"[ElCinema EPG] Downloaded "
+                f"{completed}/{total}",
+                flush=True,
+            )
+
+    for channel_number, url in channel_items:
+        actual_url, result = results[channel_number]
+
+        channel_info, programmes = parse_channel_page(
+            channel_number,
+            actual_url,
+            result,
+        )
+
+        all_channels.append(channel_info)
+        all_programmes.extend(programmes)
+
+    if not all_programmes:
+        print(
+            "[ElCinema EPG] ERROR: No programmes were extracted.",
+            flush=True,
+        )
+
+        print(
+            "[ElCinema EPG] Check the HTTP statuses, HTML sizes, "
+            "date counts and card counts printed above.",
+            flush=True,
+        )
+
+        sys.exit(1)
+
+    write_xml(all_channels, all_programmes)
+    write_csv(all_channels)
+
+    elapsed = time.monotonic() - started
+
+    print("[ElCinema EPG] Completed successfully.", flush=True)
+    print(f"[ElCinema EPG] Channels: {len(all_channels)}", flush=True)
+    print(f"[ElCinema EPG] Programmes: {len(all_programmes)}", flush=True)
+    print(f"[ElCinema EPG] XML: {XML_FILE}", flush=True)
+    print(f"[ElCinema EPG] CSV: {CSV_FILE}", flush=True)
+    print(f"[ElCinema EPG] Runtime: {elapsed:.1f} seconds", flush=True)
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        log("تم إيقاف السكريبت من المستخدم.")
-        sys.exit(130)
-    except Exception as exc:
-        log(f"خطأ رئيسي: {exc}")
-        traceback.print_exc()
-        sys.exit(1)
+    main()
