@@ -1,4 +1,3 @@
-
 import argparse
 import csv
 import re
@@ -82,6 +81,115 @@ def get_attribute(element, attribute):
         return ""
 
     return clean_text(element.get(attribute, ""))
+
+
+# ============================================================
+# NETWORK DIAGNOSTICS
+# ============================================================
+
+def install_network_diagnostics(page):
+    """
+    Log relevant network responses.
+    Call this BEFORE page.goto() so initial requests are captured.
+    """
+
+    keywords = (
+        "graphql",
+        "program",
+        "schedule",
+        "epg",
+        "guide",
+        "channel",
+        "content",
+        "api",
+    )
+
+    print(
+        "\n========== NETWORK DIAGNOSTIC ENABLED ==========",
+        flush=True,
+    )
+
+    def on_response(response):
+        try:
+            url = response.url
+            lower_url = url.lower()
+
+            if any(word in lower_url for word in keywords):
+                request = response.request
+
+                print(
+                    "DATA RESPONSE | "
+                    f"status={response.status} | "
+                    f"method={request.method} | "
+                    f"type={request.resource_type} | "
+                    f"url={url}",
+                    flush=True,
+                )
+
+        except Exception as exc:
+            print(
+                f"NETWORK DIAGNOSTIC WARNING: {exc}",
+                flush=True,
+            )
+
+    page.on("response", on_response)
+
+    def on_request_failed(request):
+        try:
+            lower_url = request.url.lower()
+
+            if any(word in lower_url for word in keywords):
+                print(
+                    "FAILED REQUEST | "
+                    f"type={request.resource_type} | "
+                    f"error={request.failure} | "
+                    f"url={request.url}",
+                    flush=True,
+                )
+
+        except Exception:
+            pass
+
+    page.on("requestfailed", on_request_failed)
+
+
+def print_loaded_javascript_files(page):
+    """
+    Print JavaScript files loaded by the current page.
+    """
+
+    print(
+        "\n========== LOADED JAVASCRIPT FILES ==========",
+        flush=True,
+    )
+
+    try:
+        scripts = page.locator(
+            "script[src]"
+        ).evaluate_all(
+            """elements => elements.map(
+                element => element.src
+            )"""
+        )
+
+        for script_url in scripts:
+            print(script_url, flush=True)
+
+        print(
+            f"TOTAL JAVASCRIPT FILES: {len(scripts)}",
+            flush=True,
+        )
+
+    except Exception as exc:
+        print(
+            f"Could not list JavaScript files: {exc}",
+            flush=True,
+        )
+
+    print(
+        "=============================================\n",
+        flush=True,
+    )
 
 
 # ============================================================
@@ -336,9 +444,10 @@ def activate_date(page, date_value, timeout_ms):
 
 def diagnose_target_channels(page):
     """
-    Wait five seconds and inspect the actual browser DOM
-    for BaraemTV, JeemTV, and beINJUNIOR.
+    Inspect the browser DOM for BaraemTV, JeemTV,
+    and beINJUNIOR after five seconds.
     """
+
     page.wait_for_timeout(5000)
 
     result = page.evaluate(
@@ -864,6 +973,9 @@ def main():
 
             page.set_default_timeout(timeout_ms)
 
+            # NEW: Enable network diagnostics BEFORE navigation.
+            install_network_diagnostics(page)
+
             print(
                 f"Opening: {PAGE_URL}",
                 flush=True,
@@ -881,6 +993,9 @@ def main():
             )
 
             page.wait_for_timeout(1500)
+
+            # NEW: List scripts after the page has initialized.
+            print_loaded_javascript_files(page)
 
             for category in CATEGORIES:
                 print(
@@ -916,177 +1031,4 @@ def main():
                         if datetime.strptime(
                             date_value,
                             "%Y-%m-%d",
-                        ).date() >= start_date
-                    ]
-
-                else:
-                    requested_dates = available_dates
-
-                requested_dates = requested_dates[
-                    :args.days
-                ]
-
-                print(
-                    f"Available dates: {available_dates}",
-                    flush=True,
-                )
-
-                print(
-                    f"Dates to process: {requested_dates}",
-                    flush=True,
-                )
-
-                for date_value in requested_dates:
-                    try:
-                        activate_date(
-                            page,
-                            date_value,
-                            timeout_ms,
-                        )
-
-                        # ==================================================
-                        # NEW DIAGNOSTIC:
-                        # WAIT 5 SECONDS AND CHECK TARGET CHANNELS
-                        # ==================================================
-
-                        if category == "entertainment":
-                            diagnose_target_channels(page)
-
-                        # Read the current browser DOM after the
-                        # diagnostic wait.
-                        browser_html = page.locator(
-                            "#channelRows"
-                        ).inner_html()
-
-                        # Extra diagnostic for all entertainment rows.
-                        if category == "entertainment":
-                            diagnostic = page.locator(
-                                "#channelRows"
-                            ).evaluate(
-                                """root => {
-                                    const rows = [
-                                        ...root.querySelectorAll(
-                                            ".channel-row"
-                                        )
-                                    ];
-
-                                    return rows.map((row, index) => {
-                                        const link = row.querySelector(
-                                            ".channel-col a[href]"
-                                        );
-
-                                        const blocks =
-                                            row.querySelectorAll(
-                                                ".prog-block"
-                                            );
-
-                                        return {
-                                            index,
-                                            url: link ? link.href : "",
-                                            rowBlocks: blocks.length,
-                                            timedBlocks:
-                                                row.querySelectorAll(
-                                                    ".prog-block" +
-                                                    "[data-start-ms]" +
-                                                    "[data-end-ms]"
-                                                ).length,
-                                            firstTitle: blocks.length
-                                                ? blocks[0].getAttribute(
-                                                    "data-full-title"
-                                                )
-                                                : ""
-                                        };
-                                    });
-                                }"""
-                            )
-
-                            print(
-                                "BROWSER DOM DIAGNOSTIC:",
-                                diagnostic,
-                                flush=True,
-                            )
-
-                            baraem_rows = page.locator(
-                                "#channelRows .channel-row"
-                            ).evaluate_all(
-                                """rows => rows
-                                    .filter(row => {
-                                        const link = row.querySelector(
-                                            ".channel-col a[href]"
-                                        );
-
-                                        return link &&
-                                            /baraem/i.test(link.href);
-                                    })
-                                    .map(row => row.outerHTML)"""
-                            )
-
-                            if baraem_rows:
-                                print(
-                                    "BARAEM ROW HTML:",
-                                    baraem_rows[0][:3000],
-                                    flush=True,
-                                )
-
-                        channels, programmes = parse_channel_rows(
-                            browser_html,
-                            category,
-                            date_value,
-                        )
-
-                        all_channels.extend(channels)
-                        all_programmes.extend(programmes)
-
-                    except Exception as exc:
-                        print(
-                            f"ERROR processing "
-                            f"{category} / {date_value}: {exc}",
-                            flush=True,
-                        )
-
-                        traceback.print_exc()
-
-            context.close()
-            browser.close()
-
-        if not all_channels:
-            print(
-                "ERROR: No channels were extracted.",
-                file=sys.stderr,
-                flush=True,
-            )
-            return 1
-
-        write_xml(
-            all_channels,
-            all_programmes,
-            xml_path,
-        )
-
-        write_csv(
-            all_channels,
-            csv_path,
-        )
-
-        print(
-            "\nEPG scraping completed successfully.",
-            flush=True,
-        )
-
-        return 0
-
-    except Exception:
-        traceback.print_exc()
-        return 1
-
-
-if __name__ == "__main__":
-    try:
-        sys.exit(main())
-
-    except KeyboardInterrupt:
-        print(
-            "\nProcess interrupted by user.",
-            file=sys.stderr,
-        )
-        sys.exit(130)
+                        ).date()
