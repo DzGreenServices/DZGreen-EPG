@@ -2,427 +2,321 @@
 <tv generator-info-name="DZGreen Test">
   <channel id="elcinema.1101">
     <display-name lang="en">Aloula Channel</display-name>
-    <display-name lang="en">Aloula</display-name>
   </channel>
   <channel id="elcinema.1119">
     <display-name lang="en">Egyptian TV Channel</display-name>
-    <display-name lang="en">Egyptian TV</display-name>
   </channel>
   <channel id="elcinema.1127">
-    <display-name lang="en">MBC Channel</display-name>
-    <display-name lang="en">MBC</display-name>
+    <display-name lang="en">MBC 1</display-name>
   </channel>
   <channel id="elcinema.1128">
     <display-name lang="en">MBC 2 Channel</display-name>
-    <display-name lang="en">MBC 2</display-name>
   </channel>
   <channel id="elcinema.1129">
     <display-name lang="en">MBC 4 Channel</display-name>
-    <display-name lang="en">MBC 4</display-name>
   </channel>
   <channel id="elcinema.1130">
     <display-name lang="en">MBC Action Channel</display-name>
-    <display-name lang="en">MBC Action</display-name>
   </channel>
   <channel id="elcinema.1131">
     <display-name lang="en">MBC Drama + Channel</display-name>
-    <display-name lang="en">MBC Drama +</display-name>
   </channel>
   <channel id="elcinema.1132">
     <display-name lang="en">MBC MAX Channel</display-name>
-    <display-name lang="en">MBC MAX</display-name>
   </channel>
   <channel id="elcinema.1134">
     <display-name lang="en">ON Drama Channel</display-name>
-    <display-name lang="en">ON Drama</display-name>
   </channel>
   <channel id="elcinema.1135">
     <display-name lang="en">Emirates Channel</display-name>
-    <display-name lang="en">Emirates</display-name>
   </channel>
   <channel id="elcinema.1136">
     <display-name lang="en">Abu Dhabi TV Channel</display-name>
-    <display-name lang="en">Abu Dhabi TV</display-name>
   </channel>
   <channel id="elcinema.1137">
     <display-name lang="en">Alhayat TV Channel</display-name>
-    <display-name lang="en">Alhayat TV</display-name>
   </channel>
   <channel id="elcinema.1145">
     <display-name lang="en">Mehwar Channel</display-name>
-    <display-name lang="en">Mehwar</display-name>
   </channel>
   <channel id="elcinema.1147">
     <display-name lang="en">Rotana Drama Channel</display-name>
-    <display-name lang="en">Rotana Drama</display-name>
   </channel>
   <channel id="elcinema.1148">
     <display-name lang="en">Rotana Cinema Masr Channel</display-name>
-    <display-name lang="en">Rotana Cinema Masr</display-name>
   </channel>
   <channel id="elcinema.1149">
     <display-name lang="en">Rotana Khalejia Channel</display-name>
-    <display-name lang="en">Rotana Khalejia</display-name>
   </channel>
   <channel id="elcinema.1156">
     <display-name lang="en">Nile Drama Channel</display-name>
-    <display-name lang="en">Nile Drama</display-name>
   </channel>
   <channel id="elcinema.1159">
     <display-name lang="en">Nile Life Channel</display-name>
-    <display-name lang="en">Nile Life</display-name>
   </channel>
   <channel id="elcinema.1168">
     <display-name lang="en">LBCI Channel</display-name>
-    <display-name lang="en">LBCI</display-name>
   </channel>
   <channel id="elcinema.1169">
     <display-name lang="en">Dubai TV Channel</display-name>
-    <display-name lang="en">Dubai TV</display-name>
   </channel>
   <channel id="elcinema.1173">
     <display-name lang="en">Dubai One Channel</display-name>
-    <display-name lang="en">Dubai One</display-name>
   </channel>
   <channel id="elcinema.1174">
     <display-name lang="en">Al Kahera Wal Nas TV Channel</display-name>
-    <display-name lang="en">Al Kahera Wal Nas TV</display-name>
   </channel>
   <channel id="elcinema.1176">
     <display-name lang="en">Cima Channel</display-name>
-    <display-name lang="en">Cima</display-name>
   </channel>
   <channel id="elcinema.1177">
     <display-name lang="en">Sama Dubai Channel</display-name>
-    <display-name lang="en">Sama Dubai</display-name>
   </channel>
   <channel id="elcinema.1188">
     <display-name lang="en">Sharjah TV Channel</display-name>
-    <display-name lang="en">Sharjah TV</display-name>
   </channel>
   <channel id="elcinema.1193">
     <display-name lang="en">Al Nahar TV Channel</display-name>
-    <display-name lang="en">Al Nahar TV</display-name>
   </channel>
   <channel id="elcinema.1194">
     <display-name lang="en">MBC Drama Channel</display-name>
-    <display-name lang="en">MBC Drama</display-name>
   </channel>
   <channel id="elcinema.1198">
     <display-name lang="en">CBC Channel</display-name>
-    <display-name lang="en">CBC</display-name>
   </channel>
   <channel id="elcinema.1199">
     <display-name lang="en">CBC Drama Channel</display-name>
-    <display-name lang="en">CBC Drama</display-name>
   </channel>
   <channel id="elcinema.1203">
     <display-name lang="en">ON E Channel</display-name>
-    <display-name lang="en">ON E</display-name>
   </channel>
   <channel id="elcinema.1204">
     <display-name lang="en">iFILM TV Channel</display-name>
-    <display-name lang="en">iFILM TV</display-name>
   </channel>
   <channel id="elcinema.1205">
     <display-name lang="en">OSN Ya Hala Channel</display-name>
-    <display-name lang="en">OSN Ya Hala</display-name>
   </channel>
   <channel id="elcinema.1211">
     <display-name lang="en">OSN TV Movies Action Channel</display-name>
-    <display-name lang="en">OSN TV Movies Action</display-name>
   </channel>
   <channel id="elcinema.1213">
     <display-name lang="en">OSN TV Movies Premiere Channel</display-name>
-    <display-name lang="en">OSN TV Movies Premiere</display-name>
   </channel>
   <channel id="elcinema.1216">
     <display-name lang="en">Al Jadeed TV Channel</display-name>
-    <display-name lang="en">Al Jadeed TV</display-name>
   </channel>
   <channel id="elcinema.1217">
     <display-name lang="en">Rotana Classic Channel</display-name>
-    <display-name lang="en">Rotana Classic</display-name>
   </channel>
   <channel id="elcinema.1223">
     <display-name lang="en">Al Nahar Drama Channel</display-name>
-    <display-name lang="en">Al Nahar Drama</display-name>
   </channel>
   <channel id="elcinema.1226">
     <display-name lang="en">Sada El Balad Channel</display-name>
-    <display-name lang="en">Sada El Balad</display-name>
   </channel>
   <channel id="elcinema.1227">
     <display-name lang="en">Sada El Balad Drama Channel</display-name>
-    <display-name lang="en">Sada El Balad Drama</display-name>
   </channel>
   <channel id="elcinema.1231">
     <display-name lang="en">OSN TV Movies Comedy Channel</display-name>
-    <display-name lang="en">OSN TV Movies Comedy</display-name>
   </channel>
   <channel id="elcinema.1232">
     <display-name lang="en">OSN TV Kids Channel</display-name>
-    <display-name lang="en">OSN TV Kids</display-name>
   </channel>
   <channel id="elcinema.1239">
     <display-name lang="en">MBC Egypt Channel</display-name>
-    <display-name lang="en">MBC Egypt</display-name>
   </channel>
   <channel id="elcinema.1241">
     <display-name lang="en">MBC 3 Channel</display-name>
-    <display-name lang="en">MBC 3</display-name>
   </channel>
   <channel id="elcinema.1242">
     <display-name lang="en">Network Arabic Channel</display-name>
-    <display-name lang="en">Network Arabic</display-name>
   </channel>
   <channel id="elcinema.1246">
     <display-name lang="en">LDC Channel</display-name>
-    <display-name lang="en">LDC</display-name>
   </channel>
   <channel id="elcinema.1252">
     <display-name lang="en">Al Kahera Wal Nas TV 2 Channel</display-name>
-    <display-name lang="en">Al Kahera Wal Nas TV 2</display-name>
   </channel>
   <channel id="elcinema.1257">
     <display-name lang="en">OSN TV Comedy Channel</display-name>
-    <display-name lang="en">OSN TV Comedy</display-name>
   </channel>
   <channel id="elcinema.1259">
     <display-name lang="en">MBC Bollywood Channel</display-name>
-    <display-name lang="en">MBC Bollywood</display-name>
   </channel>
   <channel id="elcinema.1261">
     <display-name lang="en">Zee alwan Channel</display-name>
-    <display-name lang="en">Zee alwan</display-name>
   </channel>
   <channel id="elcinema.1264">
     <display-name lang="en">Al Dafrah Channel</display-name>
-    <display-name lang="en">Al Dafrah</display-name>
   </channel>
   <channel id="elcinema.1269">
     <display-name lang="en">AlSharqiya Channel</display-name>
-    <display-name lang="en">AlSharqiya</display-name>
   </channel>
   <channel id="elcinema.1278">
     <display-name lang="en">MBC MASR 2 Channel</display-name>
-    <display-name lang="en">MBC MASR 2</display-name>
   </channel>
   <channel id="elcinema.1279">
     <display-name lang="en">Sada El Balad 2 Channel</display-name>
-    <display-name lang="en">Sada El Balad 2</display-name>
   </channel>
   <channel id="elcinema.1280">
     <display-name lang="en">TeN TV Channel</display-name>
-    <display-name lang="en">TeN TV</display-name>
   </channel>
   <channel id="elcinema.1283">
     <display-name lang="en">Dubai Zaman Channel</display-name>
-    <display-name lang="en">Dubai Zaman</display-name>
   </channel>
   <channel id="elcinema.1285">
     <display-name lang="en">Osn Ya Hala Aflam Channel</display-name>
-    <display-name lang="en">Osn Ya Hala Aflam</display-name>
   </channel>
   <channel id="elcinema.1289">
     <display-name lang="en">Rotana Cinema Channel</display-name>
-    <display-name lang="en">Rotana Cinema</display-name>
   </channel>
   <channel id="elcinema.1290">
     <display-name lang="en">DMC Channel</display-name>
-    <display-name lang="en">DMC</display-name>
   </channel>
   <channel id="elcinema.1292">
     <display-name lang="en">DMC DRAMA Channel</display-name>
-    <display-name lang="en">DMC DRAMA</display-name>
   </channel>
   <channel id="elcinema.1296">
     <display-name lang="en">MTV Channel</display-name>
-    <display-name lang="en">MTV</display-name>
   </channel>
   <channel id="elcinema.1297">
     <display-name lang="en">SBC Channel</display-name>
-    <display-name lang="en">SBC</display-name>
   </channel>
   <channel id="elcinema.1298">
     <display-name lang="en">Amman Channel</display-name>
-    <display-name lang="en">Amman</display-name>
   </channel>
   <channel id="elcinema.1299">
     <display-name lang="en">Roya Channel</display-name>
-    <display-name lang="en">Roya</display-name>
   </channel>
   <channel id="elcinema.1301">
     <display-name lang="en">Alsumaria Channel</display-name>
-    <display-name lang="en">Alsumaria</display-name>
   </channel>
   <channel id="elcinema.1302">
     <display-name lang="en">Fujairah Channel</display-name>
-    <display-name lang="en">Fujairah</display-name>
   </channel>
   <channel id="elcinema.1304">
     <display-name lang="en">Nessma Channel</display-name>
-    <display-name lang="en">Nessma</display-name>
   </channel>
   <channel id="elcinema.1306">
     <display-name lang="en">Alrasheed Channel</display-name>
-    <display-name lang="en">Alrasheed</display-name>
   </channel>
   <channel id="elcinema.1309">
     <display-name lang="en">beIN Drama Channel</display-name>
-    <display-name lang="en">beIN Drama</display-name>
   </channel>
   <channel id="elcinema.1312">
     <display-name lang="en">Al Aoula Morocco Channel</display-name>
-    <display-name lang="en">Al Aoula Morocco</display-name>
   </channel>
   <channel id="elcinema.1313">
     <display-name lang="en">LTV Channel</display-name>
-    <display-name lang="en">LTV</display-name>
   </channel>
   <channel id="elcinema.1314">
     <display-name lang="en">Jordan TV Channel</display-name>
-    <display-name lang="en">Jordan TV</display-name>
   </channel>
   <channel id="elcinema.1315">
     <display-name lang="en">Echorouk TV Channel</display-name>
-    <display-name lang="en">Echorouk TV</display-name>
   </channel>
   <channel id="elcinema.1317">
     <display-name lang="en">Oman Channel</display-name>
-    <display-name lang="en">Oman</display-name>
   </channel>
   <channel id="elcinema.1322">
     <display-name lang="en">BEIN MOVIES PREMIERE Channel</display-name>
-    <display-name lang="en">BEIN MOVIES PREMIERE</display-name>
   </channel>
   <channel id="elcinema.1323">
     <display-name lang="en">BEIN MOVIES ACTION Channel</display-name>
-    <display-name lang="en">BEIN MOVIES ACTION</display-name>
   </channel>
   <channel id="elcinema.1324">
     <display-name lang="en">BEIN MOVIES DRAMA Channel</display-name>
-    <display-name lang="en">BEIN MOVIES DRAMA</display-name>
   </channel>
   <channel id="elcinema.1325">
     <display-name lang="en">BEIN MOVIES FAMILY Channel</display-name>
-    <display-name lang="en">BEIN MOVIES FAMILY</display-name>
   </channel>
   <channel id="elcinema.1327">
     <display-name lang="en">BeIn Series HD 1 Channel</display-name>
-    <display-name lang="en">BeIn Series HD 1</display-name>
   </channel>
   <channel id="elcinema.1328">
     <display-name lang="en">beIN Series HD 2 Channel</display-name>
-    <display-name lang="en">beIN Series HD 2</display-name>
   </channel>
   <channel id="elcinema.1336">
     <display-name lang="en">Maspero Zaman Channel</display-name>
-    <display-name lang="en">Maspero Zaman</display-name>
   </channel>
   <channel id="elcinema.1339">
     <display-name lang="en">AlSaeedah Channel</display-name>
-    <display-name lang="en">AlSaeedah</display-name>
   </channel>
   <channel id="elcinema.1340">
     <display-name lang="en">MBC Iraq Channel</display-name>
-    <display-name lang="en">MBC Iraq</display-name>
   </channel>
   <channel id="elcinema.1341">
     <display-name lang="en">LBC Channel</display-name>
-    <display-name lang="en">LBC</display-name>
   </channel>
   <channel id="elcinema.1349">
     <display-name lang="en">Iraqia TV Channel</display-name>
-    <display-name lang="en">Iraqia TV</display-name>
   </channel>
   <channel id="elcinema.1352">
     <display-name lang="en">Saudiya TV Channel</display-name>
-    <display-name lang="en">Saudiya TV</display-name>
   </channel>
   <channel id="elcinema.1354">
     <display-name lang="en">MBC 5 Channel</display-name>
-    <display-name lang="en">MBC 5</display-name>
   </channel>
   <channel id="elcinema.1358">
     <display-name lang="en">Rotana Comedy Channel</display-name>
-    <display-name lang="en">Rotana Comedy</display-name>
   </channel>
   <channel id="elcinema.1366">
     <display-name lang="en">Thikrayat Tv Channel</display-name>
-    <display-name lang="en">Thikrayat Tv</display-name>
   </channel>
   <channel id="elcinema.1367">
     <display-name lang="en">Utv Channel</display-name>
-    <display-name lang="en">Utv</display-name>
   </channel>
   <channel id="elcinema.1371">
     <display-name lang="en">Mix Bel Araby Channel</display-name>
-    <display-name lang="en">Mix Bel Araby</display-name>
   </channel>
   <channel id="elcinema.1373">
     <display-name lang="en">Mix ONE Channel</display-name>
-    <display-name lang="en">Mix ONE</display-name>
   </channel>
   <channel id="elcinema.1374">
     <display-name lang="en">Hadhramaut TV Channel</display-name>
-    <display-name lang="en">Hadhramaut TV</display-name>
   </channel>
   <channel id="elcinema.1382">
     <display-name lang="en">Alaraby TV 2 Channel</display-name>
-    <display-name lang="en">Alaraby TV 2</display-name>
   </channel>
   <channel id="elcinema.1383">
     <display-name lang="en">WTV Channel</display-name>
-    <display-name lang="en">WTV</display-name>
   </channel>
   <channel id="elcinema.1385">
     <display-name lang="en">Dijlah TV Channel</display-name>
-    <display-name lang="en">Dijlah TV</display-name>
   </channel>
   <channel id="elcinema.1390">
     <display-name lang="en">OSN TV Yahala Bil Arabi Channel</display-name>
-    <display-name lang="en">OSN TV Yahala Bil Arabi</display-name>
   </channel>
   <channel id="elcinema.1391">
     <display-name lang="en">OSN TV Movies Hollywood Channel</display-name>
-    <display-name lang="en">OSN TV Movies Hollywood</display-name>
   </channel>
   <channel id="elcinema.1392">
     <display-name lang="en">OSN TV Movies Family Channel</display-name>
-    <display-name lang="en">OSN TV Movies Family</display-name>
   </channel>
   <channel id="elcinema.1393">
     <display-name lang="en">OSN TV One Channel</display-name>
-    <display-name lang="en">OSN TV One</display-name>
   </channel>
   <channel id="elcinema.1394">
     <display-name lang="en">OSN TV Showcase Channel</display-name>
-    <display-name lang="en">OSN TV Showcase</display-name>
   </channel>
   <channel id="elcinema.1395">
     <display-name lang="en">OSN TV Crime Channel</display-name>
-    <display-name lang="en">OSN TV Crime</display-name>
   </channel>
   <channel id="elcinema.1396">
     <display-name lang="en">OSN TV Now Channel</display-name>
-    <display-name lang="en">OSN TV Now</display-name>
   </channel>
   <channel id="elcinema.1398">
     <display-name lang="en">Althania Channel</display-name>
-    <display-name lang="en">Althania</display-name>
   </channel>
   <channel id="elcinema.1399">
     <display-name lang="en">MBC Masr Drama Channel</display-name>
-    <display-name lang="en">MBC Masr Drama</display-name>
   </channel>
   <channel id="elcinema.1401">
     <display-name lang="en">Masah Channel</display-name>
-    <display-name lang="en">Masah</display-name>
   </channel>
   <channel id="elcinema.1405">
     <display-name lang="en">One Drama Channel</display-name>
-    <display-name lang="en">One Drama</display-name>
   </channel>
   <programme start="20261010130000 +0100" stop="20261010140000 +0100" channel="elcinema.1101">
     <title lang="en">Altaasiea</title>
