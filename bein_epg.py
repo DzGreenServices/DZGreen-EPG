@@ -2,7 +2,6 @@
 import csv
 import re
 import sys
-import time
 import traceback
 import xml.etree.ElementTree as ET
 
@@ -35,25 +34,25 @@ PAGE_TIMEOUT_MS = 60000
 
 
 # ============================================================
-# TEXT AND DATE HELPERS
+# TEXT HELPERS
 # ============================================================
 
 def clean_text(value):
-    """Clean text extracted from HTML."""
+    """Clean HTML text."""
 
     if value is None:
         return ""
 
-    value = BeautifulSoup(str(value), "html.parser").get_text(
-        separator=" ",
-        strip=True,
-    )
+    value = BeautifulSoup(
+        str(value),
+        "html.parser",
+    ).get_text(" ", strip=True)
 
     return re.sub(r"\s+", " ", value).strip()
 
 
 def timestamp_to_xmltv(value):
-    """Convert a Unix timestamp in milliseconds to XMLTV UTC."""
+    """Convert Unix milliseconds to XMLTV UTC format."""
 
     try:
         timestamp_ms = int(value)
@@ -79,20 +78,16 @@ def get_channel_id(url):
 
     slug = path.split("/")[-1].lower()
 
-    slug = re.sub(r"[^a-z0-9._-]+", "", slug)
-
-    return slug
+    return re.sub(r"[^a-z0-9._-]+", "", slug)
 
 
 def get_channel_name(anchor, image, url):
-    """Extract the best available channel name."""
+    """Determine the channel name."""
 
     candidates = [
         anchor.get("data-full-title"),
         anchor.get("title"),
         anchor.get("aria-label"),
-        image.get("alt") if image else None,
-        anchor.get_text(" ", strip=True),
     ]
 
     for candidate in candidates:
@@ -101,9 +96,20 @@ def get_channel_name(anchor, image, url):
         if name:
             return name
 
-    slug = urlparse(url).path.strip("/").split("/")[-1]
+    if image:
+        image_alt = clean_text(image.get("alt"))
 
-    return slug.replace("_", " ").replace("-", " ").title()
+        if image_alt and image_alt.lower() not in {
+            "channel logo",
+            "logo",
+            "channel",
+        }:
+            return image_alt
+
+    path = urlparse(url).path.strip("/")
+    slug = path.split("/")[-1] if path else "Unknown Channel"
+
+    return slug.replace("_", " ").replace("-", " ").strip()
 
 
 # ============================================================
@@ -111,11 +117,18 @@ def get_channel_name(anchor, image, url):
 # ============================================================
 
 def parse_channel_rows(html, category, date_value):
-    """Extract channels and programmes from the current page."""
+    """
+    Extract channel rows from HTML.
+
+    Important:
+    html may be the inner HTML of #channelRows.
+    Therefore, select .channel-row, not
+    #channelRows .channel-row.
+    """
 
     soup = BeautifulSoup(html, "html.parser")
 
-    rows = soup.select("#channelRows .channel-row")
+    rows = soup.select(".channel-row")
 
     channels = []
 
@@ -128,11 +141,12 @@ def parse_channel_rows(html, category, date_value):
         if anchor is None:
             continue
 
-        channel_url = urljoin(
-            PAGE_URL,
-            anchor.get("href", "").strip(),
-        )
+        href = anchor.get("href", "").strip()
 
+        if not href:
+            continue
+
+        channel_url = urljoin(PAGE_URL, href)
         channel_id = get_channel_id(channel_url)
 
         if not channel_id:
@@ -224,6 +238,15 @@ def parse_channel_rows(html, category, date_value):
             "programmes": programmes,
         })
 
+    print(
+        f"DEBUG: {category} | {date_value} | "
+        f"Rows: {len(rows)} | "
+        f"Channels: {len(channels)} | "
+        f"Programmes: "
+        f"{sum(len(c['programmes']) for c in channels)}",
+        flush=True,
+    )
+
     return channels
 
 
@@ -239,7 +262,7 @@ def wait_for_content_change(
     value,
     timeout_ms,
 ):
-    """Wait until the selected control is active and content changes."""
+    """Wait for the selected control and new programme content."""
 
     page.wait_for_function(
         """arg => {
@@ -285,10 +308,9 @@ def wait_for_content_change(
 # ============================================================
 
 def activate_category(page, category):
-    """Activate Sports or Entertainment and verify its content."""
+    """Activate Sports or Entertainment."""
 
     selector = f'.category-tab[data-category="{category}"]'
-
     button = page.locator(selector)
 
     if button.count() == 0:
@@ -301,14 +323,12 @@ def activate_category(page, category):
     previous_html = root.inner_html()
 
     button_class = button.get_attribute("class") or ""
-
     was_active = "active" in button_class.split()
 
     if not was_active:
         button.click()
 
-    try:
-        if not was_active:
+        try:
             wait_for_content_change(
                 page=page,
                 previous_html=previous_html,
@@ -317,7 +337,14 @@ def activate_category(page, category):
                 value=category,
                 timeout_ms=CONTENT_TIMEOUT_MS,
             )
-        else:
+
+        except PlaywrightTimeoutError:
+            print(
+                f"Warning: waiting for {category} content change "
+                "timed out; checking loaded content.",
+                flush=True,
+            )
+
             page.wait_for_function(
                 """arg => {
                     const button = document.querySelector(arg.selector);
@@ -335,27 +362,16 @@ def activate_category(page, category):
                 timeout=CONTENT_TIMEOUT_MS,
             )
 
-    except PlaywrightTimeoutError:
-        print(
-            f"Warning: normal category wait timed out for {category}. "
-            "Checking current page content...",
-            flush=True,
-        )
-
+    else:
         page.wait_for_function(
             """arg => {
                 const button = document.querySelector(arg.selector);
                 const root = document.querySelector("#channelRows");
 
-                if (
-                    !button ||
-                    !button.classList.contains("active") ||
-                    !root
-                ) {
-                    return false;
-                }
-
-                return root.querySelectorAll(".channel-row").length > 0
+                return button
+                    && button.classList.contains("active")
+                    && root
+                    && root.querySelectorAll(".channel-row").length > 0
                     && root.querySelector(
                         '.prog-block[data-start-ms][data-end-ms]'
                     );
@@ -364,16 +380,11 @@ def activate_category(page, category):
             timeout=CONTENT_TIMEOUT_MS,
         )
 
-    channel_count = root.locator(".channel-row").count()
-
-    programme_count = root.locator(
-        '.prog-block[data-start-ms][data-end-ms]'
-    ).count()
-
     print(
         f"Category activated: {category} | "
-        f"Channels: {channel_count} | "
-        f"Programmes: {programme_count}",
+        f"Channels: {root.locator('.channel-row').count()} | "
+        f"Programmes: "
+        f"{root.locator('.prog-block[data-start-ms][data-end-ms]').count()}",
         flush=True,
     )
 
@@ -383,7 +394,7 @@ def activate_category(page, category):
 # ============================================================
 
 def get_available_dates(page):
-    """Read the dates displayed in the date strip."""
+    """Read available dates from the date strip."""
 
     dates = page.locator(
         "#dayStrip .day-cell[data-date]"
@@ -404,15 +415,14 @@ def get_available_dates(page):
 
 
 def activate_date(page, date_value):
-    """Select a date and wait for its programmes to load."""
+    """Select a date and wait for its content."""
 
     selector = f'.day-cell[data-date="{date_value}"]'
-
     cell = page.locator(selector)
 
     if cell.count() == 0:
         raise RuntimeError(
-            f"Date not found on page: {date_value}"
+            f"Date not found: {date_value}"
         )
 
     root = page.locator("#channelRows")
@@ -420,7 +430,6 @@ def activate_date(page, date_value):
     previous_html = root.inner_html()
 
     cell_class = cell.get_attribute("class") or ""
-
     was_active = "active" in cell_class.split()
 
     if not was_active:
@@ -438,8 +447,8 @@ def activate_date(page, date_value):
 
         except PlaywrightTimeoutError:
             print(
-                f"Warning: content-change wait timed out for "
-                f"{date_value}; checking current content...",
+                f"Warning: waiting for date {date_value} "
+                "content change timed out.",
                 flush=True,
             )
 
@@ -485,18 +494,21 @@ def activate_date(page, date_value):
 
 
 # ============================================================
-# XMLTV GENERATION
+# XMLTV OUTPUT
 # ============================================================
 
 def write_xml(channels):
-    """Write the XMLTV EPG file."""
+    """Generate BeIN-EPG.xml."""
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    tv = ET.Element("tv", {
-        "generator-info-name": "DZGreen beIN EPG",
-        "generator-info-url": PAGE_URL,
-    })
+    tv = ET.Element(
+        "tv",
+        {
+            "generator-info-name": "DZGreen beIN EPG",
+            "generator-info-url": PAGE_URL,
+        },
+    )
 
     unique_channels = {}
 
@@ -506,10 +518,13 @@ def write_xml(channels):
         if channel_id not in unique_channels:
             unique_channels[channel_id] = channel
 
-    for channel_id, channel in sorted(
-        unique_channels.items(),
-        key=lambda item: item[0],
-    ):
+        elif (
+            not unique_channels[channel_id]["logo"]
+            and channel["logo"]
+        ):
+            unique_channels[channel_id]["logo"] = channel["logo"]
+
+    for channel_id, channel in sorted(unique_channels.items()):
         channel_element = ET.SubElement(
             tv,
             "channel",
@@ -582,7 +597,6 @@ def write_xml(channels):
                 description_element.text = programme["description"]
 
     tree = ET.ElementTree(tv)
-
     ET.indent(tree, space="  ")
 
     tree.write(
@@ -600,11 +614,11 @@ def write_xml(channels):
 
 
 # ============================================================
-# CSV MAPPING GENERATION
+# CSV OUTPUT
 # ============================================================
 
 def write_csv(channels):
-    """Write the channel mapping CSV file."""
+    """Generate BeIN-Channel-Mapping.csv."""
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -615,6 +629,12 @@ def write_csv(channels):
 
         if channel_id not in unique_channels:
             unique_channels[channel_id] = channel
+
+        elif (
+            not unique_channels[channel_id]["logo"]
+            and channel["logo"]
+        ):
+            unique_channels[channel_id]["logo"] = channel["logo"]
 
     with CSV_FILE.open(
         "w",
@@ -632,10 +652,7 @@ def write_csv(channels):
             "category",
         ])
 
-        for channel_id, channel in sorted(
-            unique_channels.items(),
-            key=lambda item: item[0],
-        ):
+        for channel_id, channel in sorted(unique_channels.items()):
             writer.writerow([
                 channel_id,
                 channel["name"],
@@ -665,104 +682,109 @@ def main():
             headless=True,
         )
 
-        page = browser.new_page(
-            locale="en-US",
-        )
+        try:
+            page = browser.new_page(
+                locale="en-US",
+            )
 
-        page.set_default_timeout(CONTENT_TIMEOUT_MS)
+            page.set_default_timeout(CONTENT_TIMEOUT_MS)
 
-        print(
-            "Opening the beIN TV Guide...",
-            flush=True,
-        )
-
-        page.goto(
-            PAGE_URL,
-            wait_until="domcontentloaded",
-            timeout=PAGE_TIMEOUT_MS,
-        )
-
-        page.wait_for_selector(
-            "#channelRows .channel-row",
-            timeout=PAGE_TIMEOUT_MS,
-        )
-
-        page.wait_for_selector(
-            '.category-tab[data-category="sports"]',
-            timeout=PAGE_TIMEOUT_MS,
-        )
-
-        page.wait_for_selector(
-            '.category-tab[data-category="entertainment"]',
-            timeout=PAGE_TIMEOUT_MS,
-        )
-
-        available_dates = get_available_dates(page)
-
-        print(
-            "Available dates: " + ", ".join(available_dates),
-            flush=True,
-        )
-
-        for category in CATEGORIES:
             print(
-                f"\n=== {category.upper()} ===",
+                "Opening the beIN TV Guide...",
                 flush=True,
             )
 
-            activate_category(page, category)
+            page.goto(
+                PAGE_URL,
+                wait_until="domcontentloaded",
+                timeout=PAGE_TIMEOUT_MS,
+            )
 
-            for index, date_value in enumerate(
-                available_dates,
-                start=1,
-            ):
+            page.wait_for_selector(
+                "#channelRows .channel-row",
+                timeout=PAGE_TIMEOUT_MS,
+            )
+
+            page.wait_for_selector(
+                '.category-tab[data-category="sports"]',
+                timeout=PAGE_TIMEOUT_MS,
+            )
+
+            page.wait_for_selector(
+                '.category-tab[data-category="entertainment"]',
+                timeout=PAGE_TIMEOUT_MS,
+            )
+
+            available_dates = get_available_dates(page)
+
+            print(
+                "Available dates: " + ", ".join(available_dates),
+                flush=True,
+            )
+
+            for category in CATEGORIES:
                 print(
-                    f"[{index}/{len(available_dates)}] "
-                    f"{category} - {date_value}",
+                    f"\n=== {category.upper()} ===",
                     flush=True,
                 )
 
-                if index > 1:
-                    activate_date(page, date_value)
+                activate_category(page, category)
 
-                html = page.locator(
-                    "#channelRows"
-                ).inner_html()
-
-                extracted_channels = parse_channel_rows(
-                    html,
-                    category,
-                    date_value,
-                )
-
-                channel_count = len(extracted_channels)
-
-                programme_count = sum(
-                    len(channel["programmes"])
-                    for channel in extracted_channels
-                )
-
-                print(
-                    f"  Channels: {channel_count} | "
-                    f"Programmes: {programme_count}",
-                    flush=True,
-                )
-
-                if channel_count == 0:
-                    raise RuntimeError(
-                        f"No channels extracted for "
-                        f"{category} on {date_value}."
+                for index, date_value in enumerate(
+                    available_dates,
+                    start=1,
+                ):
+                    print(
+                        f"[{index}/{len(available_dates)}] "
+                        f"{category} - {date_value}",
+                        flush=True,
                     )
 
-                if programme_count == 0:
-                    raise RuntimeError(
-                        f"No programmes extracted for "
-                        f"{category} on {date_value}."
+                    if index > 1:
+                        activate_date(page, date_value)
+
+                    # Read the inner HTML of the container.
+                    # parse_channel_rows() correctly searches
+                    # for .channel-row without the parent selector.
+                    html = page.locator(
+                        "#channelRows"
+                    ).inner_html()
+
+                    extracted_channels = parse_channel_rows(
+                        html,
+                        category,
+                        date_value,
                     )
 
-                all_channels.extend(extracted_channels)
+                    channel_count = len(extracted_channels)
 
-        browser.close()
+                    programme_count = sum(
+                        len(channel["programmes"])
+                        for channel in extracted_channels
+                    )
+
+                    print(
+                        f"  Channels: {channel_count} | "
+                        f"Programmes: {programme_count}",
+                        flush=True,
+                    )
+
+                    if channel_count == 0:
+                        raise RuntimeError(
+                            f"No channels extracted for "
+                            f"{category} on {date_value}."
+                        )
+
+                    if programme_count == 0:
+                        raise RuntimeError(
+                            f"No programmes extracted for "
+                            f"{category} on {date_value}."
+                        )
+
+                    all_channels.extend(extracted_channels)
+
+        finally:
+            browser.close()
 
     if not all_channels:
         raise RuntimeError(
@@ -781,7 +803,7 @@ def main():
 
 
 # ============================================================
-# ENTRY POINT AND FULL ERROR TRACEBACK
+# ENTRY POINT AND ERROR TRACEBACK
 # ============================================================
 
 if __name__ == "__main__":
@@ -796,9 +818,7 @@ if __name__ == "__main__":
             flush=True,
         )
 
-        traceback.print_exc(
-            file=sys.stderr,
-        )
+        traceback.print_exc(file=sys.stderr)
 
         print(
             "========== END ERROR TRACEBACK ==========\n",
