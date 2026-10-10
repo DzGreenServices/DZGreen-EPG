@@ -7,7 +7,7 @@ from datetime import datetime, date, time as dt_time, timedelta, timezone
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import local
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin
 from zoneinfo import ZoneInfo
 
 import requests
@@ -360,115 +360,8 @@ def parse_program_card(card, guide_date):
         strip=True,
     )
 
-    program_url = urljoin(
-        BASE_URL,
-        title_link.get("href", ""),
-    )
-
     if not title:
         return None
-
-    # Description, including hidden "Read more" text.
-    description = ""
-
-    for item in card.select(
-        "ul.unstyled.no-margin li"
-    ):
-        if item.select_one("a#read-more"):
-            description = item.get_text(
-                " ",
-                strip=True,
-            )
-
-            description = re.sub(
-                r"\s*\.\.\.\s*Read more",
-                "",
-                description,
-                flags=re.IGNORECASE,
-            ).strip()
-
-            break
-
-    # Category and year, e.g. Movie (2016).
-    category = ""
-
-    for item in card.select(
-        "ul.unstyled.no-margin li"
-    ):
-        text = item.get_text(
-            " ",
-            strip=True,
-        )
-
-        if re.search(
-            r"\bMovie\b|\bSeries\b|\bProgram\b",
-            text,
-            re.I,
-        ):
-            category = text
-            break
-
-    # Rating.
-    rating = ""
-    rating_element = card.select_one(
-        ".stars-rating-lg[title]"
-    )
-
-    if rating_element:
-        rating_match = re.search(
-            r"(\d+(?:\.\d+)?)",
-            rating_element.get("title", ""),
-        )
-
-        if rating_match:
-            rating = rating_match.group(1)
-
-    # Actors.
-    actors = []
-
-    for actor_link in card.select(
-        "a[href*='/person/']"
-    ):
-        actor_name = actor_link.get_text(
-            " ",
-            strip=True,
-        )
-
-        if actor_name and actor_name not in actors:
-            actors.append(actor_name)
-
-    # Poster.
-    image_element = card.select_one(
-        "a[href*='/work/'] img[src]"
-    )
-
-    if not image_element:
-        image_element = card.select_one(
-            "img[src]"
-        )
-
-    image_url = ""
-
-    if image_element:
-        raw_image_url = (
-            image_element.get("src") or ""
-        ).strip()
-
-        if raw_image_url:
-            image_url = urljoin(
-                BASE_URL,
-                raw_image_url,
-            )
-
-            # Reject the site homepage as an image URL.
-            parsed_image_url = urlparse(image_url)
-
-            if (
-                parsed_image_url.scheme not in ("http", "https")
-                or not parsed_image_url.netloc
-                or image_url.rstrip("/") == BASE_URL
-            ):
-                image_url = ""
 
     # Convert Cairo time to Algeria time.
     # Calculate the end in UTC to handle DST transitions.
@@ -483,14 +376,8 @@ def parse_program_card(card, guide_date):
 
     return {
         "title": title,
-        "url": program_url,
         "start": start_algiers,
         "end": end_algiers,
-        "description": description,
-        "category": category,
-        "rating": rating,
-        "actors": actors,
-        "image": image_url,
     }
 
 
@@ -593,7 +480,7 @@ def parse_channel_page(item):
             continue
 
         unique_key = (
-            programme["url"],
+            programme["title"],
             programme["start"].isoformat(),
         )
 
@@ -622,7 +509,7 @@ def parse_channel_page(item):
 
 
 # ============================================================
-# XMLTV GENERATION
+# XMLTV GENERATION - SIMPLIFIED
 # ============================================================
 
 def add_text(parent, tag, value, **attributes):
@@ -663,14 +550,15 @@ def write_xmltv(channel_results):
             lang="en",
         )
 
-    # 2. Write ALL programmes after channel definitions.
+    # 2. Write programmes with only:
+    # start, stop, channel and title.
     for channel in channel_results:
         channel_id = (
             f"elcinema.{channel['number']}"
         )
 
         for programme in channel["programmes"]:
-            element = ET.SubElement(
+            ET.SubElement(
                 tv,
                 "programme",
                 {
@@ -684,85 +572,14 @@ def write_xmltv(channel_results):
                 },
             )
 
+            # The only programme metadata retained is the title.
+            title_element = tv[-1]
             add_text(
-                element,
+                title_element,
                 "title",
                 programme["title"],
                 lang="en",
             )
-
-            if programme["description"]:
-                add_text(
-                    element,
-                    "desc",
-                    programme["description"],
-                    lang="en",
-                )
-
-            if programme["category"]:
-                add_text(
-                    element,
-                    "category",
-                    programme["category"],
-                    lang="en",
-                )
-
-            if programme["rating"]:
-                rating = ET.SubElement(
-                    element,
-                    "rating",
-                )
-
-                add_text(
-                    rating,
-                    "value",
-                    f"{programme['rating']}/10",
-                )
-
-            if programme["actors"]:
-                credits = ET.SubElement(
-                    element,
-                    "credits",
-                )
-
-                for actor in programme["actors"]:
-                    add_text(
-                        credits,
-                        "actor",
-                        actor,
-                    )
-
-            # Add only valid HTTP(S) image URLs.
-            image_url = (
-                programme.get("image") or ""
-            ).strip()
-
-            if image_url.startswith(
-                ("https://", "http://")
-            ):
-                parsed_image_url = urlparse(
-                    image_url
-                )
-
-                if (
-                    parsed_image_url.netloc
-                    and parsed_image_url.scheme
-                    in ("http", "https")
-                    and image_url.rstrip("/")
-                    != BASE_URL
-                ):
-                    ET.SubElement(
-                        element,
-                        "icon",
-                        {"src": image_url},
-                    )
-
-            if programme["url"]:
-                add_text(
-                    element,
-                    "url",
-                    programme["url"],
-                )
 
     ET.indent(
         tv,
@@ -775,6 +592,14 @@ def write_xmltv(channel_results):
         XML_FILE,
         encoding="utf-8",
         xml_declaration=True,
+    )
+
+    # Verify that the generated XML can be parsed.
+    ET.parse(XML_FILE)
+
+    log.info(
+        "XML validation passed: %s",
+        XML_FILE,
     )
 
 
