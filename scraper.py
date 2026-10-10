@@ -1,3 +1,4 @@
+
 import csv
 import re
 import time
@@ -260,7 +261,7 @@ def parse_start_datetime(date_value, time_text):
 
 
 def xmltv_timestamp(value):
-    # All timestamps are written in Algeria local time.
+    # Keep all programme times in Algeria local time.
     return value.astimezone(ALGIERS).strftime(
         "%Y%m%d%H%M%S %z"
     )
@@ -271,17 +272,17 @@ def xmltv_timestamp(value):
 # ============================================================
 
 def clean_channel_name(name):
-    name = re.sub(r"\s+", " ", name or "").strip()
-    return name
+    return re.sub(
+        r"\s+",
+        " ",
+        name or "",
+    ).strip()
 
 
 def channel_name_aliases(name):
     """
-    Keep the original name and add a simpler alias when
-    the name ends with the word 'Channel'.
-
-    Example:
-        MBC 1 Channel -> MBC 1 Channel + MBC 1
+    Preserve the original channel name and add a simplified
+    alias when the name ends with 'Channel'.
     """
     name = clean_channel_name(name)
 
@@ -297,7 +298,10 @@ def channel_name_aliases(name):
         flags=re.IGNORECASE,
     ).strip()
 
-    if simplified and simplified.casefold() != name.casefold():
+    if (
+        simplified
+        and simplified.casefold() != name.casefold()
+    ):
         aliases.append(simplified)
 
     return aliases
@@ -378,7 +382,6 @@ def parse_program_card(card, guide_date):
         "title": title,
         "start": start_algiers,
         "end": end_algiers,
-        "category": "Entertainment",
     }
 
 
@@ -508,7 +511,7 @@ def parse_channel_page(item):
 
 
 # ============================================================
-# XMLTV GENERATION
+# XMLTV GENERATION — MATCH SUCCESSFUL TEST.XML
 # ============================================================
 
 def add_text(parent, tag, value, **attributes):
@@ -525,18 +528,17 @@ def add_text(parent, tag, value, **attributes):
 
 
 def write_xmltv(channel_results):
+    # Match the successful test.xml top-level structure.
     tv = ET.Element(
         "tv",
         {
-            "source-info-name": "ElCinema",
-            "generator-info-name": "DZGreen-EPG",
-            "generator-info-url": GUIDE_URL,
+            "generator-info-name": "DZGreen Test",
         },
     )
 
     known_channel_ids = set()
 
-    # 1. Write all channel definitions first.
+    # 1. Write channel definitions.
     for channel in channel_results:
         channel_id = f"elcinema.{channel['number']}"
 
@@ -563,15 +565,12 @@ def write_xmltv(channel_results):
                 lang="en",
             )
 
-    # 2. Write all programme records.
+    # 2. Write programme entries.
     total_programmes = 0
     invalid_programmes = 0
 
     for channel in channel_results:
         channel_id = f"elcinema.{channel['number']}"
-
-        if channel_id not in known_channel_ids:
-            continue
 
         for programme in channel["programmes"]:
             start = programme.get("start")
@@ -598,6 +597,7 @@ def write_xmltv(channel_results):
                 },
             )
 
+            # Same title structure as successful test.xml.
             add_text(
                 programme_element,
                 "title",
@@ -605,22 +605,9 @@ def write_xmltv(channel_results):
                 lang="en",
             )
 
-            add_text(
-                programme_element,
-                "desc",
-                "Programme information from ElCinema.",
-                lang="en",
-            )
-
-            add_text(
-                programme_element,
-                "category",
-                programme.get("category", "Entertainment"),
-                lang="en",
-            )
-
             total_programmes += 1
 
+    # 3. Write the XML file.
     ET.indent(
         tv,
         space="  ",
@@ -634,7 +621,7 @@ def write_xmltv(channel_results):
         xml_declaration=True,
     )
 
-    # 3. Verify XML syntax and channel references.
+    # 4. Validate XML syntax and channel references.
     parsed_root = ET.parse(XML_FILE).getroot()
 
     parsed_channel_ids = {
@@ -654,7 +641,9 @@ def write_xmltv(channel_results):
         raise RuntimeError(
             "XMLTV contains programmes referencing "
             "undefined channels: "
-            + ", ".join(sorted(set(missing_channel_references)))
+            + ", ".join(
+                sorted(set(missing_channel_references))
+            )
         )
 
     if total_programmes == 0:
