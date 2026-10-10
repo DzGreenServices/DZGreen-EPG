@@ -34,7 +34,6 @@ CATEGORIES = ("sports", "entertainment")
 DAYS_TO_FETCH = 4
 DEFAULT_TIMEOUT = 60
 
-# Wait for asynchronous updates after category/date changes.
 CONTENT_STABLE_CHECKS = 3
 CONTENT_CHECK_INTERVAL_MS = 700
 MAX_CONTENT_WAIT_SECONDS = 20
@@ -52,34 +51,28 @@ def clean_text(value):
 
 
 def get_channel_id(url):
-    """
-    Build a stable channel ID from the final URL path segment.
-    Example:
-    https://beinconnect.app/BaraemTV -> baraemtv
-    """
     if not url:
         return ""
 
     path = urlparse(url).path.rstrip("/")
     last_segment = path.split("/")[-1] if path else ""
 
-    channel_id = re.sub(
+    return re.sub(
         r"[^a-zA-Z0-9_.-]",
         "",
         last_segment,
     ).lower()
 
-    return channel_id
-
 
 def timestamp_to_xmltv(milliseconds):
-    """
-    Convert Unix milliseconds to an XMLTV UTC timestamp.
-    """
     try:
         timestamp = float(milliseconds) / 1000.0
-        dt = datetime.fromtimestamp(timestamp, tz=timezone.utc)
+        dt = datetime.fromtimestamp(
+            timestamp,
+            tz=timezone.utc,
+        )
         return dt.strftime("%Y%m%d%H%M%S +0000")
+
     except (ValueError, TypeError, OverflowError, OSError):
         return ""
 
@@ -92,7 +85,7 @@ def get_attribute(element, attribute):
 
 
 # ============================================================
-# WAIT FOR PAGE CONTENT
+# PAGE INITIALIZATION
 # ============================================================
 
 def wait_for_page_ready(page, timeout_ms):
@@ -117,6 +110,10 @@ def wait_for_page_ready(page, timeout_ms):
     )
 
 
+# ============================================================
+# CONTENT WAITING
+# ============================================================
+
 def wait_for_content_change(
     page,
     previous_html,
@@ -125,23 +122,20 @@ def wait_for_content_change(
     value,
     timeout_ms,
 ):
-    """
-    Wait for the requested control to become active and for the
-    channel HTML to change.
-
-    This function does not assume that a single .prog-block means
-    all channel data has finished loading.
-    """
     try:
         page.wait_for_function(
             """arg => {
-                const active = document.querySelector(arg.activeSelector);
+                const active = document.querySelector(
+                    arg.activeSelector
+                );
 
                 if (!active) {
                     return false;
                 }
 
-                const activeValue = active.getAttribute(arg.attribute);
+                const activeValue = active.getAttribute(
+                    arg.attribute
+                );
 
                 const isActive =
                     activeValue === arg.value ||
@@ -154,7 +148,8 @@ def wait_for_content_change(
                     return false;
                 }
 
-                const htmlChanged = root.innerHTML !== arg.previousHtml;
+                const htmlChanged =
+                    root.innerHTML !== arg.previousHtml;
 
                 return isActive && htmlChanged;
             }""",
@@ -170,25 +165,23 @@ def wait_for_content_change(
     except PlaywrightTimeoutError:
         print(
             f"WARNING: Content did not visibly change for "
-            f"{attribute}={value}. Checking the current DOM anyway.",
+            f"{attribute}={value}. Checking current DOM.",
             flush=True,
         )
 
 
 def wait_for_stable_content(page):
-    """
-    Read the actual browser DOM repeatedly.
-
-    Stop after several consecutive identical snapshots, or after
-    the maximum wait. This helps catch delayed channel/program loads.
-    """
-    deadline = time.monotonic() + MAX_CONTENT_WAIT_SECONDS
+    deadline = (
+        time.monotonic() + MAX_CONTENT_WAIT_SECONDS
+    )
 
     previous_html = None
     stable_checks = 0
 
     while time.monotonic() < deadline:
-        current_html = page.locator("#channelRows").inner_html()
+        current_html = page.locator(
+            "#channelRows"
+        ).inner_html()
 
         if current_html == previous_html:
             stable_checks += 1
@@ -199,11 +192,13 @@ def wait_for_stable_content(page):
         if stable_checks >= CONTENT_STABLE_CHECKS:
             return current_html
 
-        page.wait_for_timeout(CONTENT_CHECK_INTERVAL_MS)
+        page.wait_for_timeout(
+            CONTENT_CHECK_INTERVAL_MS
+        )
 
     print(
-        "WARNING: Maximum wait reached before DOM stability "
-        "was confirmed.",
+        "WARNING: Maximum wait reached before "
+        "DOM stability was confirmed.",
         flush=True,
     )
 
@@ -215,7 +210,9 @@ def wait_for_stable_content(page):
 # ============================================================
 
 def activate_category(page, category, timeout_ms):
-    selector = f'.category-tab[data-category="{category}"]'
+    selector = (
+        f'.category-tab[data-category="{category}"]'
+    )
 
     tab = page.locator(selector).first
 
@@ -224,7 +221,9 @@ def activate_category(page, category, timeout_ms):
             f"Category tab not found: {category}"
         )
 
-    previous_html = page.locator("#channelRows").inner_html()
+    previous_html = page.locator(
+        "#channelRows"
+    ).inner_html()
 
     tab.click()
 
@@ -254,10 +253,9 @@ def activate_category(page, category, timeout_ms):
 # ============================================================
 
 def get_available_dates(page):
-    """
-    Read the dates available in the actual page.
-    """
-    dates = page.locator(".day-cell").evaluate_all(
+    dates = page.locator(
+        ".day-cell"
+    ).evaluate_all(
         """elements => elements.map(element => ({
             date: element.getAttribute("data-date") || "",
             text: (element.innerText || "").trim()
@@ -267,12 +265,11 @@ def get_available_dates(page):
     result = []
 
     for item in dates:
-        date_value = clean_text(item.get("date", ""))
+        date_value = clean_text(
+            item.get("date", "")
+        )
 
-        if not date_value:
-            continue
-
-        if date_value not in result:
+        if date_value and date_value not in result:
             result.append(date_value)
 
     return result
@@ -283,23 +280,29 @@ def get_available_dates(page):
 # ============================================================
 
 def activate_date(page, date_value, timeout_ms):
-    selector = f'.day-cell[data-date="{date_value}"]'
+    selector = (
+        f'.day-cell[data-date="{date_value}"]'
+    )
 
     day = page.locator(selector).first
 
     if day.count() == 0:
         print(
-            f"WARNING: Date not found on page: {date_value}",
+            f"WARNING: Date not found: {date_value}",
             flush=True,
         )
-        return page.locator("#channelRows").inner_html()
 
-    # Always click the requested date, even if it appears active.
-    # This avoids relying on stale or partially loaded content.
-    previous_html = page.locator("#channelRows").inner_html()
+        return page.locator(
+            "#channelRows"
+        ).inner_html()
+
+    previous_html = page.locator(
+        "#channelRows"
+    ).inner_html()
 
     try:
         day.click(timeout=timeout_ms)
+
     except PlaywrightTimeoutError:
         print(
             f"WARNING: Could not click date {date_value}.",
@@ -328,17 +331,70 @@ def activate_date(page, date_value, timeout_ms):
 
 
 # ============================================================
+# CHANNEL DIAGNOSTIC
+# ============================================================
+
+def diagnose_target_channels(page):
+    """
+    Wait five seconds and inspect the actual browser DOM
+    for BaraemTV, JeemTV, and beINJUNIOR.
+    """
+    page.wait_for_timeout(5000)
+
+    result = page.evaluate(
+        """() => {
+            const rows = [
+                ...document.querySelectorAll(
+                    "#channelRows .channel-row"
+                )
+            ];
+
+            return rows
+                .filter(row => {
+                    const link = row.querySelector(
+                        ".channel-col a[href]"
+                    );
+
+                    return link && (
+                        /BaraemTV/i.test(link.href) ||
+                        /JeemTV/i.test(link.href) ||
+                        /beINJUNIOR/i.test(link.href)
+                    );
+                })
+                .map(row => ({
+                    url: row.querySelector(
+                        ".channel-col a[href]"
+                    )?.href || "",
+
+                    html: row.outerHTML,
+
+                    trackHTML: row.querySelector(
+                        ".row-timeline-track"
+                    )?.innerHTML || "",
+
+                    blocks: row.querySelectorAll(
+                        ".prog-block"
+                    ).length
+                }));
+        }"""
+    )
+
+    print(
+        "CHANNEL CHECK AFTER 5 SECONDS:",
+        result,
+        flush=True,
+    )
+
+
+# ============================================================
 # CHANNEL AND PROGRAMME EXTRACTION
 # ============================================================
 
 def parse_channel_rows(html, category, date_value):
-    """
-    Parse channel rows from the browser HTML.
-
-    The browser DOM is captured after the content-stability wait.
-    Programme blocks require data-start-ms and data-end-ms.
-    """
-    soup = BeautifulSoup(html, "html.parser")
+    soup = BeautifulSoup(
+        html,
+        "html.parser",
+    )
 
     rows = soup.select(".channel-row")
 
@@ -362,13 +418,17 @@ def parse_channel_rows(html, category, date_value):
     )
 
     for index, row in enumerate(rows, start=1):
-        link = row.select_one(".channel-col a[href]")
+        link = row.select_one(
+            ".channel-col a[href]"
+        )
 
         if link is None:
             rows_without_links += 1
             continue
 
-        channel_url = clean_text(link.get("href", ""))
+        channel_url = clean_text(
+            link.get("href", "")
+        )
 
         if channel_url.startswith("/"):
             channel_url = (
@@ -418,14 +478,14 @@ def parse_channel_rows(html, category, date_value):
 
         channel_programme_count = 0
 
-        channel_info = {
-            "channel_id": channel_id,
-            "channel_name": channel_name,
-            "channel_url": channel_url,
-            "category": category,
-        }
-
-        channels.append(channel_info)
+        channels.append(
+            {
+                "channel_id": channel_id,
+                "channel_name": channel_name,
+                "channel_url": channel_url,
+                "category": category,
+            }
+        )
 
         for block in valid_blocks:
             start_ms = get_attribute(
@@ -447,11 +507,15 @@ def parse_channel_rows(html, category, date_value):
             try:
                 if float(end_ms) <= float(start_ms):
                     continue
+
             except (ValueError, TypeError):
                 continue
 
             title = (
-                get_attribute(block, "data-full-title")
+                get_attribute(
+                    block,
+                    "data-full-title",
+                )
                 or clean_text(
                     block.get_text(" ", strip=True)
                 )
@@ -489,6 +553,7 @@ def parse_channel_rows(html, category, date_value):
                 f"url={channel_url}",
                 flush=True,
             )
+
         else:
             print(
                 f"OK | {channel_name} | "
@@ -501,16 +566,31 @@ def parse_channel_rows(html, category, date_value):
     print(f"Category: {category}", flush=True)
     print(f"Date: {date_value}", flush=True)
     print(f"Channels: {len(channels)}", flush=True)
-    print(f"All programme blocks: {total_blocks}", flush=True)
-    print(f"Blocks with timestamps: {timed_blocks}", flush=True)
-    print(f"Extracted programmes: {len(programmes)}", flush=True)
+
+    print(
+        f"All programme blocks: {total_blocks}",
+        flush=True,
+    )
+
+    print(
+        f"Blocks with timestamps: {timed_blocks}",
+        flush=True,
+    )
+
+    print(
+        f"Extracted programmes: {len(programmes)}",
+        flush=True,
+    )
+
     print(
         f"Channels with zero programmes: "
         f"{zero_programme_channels}",
         flush=True,
     )
+
     print(
-        f"Rows without channel links: {rows_without_links}",
+        f"Rows without channel links: "
+        f"{rows_without_links}",
         flush=True,
     )
 
@@ -530,7 +610,6 @@ def write_xml(channels, programmes, output_path):
         },
     )
 
-    # One XML channel element per unique channel ID.
     unique_channels = {}
 
     for channel in channels:
@@ -559,6 +638,7 @@ def write_xml(channels, programmes, output_path):
                 channel_element,
                 "url",
             )
+
             url_element.text = channel["channel_url"]
 
     seen_programmes = set()
@@ -591,6 +671,7 @@ def write_xml(channels, programmes, output_path):
             "title",
             {"lang": "en"},
         )
+
         title_element.text = programme["title"]
 
         if programme.get("category"):
@@ -599,6 +680,7 @@ def write_xml(channels, programmes, output_path):
                 "category",
                 {"lang": "en"},
             )
+
             category_element.text = programme["category"]
 
     ET.indent(tv, space="  ")
@@ -616,11 +698,16 @@ def write_xml(channels, programmes, output_path):
         xml_declaration=True,
     )
 
-    print(f"\nXML saved: {output_path}", flush=True)
+    print(
+        f"\nXML saved: {output_path}",
+        flush=True,
+    )
+
     print(
         f"XML channels: {len(unique_channels)}",
         flush=True,
     )
+
     print(
         f"XML programmes: {len(seen_programmes)}",
         flush=True,
@@ -672,7 +759,11 @@ def write_csv(channels, output_path):
                 }
             )
 
-    print(f"CSV saved: {output_path}", flush=True)
+    print(
+        f"CSV saved: {output_path}",
+        flush=True,
+    )
+
     print(
         f"CSV channels: {len(unique_channels)}",
         flush=True,
@@ -685,7 +776,9 @@ def write_csv(channels, output_path):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Extract EPG from the official beIN TV Guide."
+        description=(
+            "Extract EPG from the official beIN TV Guide."
+        ),
     )
 
     parser.add_argument(
@@ -719,10 +812,14 @@ def main():
     args = parser.parse_args()
 
     if not 1 <= args.days <= 14:
-        parser.error("--days must be between 1 and 14.")
+        parser.error(
+            "--days must be between 1 and 14."
+        )
 
     if args.timeout < 10:
-        parser.error("--timeout must be at least 10 seconds.")
+        parser.error(
+            "--timeout must be at least 10 seconds."
+        )
 
     start_date = None
 
@@ -732,6 +829,7 @@ def main():
                 args.start_date,
                 "%Y-%m-%d",
             ).date()
+
         except ValueError:
             parser.error(
                 "--start-date must use YYYY-MM-DD format."
@@ -766,7 +864,10 @@ def main():
 
             page.set_default_timeout(timeout_ms)
 
-            print(f"Opening: {PAGE_URL}", flush=True)
+            print(
+                f"Opening: {PAGE_URL}",
+                flush=True,
+            )
 
             page.goto(
                 PAGE_URL,
@@ -796,7 +897,9 @@ def main():
                     timeout_ms,
                 )
 
-                available_dates = get_available_dates(page)
+                available_dates = get_available_dates(
+                    page
+                )
 
                 if not available_dates:
                     print(
@@ -810,18 +913,18 @@ def main():
                     requested_dates = [
                         date_value
                         for date_value in available_dates
-                        if (
-                            datetime.strptime(
-                                date_value,
-                                "%Y-%m-%d",
-                            ).date()
-                            >= start_date
-                        )
+                        if datetime.strptime(
+                            date_value,
+                            "%Y-%m-%d",
+                        ).date() >= start_date
                     ]
+
                 else:
                     requested_dates = available_dates
 
-                requested_dates = requested_dates[:args.days]
+                requested_dates = requested_dates[
+                    :args.days
+                ]
 
                 print(
                     f"Available dates: {available_dates}",
@@ -841,14 +944,21 @@ def main():
                             timeout_ms,
                         )
 
-                        # Read the complete channel container from
-                        # the live browser DOM after waiting.
+                        # ==================================================
+                        # NEW DIAGNOSTIC:
+                        # WAIT 5 SECONDS AND CHECK TARGET CHANNELS
+                        # ==================================================
+
+                        if category == "entertainment":
+                            diagnose_target_channels(page)
+
+                        # Read the current browser DOM after the
+                        # diagnostic wait.
                         browser_html = page.locator(
                             "#channelRows"
                         ).inner_html()
 
-                        # Extra browser-side diagnostics for
-                        # entertainment channels such as Baraem.
+                        # Extra diagnostic for all entertainment rows.
                         if category == "entertainment":
                             diagnostic = page.locator(
                                 "#channelRows"
@@ -896,8 +1006,6 @@ def main():
                                 flush=True,
                             )
 
-                            # Save the exact browser HTML for
-                            # inspection if the channel has no data.
                             baraem_rows = page.locator(
                                 "#channelRows .channel-row"
                             ).evaluate_all(
@@ -935,6 +1043,7 @@ def main():
                             f"{category} / {date_value}: {exc}",
                             flush=True,
                         )
+
                         traceback.print_exc()
 
             context.close()
@@ -974,6 +1083,7 @@ def main():
 if __name__ == "__main__":
     try:
         sys.exit(main())
+
     except KeyboardInterrupt:
         print(
             "\nProcess interrupted by user.",
