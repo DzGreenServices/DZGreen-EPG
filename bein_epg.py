@@ -13,6 +13,10 @@ from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 
 
+# ============================================================
+# CONFIGURATION
+# ============================================================
+
 PAGE_URL = "https://www.bein.com/en/tv-guide/?c=dz&"
 
 OUTPUT_DIR = Path("docs")
@@ -25,6 +29,10 @@ DAYS_TO_FETCH = 4
 CONTENT_TIMEOUT_MS = 20000
 PAGE_TIMEOUT_MS = 60000
 
+
+# ============================================================
+# TEXT AND TIMESTAMP HELPERS
+# ============================================================
 
 def clean_text(value):
     """Clean whitespace from text."""
@@ -78,17 +86,36 @@ def get_channel_name(anchor, image, url):
     return get_channel_id(url)
 
 
+# ============================================================
+# CHANNEL AND PROGRAMME PARSER
+# ============================================================
+
 def parse_channel_rows(html, category, date_value):
-    """Parse channel rows and every programme block from the page."""
+    """Parse channel rows and diagnose programme extraction for every channel."""
+
     soup = BeautifulSoup(html, "html.parser")
     rows = soup.select(".channel-row")
 
     channels = []
+    zero_programme_channels = []
+
+    total_raw_blocks = 0
+    total_programmes = 0
+
+    print(
+        f"\nDIAGNOSTIC: category={category}, date={date_value}, "
+        f"HTML rows={len(rows)}",
+        flush=True,
+    )
 
     for row in rows:
         anchor = row.select_one(".channel-col a[href]")
 
         if anchor is None:
+            print(
+                "WARNING: Channel row has no .channel-col a[href].",
+                flush=True,
+            )
             continue
 
         channel_url = urljoin(
@@ -112,6 +139,10 @@ def parse_channel_rows(html, category, date_value):
         channel_id = get_channel_id(channel_url)
 
         if not channel_id:
+            print(
+                f"WARNING: Empty channel ID for URL: {channel_url}",
+                flush=True,
+            )
             continue
 
         channel_name = get_channel_name(
@@ -120,11 +151,20 @@ def parse_channel_rows(html, category, date_value):
             channel_url,
         )
 
-        programmes = []
+        # Count all blocks and those containing both timestamps.
+        all_blocks = row.select(".prog-block")
 
         blocks = row.select(
             '.prog-block[data-start-ms][data-end-ms]'
         )
+
+        total_raw_blocks += len(blocks)
+
+        programmes = []
+
+        skipped_missing_data = 0
+        skipped_invalid_time = 0
+        skipped_invalid_duration = 0
 
         for block in blocks:
             title = clean_text(
@@ -137,6 +177,7 @@ def parse_channel_rows(html, category, date_value):
             end_ms = block.get("data-end-ms")
 
             if not title or not start_ms or not end_ms:
+                skipped_missing_data += 1
                 continue
 
             try:
@@ -147,25 +188,18 @@ def parse_channel_rows(html, category, date_value):
                     int(start_ms) / 1000,
                     tz=timezone.utc,
                 )
+
                 stop_dt = datetime.fromtimestamp(
                     int(end_ms) / 1000,
                     tz=timezone.utc,
                 )
 
-                if stop_dt <= start_dt:
-                    print(
-                        f"WARNING: Invalid programme duration: "
-                        f"{channel_id} - {title}",
-                        flush=True,
-                    )
-                    continue
-
             except (ValueError, TypeError, OverflowError):
-                print(
-                    f"WARNING: Invalid timestamp for "
-                    f"{channel_id}: {title}",
-                    flush=True,
-                )
+                skipped_invalid_time += 1
+                continue
+
+            if stop_dt <= start_dt:
+                skipped_invalid_duration += 1
                 continue
 
             programme_category = clean_text(
@@ -189,59 +223,75 @@ def parse_channel_rows(html, category, date_value):
                 }
             )
 
-        channels.append(
-            {
-                "id": channel_id,
-                "name": channel_name,
-                "url": channel_url,
-                "logo": logo,
-                "category": category,
-                "date": date_value,
-                "programmes": programmes,
-            }
-        )
+        channel_data = {
+            "id": channel_id,
+            "name": channel_name,
+            "url": channel_url,
+            "logo": logo,
+            "category": category,
+            "date": date_value,
+            "programmes": programmes,
+        }
 
-    total_programmes = sum(
-        len(channel["programmes"])
-        for channel in channels
-    )
+        channels.append(channel_data)
+
+        total_programmes += len(programmes)
+
+        # Report every channel with no extracted programmes.
+        if not programmes:
+            zero_programme_channels.append(channel_id)
+
+            print(
+                f"WARNING: ZERO PROGRAMMES | "
+                f"id={channel_id} | "
+                f"name={channel_name} | "
+                f"all .prog-block elements={len(all_blocks)} | "
+                f"blocks with timestamps={len(blocks)} | "
+                f"missing data={skipped_missing_data} | "
+                f"invalid timestamps={skipped_invalid_time} | "
+                f"invalid duration={skipped_invalid_duration} | "
+                f"url={channel_url}",
+                flush=True,
+            )
+
+        # Report blocks that were rejected by the parser.
+        elif (
+            skipped_missing_data
+            or skipped_invalid_time
+            or skipped_invalid_duration
+        ):
+            print(
+                f"WARNING: Some programmes skipped | "
+                f"id={channel_id} | "
+                f"extracted={len(programmes)} | "
+                f"missing data={skipped_missing_data} | "
+                f"invalid timestamps={skipped_invalid_time} | "
+                f"invalid duration={skipped_invalid_duration}",
+                flush=True,
+            )
 
     print(
-        f"Parsed: category={category}, date={date_value}, "
-        f"channels={len(channels)}, programmes={total_programmes}",
+        f"\nPARSE SUMMARY: category={category}, date={date_value} | "
+        f"channels={len(channels)} | "
+        f"raw blocks with timestamps={total_raw_blocks} | "
+        f"extracted programmes={total_programmes} | "
+        f"channels with zero programmes={len(zero_programme_channels)}",
         flush=True,
     )
 
-    # Extra diagnostics for beIN Movies 1.
-    for channel in channels:
-        if channel["id"] == "beinmovies1":
-            programmes = sorted(
-                channel["programmes"],
-                key=lambda item: item["start"],
-            )
-
-            if programmes:
-                first = programmes[0]
-                last = programmes[-1]
-
-                print(
-                    f"DEBUG beINMOVIES1 [{category} / {date_value}]: "
-                    f"first={first['start']} "
-                    f"{first['title']}; "
-                    f"last={last['start']} "
-                    f"{last['title']}; "
-                    f"count={len(programmes)}",
-                    flush=True,
-                )
-            else:
-                print(
-                    f"WARNING: beINMOVIES1 has no programmes "
-                    f"for {category} / {date_value}",
-                    flush=True,
-                )
+    if zero_programme_channels:
+        print(
+            "ZERO-PROGRAMME CHANNEL IDS: "
+            + ", ".join(zero_programme_channels),
+            flush=True,
+        )
 
     return channels
 
+
+# ============================================================
+# PAGE CONTENT WAITING AND VERIFICATION
+# ============================================================
 
 def wait_for_content_change(
     page,
@@ -263,6 +313,7 @@ def wait_for_content_change(
             }
 
             const isActive = active.classList.contains("active");
+
             const attributeMatches =
                 active.getAttribute(arg.attribute) === arg.value;
 
@@ -319,6 +370,10 @@ def verify_page_content(page, control_selector, attribute, value):
     )
 
 
+# ============================================================
+# CATEGORY SELECTION
+# ============================================================
+
 def activate_category(page, category):
     """Select a category and reject stale programme content."""
 
@@ -353,6 +408,7 @@ def activate_category(page, category):
                 value=category,
                 timeout_ms=CONTENT_TIMEOUT_MS,
             )
+
         except PlaywrightTimeoutError as exc:
             raise RuntimeError(
                 f"Category '{category}' did not refresh the "
@@ -372,6 +428,10 @@ def activate_category(page, category):
         flush=True,
     )
 
+
+# ============================================================
+# AVAILABLE DATES
+# ============================================================
 
 def get_available_dates(page):
     """Read the available dates from the date strip."""
@@ -443,6 +503,7 @@ def activate_date(page, date_value):
                 value=date_value,
                 timeout_ms=CONTENT_TIMEOUT_MS,
             )
+
         except PlaywrightTimeoutError as exc:
             raise RuntimeError(
                 f"Date {date_value} became active, but the "
@@ -462,6 +523,10 @@ def activate_date(page, date_value):
         flush=True,
     )
 
+
+# ============================================================
+# XMLTV OUTPUT
+# ============================================================
 
 def write_xml(channels):
     """Write the XMLTV file, avoiding duplicate channels and programmes."""
@@ -509,6 +574,7 @@ def write_xml(channels):
             "display-name",
             {"lang": "en"},
         )
+
         display_name.text = channel["name"]
 
         if channel["logo"]:
@@ -547,6 +613,7 @@ def write_xml(channels):
             "title",
             {"lang": "en"},
         )
+
         title_element.text = title
 
         if programme["category"]:
@@ -555,6 +622,7 @@ def write_xml(channels):
                 "category",
                 {"lang": "en"},
             )
+
             category_element.text = programme["category"]
 
         if programme["description"]:
@@ -563,6 +631,7 @@ def write_xml(channels):
                 "desc",
                 {"lang": "en"},
             )
+
             description_element.text = programme["description"]
 
     tree = ET.ElementTree(tv)
@@ -582,15 +651,21 @@ def write_xml(channels):
         f"XML saved: {XML_FILE}",
         flush=True,
     )
+
     print(
         f"XML channels: {len(channel_info)}",
         flush=True,
     )
+
     print(
         f"XML programmes: {len(programme_records)}",
         flush=True,
     )
 
+
+# ============================================================
+# CSV CHANNEL MAPPING
+# ============================================================
 
 def write_csv(channels):
     """Write the channel mapping CSV file."""
@@ -627,6 +702,7 @@ def write_csv(channels):
         encoding="utf-8-sig",
         newline="",
     ) as csv_file:
+
         writer = csv.DictWriter(
             csv_file,
             fieldnames=fieldnames,
@@ -651,11 +727,16 @@ def write_csv(channels):
         f"CSV saved: {CSV_FILE}",
         flush=True,
     )
+
     print(
         f"CSV channels: {len(unique_channels)}",
         flush=True,
     )
 
+
+# ============================================================
+# MAIN SCRAPER
+# ============================================================
 
 def main():
     """Run the scraper for all categories and available dates."""
@@ -715,8 +796,7 @@ def main():
                 category,
             )
 
-            # IMPORTANT: explicitly activate EVERY date,
-            # including the first date in the list.
+            # Explicitly activate every date, including the first.
             for date_value in dates:
                 print(
                     f"\n--- {category} / {date_value} ---",
@@ -779,6 +859,10 @@ def main():
         flush=True,
     )
 
+
+# ============================================================
+# ENTRY POINT
+# ============================================================
 
 if __name__ == "__main__":
     try:
