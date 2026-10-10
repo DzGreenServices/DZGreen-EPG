@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tv generator-info-name="ElCinema EPG Scraper"
-     generator-info-url="https://www.elcinema.com/">
+<tv generator-info-name="DZGreen Test">
 
-  <channel id="elcinema.1128">
-    <display-name lang="en">MBC 2 4K</display-name>
-    <url>https://www.elcinema.com/</url>
+  <channel id="elcinema.1127">
+    <display-name lang="en">MBC 1</display-name>
   </channel>
 
-  <programme start="20261010110000 +0100"
-             stop="20261010130000 +0100"
-             channel="elcinema.1128">
-    <title lang="en">Central Intelligence</title>
-    <category lang="en">Movie</category>
-  </programme>
-
-  <programme start="20261010130000 +0100"
-             stop="20261010153000 +0100"
-             channel="elcinema.1128">
-    <title lang="en">Inherent Vice</title>
-    <category lang="en">Movie</category>
+  <programme start="20261010180000 +0100"
+             stop="20261011060000 +0100"
+             channel="elcinema.1127">
+    <title lang="en">TEST</title>
+    <desc>DZGreen EPG Compatibility Test</desc>
+    <category lang="en">Test</category>
   </programme>
 
 </tv>
