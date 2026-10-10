@@ -8,9 +8,9 @@ import xml.etree.ElementTree as ET
 
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from playwright.sync_api import (
     sync_playwright,
     TimeoutError as PlaywrightTimeoutError,
@@ -36,6 +36,12 @@ DEFAULT_TIMEOUT = 60
 CONTENT_STABLE_CHECKS = 3
 CONTENT_CHECK_INTERVAL_MS = 700
 MAX_CONTENT_WAIT_SECONDS = 20
+
+TARGET_CHANNELS = (
+    "baraemtv",
+    "jeemtv",
+    "beinjunior",
+)
 
 
 # ============================================================
@@ -74,7 +80,12 @@ def timestamp_to_xmltv(milliseconds):
 
         return dt.strftime("%Y%m%d%H%M%S +0000")
 
-    except (ValueError, TypeError, OverflowError, OSError):
+    except (
+        ValueError,
+        TypeError,
+        OverflowError,
+        OSError,
+    ):
         return ""
 
 
@@ -82,7 +93,169 @@ def get_attribute(element, attribute):
     if element is None:
         return ""
 
-    return clean_text(element.get(attribute, ""))
+    return clean_text(
+        element.get(attribute, "")
+    )
+
+
+def normalize_url(url, base_url=PAGE_URL):
+    if not url:
+        return ""
+
+    return urljoin(base_url, url.strip())
+
+
+def is_generic_channel_name(name):
+    generic_names = {
+        "",
+        "channel logo",
+        "logo",
+        "image",
+        "channel",
+        "tv",
+    }
+
+    return clean_text(name).lower() in generic_names
+
+
+def get_channel_name(row, link, channel_id):
+    """
+    Prefer a real channel name over a generic image alt value.
+    """
+
+    candidates = []
+
+    if link is not None:
+        for selector in (
+            ".channel-name",
+            ".channelName",
+            ".channel-title",
+            ".channelTitle",
+            ".name",
+            ".title",
+        ):
+            element = link.select_one(selector)
+
+            if element:
+                candidates.append(
+                    element.get_text(" ", strip=True)
+                )
+
+        candidates.append(
+            link.get_text(" ", strip=True)
+        )
+
+    if row is not None:
+        for selector in (
+            ".channel-name",
+            ".channelName",
+            ".channel-title",
+            ".channelTitle",
+            ".name",
+            ".title",
+        ):
+            for element in row.select(selector):
+                candidates.append(
+                    element.get_text(" ", strip=True)
+                )
+
+        for image in row.select("img"):
+            candidates.append(
+                image.get("title", "")
+            )
+
+            candidates.append(
+                image.get("alt", "")
+            )
+
+    for candidate in candidates:
+        candidate = clean_text(candidate)
+
+        if not candidate:
+            continue
+
+        if is_generic_channel_name(candidate):
+            continue
+
+        if len(candidate) > 100:
+            continue
+
+        return candidate
+
+    known_names = {
+        "baraemtv": "Baraem TV",
+        "jeemtv": "Jeem TV",
+        "beinjunior": "beIN Junior",
+    }
+
+    if channel_id in known_names:
+        return known_names[channel_id]
+
+    return channel_id
+
+
+def parse_datetime_value(value):
+    """
+    Parse common timestamp formats found in HTML attributes.
+    """
+
+    value = clean_text(value)
+
+    if not value:
+        return ""
+
+    if value.isdigit():
+        try:
+            number = int(value)
+
+            if number > 100000000000:
+                return timestamp_to_xmltv(number)
+
+            if number > 1000000000:
+                return timestamp_to_xmltv(
+                    number * 1000
+                )
+
+        except (ValueError, OverflowError):
+            pass
+
+    formats = (
+        "%Y%m%d%H%M%S",
+        "%Y-%m-%dT%H:%M:%S",
+        "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%dT%H:%M",
+        "%Y-%m-%d %H:%M",
+    )
+
+    for fmt in formats:
+        try:
+            dt = datetime.strptime(value, fmt)
+
+            return dt.strftime(
+                "%Y%m%d%H%M%S +0000"
+            )
+
+        except ValueError:
+            continue
+
+    return ""
+
+
+def parse_programme_time(element, attributes):
+    """
+    Find a programme start/end value in common HTML attributes.
+    """
+
+    for attribute in attributes:
+        value = element.get(attribute)
+
+        if value:
+            parsed = parse_datetime_value(value)
+
+            if parsed:
+                return parsed
+
+    return ""
 
 
 # ============================================================
@@ -91,8 +264,7 @@ def get_attribute(element, attribute):
 
 def install_network_diagnostics(page):
     """
-    Log relevant network responses.
-    Call this BEFORE page.goto() so initial requests are captured.
+    Log potentially relevant responses and failed requests.
     """
 
     keywords = (
@@ -104,6 +276,8 @@ def install_network_diagnostics(page):
         "channel",
         "content",
         "api",
+        "event",
+        "broadcast",
     )
 
     print(
@@ -115,10 +289,17 @@ def install_network_diagnostics(page):
         try:
             url = response.url
             lower_url = url.lower()
+            request = response.request
 
-            if any(word in lower_url for word in keywords):
-                request = response.request
+            relevant = (
+                any(word in lower_url for word in keywords)
+                or request.resource_type in (
+                    "xhr",
+                    "fetch",
+                )
+            )
 
+            if relevant:
                 print(
                     "DATA RESPONSE | "
                     f"status={response.status} | "
@@ -140,7 +321,13 @@ def install_network_diagnostics(page):
         try:
             lower_url = request.url.lower()
 
-            if any(word in lower_url for word in keywords):
+            if (
+                any(word in lower_url for word in keywords)
+                or request.resource_type in (
+                    "xhr",
+                    "fetch",
+                )
+            ):
                 print(
                     "FAILED REQUEST | "
                     f"type={request.resource_type} | "
@@ -152,7 +339,10 @@ def install_network_diagnostics(page):
         except Exception:
             pass
 
-    page.on("requestfailed", on_request_failed)
+    page.on(
+        "requestfailed",
+        on_request_failed,
+    )
 
 
 def print_loaded_javascript_files(page):
@@ -175,7 +365,10 @@ def print_loaded_javascript_files(page):
         )
 
         for script_url in scripts:
-            print(script_url, flush=True)
+            print(
+                script_url,
+                flush=True,
+            )
 
         print(
             f"TOTAL JAVASCRIPT FILES: {len(scripts)}",
@@ -204,17 +397,23 @@ def wait_for_page_ready(page, timeout_ms):
         timeout=timeout_ms,
     )
 
-    page.locator(".category-tab").first.wait_for(
+    page.locator(
+        ".category-tab"
+    ).first.wait_for(
         state="attached",
         timeout=timeout_ms,
     )
 
-    page.locator(".day-cell").first.wait_for(
+    page.locator(
+        ".day-cell"
+    ).first.wait_for(
         state="attached",
         timeout=timeout_ms,
     )
 
-    page.locator("#channelRows").wait_for(
+    page.locator(
+        "#channelRows"
+    ).wait_for(
         state="attached",
         timeout=timeout_ms,
     )
@@ -312,7 +511,9 @@ def wait_for_stable_content(page):
         flush=True,
     )
 
-    return page.locator("#channelRows").inner_html()
+    return page.locator(
+        "#channelRows"
+    ).inner_html()
 
 
 # ============================================================
@@ -409,3 +610,49 @@ def activate_date(page, date_value, timeout_ms):
     previous_html = page.locator(
         "#channelRows"
     ).inner_html()
+
+    try:
+        day.click(timeout=timeout_ms)
+
+    except PlaywrightTimeoutError:
+        print(
+            f"WARNING: Could not click date {date_value}.",
+            flush=True,
+        )
+
+    wait_for_content_change(
+        page=page,
+        previous_html=previous_html,
+        active_selector=selector,
+        attribute="data-date",
+        value=date_value,
+        timeout_ms=timeout_ms,
+    )
+
+    page.wait_for_timeout(1000)
+
+    html = wait_for_stable_content(page)
+
+    print(
+        f"\nDATE SELECTED: {date_value}",
+        flush=True,
+    )
+
+    return html
+
+
+# ============================================================
+# CHANNEL DIAGNOSTICS
+# ============================================================
+
+def diagnose_target_channels(page):
+    """
+    Inspect the three channels that previously had no programmes.
+    """
+
+    print(
+        "\n========== CHANNEL CHECK AFTER 5 SECONDS ==========",
+        flush=True,
+    )
+
+    page.wait_for
