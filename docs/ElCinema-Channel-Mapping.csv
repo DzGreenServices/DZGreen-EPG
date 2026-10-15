@@ -1,110 +1,113 @@
 ﻿channel_id,channel_name,tvguide_url,xmltv_id,display_name,programmes_count
-1101,Aloula Channel,https://elcinema.com/en/tvguide/1101/,elcinema.1101,Aloula Channel,16
-1119,Egyptian TV Channel,https://elcinema.com/en/tvguide/1119/,elcinema.1119,Egyptian TV Channel,16
-1127,MBC Channel,https://elcinema.com/en/tvguide/1127/,elcinema.1127,MBC 1,30
-1128,MBC 2 Channel,https://elcinema.com/en/tvguide/1128/,elcinema.1128,MBC 2 Channel,34
-1129,MBC 4 Channel,https://elcinema.com/en/tvguide/1129/,elcinema.1129,MBC 4 Channel,32
-1130,MBC Action Channel,https://elcinema.com/en/tvguide/1130/,elcinema.1130,MBC Action Channel,5
-1131,MBC Drama + Channel,https://elcinema.com/en/tvguide/1131/,elcinema.1131,MBC Drama + Channel,37
-1132,MBC MAX Channel,https://elcinema.com/en/tvguide/1132/,elcinema.1132,MBC MAX Channel,32
+1101,Aloula Channel,https://elcinema.com/en/tvguide/1101/,elcinema.1101,Aloula Channel,14
+1119,Egyptian TV Channel,https://elcinema.com/en/tvguide/1119/,elcinema.1119,Egyptian TV Channel,14
+1127,MBC Channel,https://elcinema.com/en/tvguide/1127/,elcinema.1127,MBC 1,23
+1128,MBC 2 Channel,https://elcinema.com/en/tvguide/1128/,elcinema.1128,MBC 2 Channel,35
+1129,MBC 4 Channel,https://elcinema.com/en/tvguide/1129/,elcinema.1129,MBC 4 Channel,26
+1130,MBC Action Channel,https://elcinema.com/en/tvguide/1130/,elcinema.1130,MBC Action Channel,2
+1131,MBC Drama + Channel,https://elcinema.com/en/tvguide/1131/,elcinema.1131,MBC Drama + Channel,29
+1132,MBC MAX Channel,https://elcinema.com/en/tvguide/1132/,elcinema.1132,MBC MAX Channel,31
 1134,ON Drama Channel,https://elcinema.com/en/tvguide/1134/,elcinema.1134,ON Drama Channel,59
-1135,Emirates Channel,https://elcinema.com/en/tvguide/1135/,elcinema.1135,Emirates Channel,42
+1135,Emirates Channel,https://elcinema.com/en/tvguide/1135/,elcinema.1135,Emirates Channel,40
 1136,Abu Dhabi TV Channel,https://elcinema.com/en/tvguide/1136/,elcinema.1136,Abu Dhabi TV Channel,23
-1137,Alhayat TV Channel,https://elcinema.com/en/tvguide/1137/,elcinema.1137,Alhayat TV Channel,5
-1145,Mehwar Channel,https://elcinema.com/en/tvguide/1145/,elcinema.1145,Mehwar Channel,15
+1137,Alhayat TV Channel,https://elcinema.com/en/tvguide/1137/,elcinema.1137,Alhayat TV Channel,4
+1145,Mehwar Channel,https://elcinema.com/en/tvguide/1145/,elcinema.1145,Mehwar Channel,13
 1147,Rotana Drama Channel,https://elcinema.com/en/tvguide/1147/,elcinema.1147,Rotana Drama Channel,59
 1148,Rotana Cinema Masr Channel,https://elcinema.com/en/tvguide/1148/,elcinema.1148,Rotana Cinema Masr Channel,31
-1149,Rotana Khalejia Channel,https://elcinema.com/en/tvguide/1149/,elcinema.1149,Rotana Khalejia Channel,40
+1149,Rotana Khalejia Channel,https://elcinema.com/en/tvguide/1149/,elcinema.1149,Rotana Khalejia Channel,38
 1156,Nile Drama Channel,https://elcinema.com/en/tvguide/1156/,elcinema.1156,Nile Drama Channel,55
-1159,Nile Life Channel,https://elcinema.com/en/tvguide/1159/,elcinema.1159,Nile Life Channel,13
-1168,LBCI Channel,https://elcinema.com/en/tvguide/1168/,elcinema.1168,LBCI Channel,33
+1159,Nile Life Channel,https://elcinema.com/en/tvguide/1159/,elcinema.1159,Nile Life Channel,11
+1168,LBCI Channel,https://elcinema.com/en/tvguide/1168/,elcinema.1168,LBCI Channel,32
 1169,Dubai TV Channel,https://elcinema.com/en/tvguide/1169/,elcinema.1169,Dubai TV Channel,27
-1173,Dubai One Channel,https://elcinema.com/en/tvguide/1173/,elcinema.1173,Dubai One Channel,6
+1173,Dubai One Channel,https://elcinema.com/en/tvguide/1173/,elcinema.1173,Dubai One Channel,25
 1174,Al Kahera Wal Nas TV Channel,https://elcinema.com/en/tvguide/1174/,elcinema.1174,Al Kahera Wal Nas TV Channel,26
 1176,Cima Channel,https://elcinema.com/en/tvguide/1176/,elcinema.1176,Cima Channel,29
 1177,Sama Dubai Channel,https://elcinema.com/en/tvguide/1177/,elcinema.1177,Sama Dubai Channel,20
 1188,Sharjah TV Channel,https://elcinema.com/en/tvguide/1188/,elcinema.1188,Sharjah TV Channel,14
-1193,Al Nahar TV Channel,https://elcinema.com/en/tvguide/1193/,elcinema.1193,Al Nahar TV Channel,15
-1194,MBC Drama Channel,https://elcinema.com/en/tvguide/1194/,elcinema.1194,MBC Drama Channel,28
+1193,Al Nahar TV Channel,https://elcinema.com/en/tvguide/1193/,elcinema.1193,Al Nahar TV Channel,16
+1194,MBC Drama Channel,https://elcinema.com/en/tvguide/1194/,elcinema.1194,MBC Drama Channel,22
 1198,CBC Channel,https://elcinema.com/en/tvguide/1198/,elcinema.1198,CBC Channel,16
 1199,CBC Drama Channel,https://elcinema.com/en/tvguide/1199/,elcinema.1199,CBC Drama Channel,59
-1203,ON E Channel,https://elcinema.com/en/tvguide/1203/,elcinema.1203,ON E Channel,17
-1204,iFILM TV Channel,https://elcinema.com/en/tvguide/1204/,elcinema.1204,iFILM TV Channel,55
+1203,ON E Channel,https://elcinema.com/en/tvguide/1203/,elcinema.1203,ON E Channel,16
+1204,iFILM TV Channel,https://elcinema.com/en/tvguide/1204/,elcinema.1204,iFILM TV Channel,54
 1205,OSN Ya Hala Channel,https://elcinema.com/en/tvguide/1205/,elcinema.1205,OSN Ya Hala Channel,73
-1211,OSN TV Movies Action Channel,https://elcinema.com/en/tvguide/1211/,elcinema.1211,OSN TV Movies Action Channel,29
-1212,Star Movies Channel,https://elcinema.com/en/tvguide/1212/,elcinema.1212,Star Movies Channel,9
+1211,OSN TV Movies Action Channel,https://elcinema.com/en/tvguide/1211/,elcinema.1211,OSN TV Movies Action Channel,28
+1212,Star Movies Channel,https://elcinema.com/en/tvguide/1212/,elcinema.1212,Star Movies Channel,5
 1213,OSN TV Movies Premiere Channel,https://elcinema.com/en/tvguide/1213/,elcinema.1213,OSN TV Movies Premiere Channel,33
-1216,Al Jadeed TV Channel,https://elcinema.com/en/tvguide/1216/,elcinema.1216,Al Jadeed TV Channel,14
+1216,Al Jadeed TV Channel,https://elcinema.com/en/tvguide/1216/,elcinema.1216,Al Jadeed TV Channel,12
 1217,Rotana Classic Channel,https://elcinema.com/en/tvguide/1217/,elcinema.1217,Rotana Classic Channel,20
 1223,Al Nahar Drama Channel,https://elcinema.com/en/tvguide/1223/,elcinema.1223,Al Nahar Drama Channel,59
-1226,Sada El Balad Channel,https://elcinema.com/en/tvguide/1226/,elcinema.1226,Sada El Balad Channel,13
+1226,Sada El Balad Channel,https://elcinema.com/en/tvguide/1226/,elcinema.1226,Sada El Balad Channel,12
 1227,Sada El Balad Drama Channel,https://elcinema.com/en/tvguide/1227/,elcinema.1227,Sada El Balad Drama Channel,59
-1231,OSN TV Movies Comedy Channel,https://elcinema.com/en/tvguide/1231/,elcinema.1231,OSN TV Movies Comedy Channel,36
-1232,OSN TV Kids Channel,https://elcinema.com/en/tvguide/1232/,elcinema.1232,OSN TV Kids Channel,213
-1239,MBC Egypt Channel,https://elcinema.com/en/tvguide/1239/,elcinema.1239,MBC Egypt Channel,23
-1241,MBC 3 Channel,https://elcinema.com/en/tvguide/1241/,elcinema.1241,MBC 3 Channel,46
-1242,Network Arabic Channel,https://elcinema.com/en/tvguide/1242/,elcinema.1242,Network Arabic Channel,41
-1246,LDC Channel,https://elcinema.com/en/tvguide/1246/,elcinema.1246,LDC Channel,33
+1231,OSN TV Movies Comedy Channel,https://elcinema.com/en/tvguide/1231/,elcinema.1231,OSN TV Movies Comedy Channel,35
+1232,OSN TV Kids Channel,https://elcinema.com/en/tvguide/1232/,elcinema.1232,OSN TV Kids Channel,193
+1239,MBC Egypt Channel,https://elcinema.com/en/tvguide/1239/,elcinema.1239,MBC Egypt Channel,19
+1241,MBC 3 Channel,https://elcinema.com/en/tvguide/1241/,elcinema.1241,MBC 3 Channel,35
+1242,Network Arabic Channel,https://elcinema.com/en/tvguide/1242/,elcinema.1242,Network Arabic Channel,39
+1246,LDC Channel,https://elcinema.com/en/tvguide/1246/,elcinema.1246,LDC Channel,32
 1252,Al Kahera Wal Nas TV 2 Channel,https://elcinema.com/en/tvguide/1252/,elcinema.1252,Al Kahera Wal Nas TV 2 Channel,27
 1257,OSN TV Comedy Channel,https://elcinema.com/en/tvguide/1257/,elcinema.1257,OSN TV Comedy Channel,129
-1259,MBC Bollywood Channel,https://elcinema.com/en/tvguide/1259/,elcinema.1259,MBC Bollywood Channel,18
+1259,MBC Bollywood Channel,https://elcinema.com/en/tvguide/1259/,elcinema.1259,MBC Bollywood Channel,12
 1261,Zee alwan Channel,https://elcinema.com/en/tvguide/1261/,elcinema.1261,Zee alwan Channel,19
-1264,Al Dafrah Channel,https://elcinema.com/en/tvguide/1264/,elcinema.1264,Al Dafrah Channel,45
-1269,AlSharqiya Channel,https://elcinema.com/en/tvguide/1269/,elcinema.1269,AlSharqiya Channel,11
-1278,MBC MASR 2 Channel,https://elcinema.com/en/tvguide/1278/,elcinema.1278,MBC MASR 2 Channel,26
-1279,Sada El Balad 2 Channel,https://elcinema.com/en/tvguide/1279/,elcinema.1279,Sada El Balad 2 Channel,3
+1264,Al Dafrah Channel,https://elcinema.com/en/tvguide/1264/,elcinema.1264,Al Dafrah Channel,47
+1269,AlSharqiya Channel,https://elcinema.com/en/tvguide/1269/,elcinema.1269,AlSharqiya Channel,9
+1278,MBC MASR 2 Channel,https://elcinema.com/en/tvguide/1278/,elcinema.1278,MBC MASR 2 Channel,21
+1279,Sada El Balad 2 Channel,https://elcinema.com/en/tvguide/1279/,elcinema.1279,Sada El Balad 2 Channel,2
 1280,TeN TV Channel,https://elcinema.com/en/tvguide/1280/,elcinema.1280,TeN TV Channel,13
-1283,Dubai Zaman Channel,https://elcinema.com/en/tvguide/1283/,elcinema.1283,Dubai Zaman Channel,4
-1285,Osn Ya Hala Aflam Channel,https://elcinema.com/en/tvguide/1285/,elcinema.1285,Osn Ya Hala Aflam Channel,34
+1283,Dubai Zaman Channel,https://elcinema.com/en/tvguide/1283/,elcinema.1283,Dubai Zaman Channel,6
+1285,Osn Ya Hala Aflam Channel,https://elcinema.com/en/tvguide/1285/,elcinema.1285,Osn Ya Hala Aflam Channel,33
 1289,Rotana Cinema Channel,https://elcinema.com/en/tvguide/1289/,elcinema.1289,Rotana Cinema Channel,32
-1290,DMC Channel,https://elcinema.com/en/tvguide/1290/,elcinema.1290,DMC Channel,18
-1292,DMC DRAMA Channel,https://elcinema.com/en/tvguide/1292/,elcinema.1292,DMC DRAMA Channel,52
+1290,DMC Channel,https://elcinema.com/en/tvguide/1290/,elcinema.1290,DMC Channel,17
+1292,DMC DRAMA Channel,https://elcinema.com/en/tvguide/1292/,elcinema.1292,DMC DRAMA Channel,51
 1296,MTV Channel,https://elcinema.com/en/tvguide/1296/,elcinema.1296,MTV Channel,8
-1297,SBC Channel,https://elcinema.com/en/tvguide/1297/,elcinema.1297,SBC Channel,36
-1298,Amman Channel,https://elcinema.com/en/tvguide/1298/,elcinema.1298,Amman Channel,5
-1299,Roya Channel,https://elcinema.com/en/tvguide/1299/,elcinema.1299,Roya Channel,19
-1301,Alsumaria Channel,https://elcinema.com/en/tvguide/1301/,elcinema.1301,Alsumaria Channel,14
-1302,Fujairah Channel,https://elcinema.com/en/tvguide/1302/,elcinema.1302,Fujairah Channel,25
-1304,Nessma Channel,https://elcinema.com/en/tvguide/1304/,elcinema.1304,Nessma Channel,19
+1297,SBC Channel,https://elcinema.com/en/tvguide/1297/,elcinema.1297,SBC Channel,34
+1298,Amman Channel,https://elcinema.com/en/tvguide/1298/,elcinema.1298,Amman Channel,7
+1299,Roya Channel,https://elcinema.com/en/tvguide/1299/,elcinema.1299,Roya Channel,16
+1301,Alsumaria Channel,https://elcinema.com/en/tvguide/1301/,elcinema.1301,Alsumaria Channel,11
+1302,Fujairah Channel,https://elcinema.com/en/tvguide/1302/,elcinema.1302,Fujairah Channel,24
+1304,Nessma Channel,https://elcinema.com/en/tvguide/1304/,elcinema.1304,Nessma Channel,23
 1306,Alrasheed Channel,https://elcinema.com/en/tvguide/1306/,elcinema.1306,Alrasheed Channel,6
+1308,Watania1 Channel,https://elcinema.com/en/tvguide/1308/,elcinema.1308,Watania1 Channel,6
 1309,beIN Drama Channel,https://elcinema.com/en/tvguide/1309/,elcinema.1309,beIN Drama Channel,59
-1312,Al Aoula Morocco Channel,https://elcinema.com/en/tvguide/1312/,elcinema.1312,Al Aoula Morocco Channel,28
-1313,LTV Channel,https://elcinema.com/en/tvguide/1313/,elcinema.1313,LTV Channel,46
-1314,Jordan TV Channel,https://elcinema.com/en/tvguide/1314/,elcinema.1314,Jordan TV Channel,12
-1315,Echorouk TV Channel,https://elcinema.com/en/tvguide/1315/,elcinema.1315,Echorouk TV Channel,9
-1317,Oman Channel,https://elcinema.com/en/tvguide/1317/,elcinema.1317,Oman Channel,44
+1312,Al Aoula Morocco Channel,https://elcinema.com/en/tvguide/1312/,elcinema.1312,Al Aoula Morocco Channel,26
+1313,LTV Channel,https://elcinema.com/en/tvguide/1313/,elcinema.1313,LTV Channel,47
+1314,Jordan TV Channel,https://elcinema.com/en/tvguide/1314/,elcinema.1314,Jordan TV Channel,16
+1315,Echorouk TV Channel,https://elcinema.com/en/tvguide/1315/,elcinema.1315,Echorouk TV Channel,7
+1317,Oman Channel,https://elcinema.com/en/tvguide/1317/,elcinema.1317,Oman Channel,42
 1322,BEIN MOVIES PREMIERE Channel,https://elcinema.com/en/tvguide/1322/,elcinema.1322,BEIN MOVIES PREMIERE Channel,32
 1323,BEIN MOVIES ACTION Channel,https://elcinema.com/en/tvguide/1323/,elcinema.1323,BEIN MOVIES ACTION Channel,31
 1324,BEIN MOVIES DRAMA Channel,https://elcinema.com/en/tvguide/1324/,elcinema.1324,BEIN MOVIES DRAMA Channel,32
 1325,BEIN MOVIES FAMILY Channel,https://elcinema.com/en/tvguide/1325/,elcinema.1325,BEIN MOVIES FAMILY Channel,37
-1327,BeIn Series HD 1 Channel,https://elcinema.com/en/tvguide/1327/,elcinema.1327,BeIn Series HD 1 Channel,72
-1328,beIN Series HD 2 Channel,https://elcinema.com/en/tvguide/1328/,elcinema.1328,beIN Series HD 2 Channel,70
-1336,Maspero Zaman Channel,https://elcinema.com/en/tvguide/1336/,elcinema.1336,Maspero Zaman Channel,53
-1339,AlSaeedah Channel,https://elcinema.com/en/tvguide/1339/,elcinema.1339,AlSaeedah Channel,13
-1340,MBC Iraq Channel,https://elcinema.com/en/tvguide/1340/,elcinema.1340,MBC Iraq Channel,29
-1341,LBC Channel,https://elcinema.com/en/tvguide/1341/,elcinema.1341,LBC Channel,45
-1349,Iraqia TV Channel,https://elcinema.com/en/tvguide/1349/,elcinema.1349,Iraqia TV Channel,23
-1352,Saudiya TV Channel,https://elcinema.com/en/tvguide/1352/,elcinema.1352,Saudiya TV Channel,23
-1354,MBC 5 Channel,https://elcinema.com/en/tvguide/1354/,elcinema.1354,MBC 5 Channel,31
-1355,Mix Channel,https://elcinema.com/en/tvguide/1355/,elcinema.1355,Mix Channel,2
+1327,BeIn Series HD 1 Channel,https://elcinema.com/en/tvguide/1327/,elcinema.1327,BeIn Series HD 1 Channel,71
+1328,beIN Series HD 2 Channel,https://elcinema.com/en/tvguide/1328/,elcinema.1328,beIN Series HD 2 Channel,69
+1329,Star World Channel,https://elcinema.com/en/tvguide/1329/,elcinema.1329,Star World Channel,11
+1330,Star Action Channel,https://elcinema.com/en/tvguide/1330/,elcinema.1330,Star Action Channel,5
+1336,Maspero Zaman Channel,https://elcinema.com/en/tvguide/1336/,elcinema.1336,Maspero Zaman Channel,52
+1339,AlSaeedah Channel,https://elcinema.com/en/tvguide/1339/,elcinema.1339,AlSaeedah Channel,10
+1340,MBC Iraq Channel,https://elcinema.com/en/tvguide/1340/,elcinema.1340,MBC Iraq Channel,22
+1341,LBC Channel,https://elcinema.com/en/tvguide/1341/,elcinema.1341,LBC Channel,42
+1349,Iraqia TV Channel,https://elcinema.com/en/tvguide/1349/,elcinema.1349,Iraqia TV Channel,24
+1352,Saudiya TV Channel,https://elcinema.com/en/tvguide/1352/,elcinema.1352,Saudiya TV Channel,21
+1354,MBC 5 Channel,https://elcinema.com/en/tvguide/1354/,elcinema.1354,MBC 5 Channel,25
+1355,Mix Channel,https://elcinema.com/en/tvguide/1355/,elcinema.1355,Mix Channel,9
 1358,Rotana Comedy Channel,https://elcinema.com/en/tvguide/1358/,elcinema.1358,Rotana Comedy Channel,27
-1366,Thikrayat Tv Channel,https://elcinema.com/en/tvguide/1366/,elcinema.1366,Thikrayat Tv Channel,54
-1367,Utv Channel,https://elcinema.com/en/tvguide/1367/,elcinema.1367,Utv Channel,24
-1371,Mix Bel Araby Channel,https://elcinema.com/en/tvguide/1371/,elcinema.1371,Mix Bel Araby Channel,50
-1373,Mix ONE Channel,https://elcinema.com/en/tvguide/1373/,elcinema.1373,Mix ONE Channel,47
-1374,Hadhramaut TV Channel,https://elcinema.com/en/tvguide/1374/,elcinema.1374,Hadhramaut TV Channel,12
+1366,Thikrayat Tv Channel,https://elcinema.com/en/tvguide/1366/,elcinema.1366,Thikrayat Tv Channel,55
+1367,Utv Channel,https://elcinema.com/en/tvguide/1367/,elcinema.1367,Utv Channel,25
+1371,Mix Bel Araby Channel,https://elcinema.com/en/tvguide/1371/,elcinema.1371,Mix Bel Araby Channel,49
+1373,Mix ONE Channel,https://elcinema.com/en/tvguide/1373/,elcinema.1373,Mix ONE Channel,44
+1374,Hadhramaut TV Channel,https://elcinema.com/en/tvguide/1374/,elcinema.1374,Hadhramaut TV Channel,13
 1382,Alaraby TV 2 Channel,https://elcinema.com/en/tvguide/1382/,elcinema.1382,Alaraby TV 2 Channel,8
-1383,WTV Channel,https://elcinema.com/en/tvguide/1383/,elcinema.1383,WTV Channel,23
+1383,WTV Channel,https://elcinema.com/en/tvguide/1383/,elcinema.1383,WTV Channel,22
 1385,Dijlah TV Channel,https://elcinema.com/en/tvguide/1385/,elcinema.1385,Dijlah TV Channel,2
-1390,OSN TV Yahala Bil Arabi Channel,https://elcinema.com/en/tvguide/1390/,elcinema.1390,OSN TV Yahala Bil Arabi Channel,71
-1391,OSN TV Movies Hollywood Channel,https://elcinema.com/en/tvguide/1391/,elcinema.1391,OSN TV Movies Hollywood Channel,29
+1390,OSN TV Yahala Bil Arabi Channel,https://elcinema.com/en/tvguide/1390/,elcinema.1390,OSN TV Yahala Bil Arabi Channel,72
+1391,OSN TV Movies Hollywood Channel,https://elcinema.com/en/tvguide/1391/,elcinema.1391,OSN TV Movies Hollywood Channel,30
 1392,OSN TV Movies Family Channel,https://elcinema.com/en/tvguide/1392/,elcinema.1392,OSN TV Movies Family Channel,37
-1393,OSN TV One Channel,https://elcinema.com/en/tvguide/1393/,elcinema.1393,OSN TV One Channel,63
-1394,OSN TV Showcase Channel,https://elcinema.com/en/tvguide/1394/,elcinema.1394,OSN TV Showcase Channel,83
+1393,OSN TV One Channel,https://elcinema.com/en/tvguide/1393/,elcinema.1393,OSN TV One Channel,61
+1394,OSN TV Showcase Channel,https://elcinema.com/en/tvguide/1394/,elcinema.1394,OSN TV Showcase Channel,85
 1395,OSN TV Crime Channel,https://elcinema.com/en/tvguide/1395/,elcinema.1395,OSN TV Crime Channel,73
-1396,OSN TV Now Channel,https://elcinema.com/en/tvguide/1396/,elcinema.1396,OSN TV Now Channel,83
-1398,Althania Channel,https://elcinema.com/en/tvguide/1398/,elcinema.1398,Althania Channel,42
-1399,MBC Masr Drama Channel,https://elcinema.com/en/tvguide/1399/,elcinema.1399,MBC Masr Drama Channel,71
+1396,OSN TV Now Channel,https://elcinema.com/en/tvguide/1396/,elcinema.1396,OSN TV Now Channel,86
+1398,Althania Channel,https://elcinema.com/en/tvguide/1398/,elcinema.1398,Althania Channel,45
+1399,MBC Masr Drama Channel,https://elcinema.com/en/tvguide/1399/,elcinema.1399,MBC Masr Drama Channel,69
 1401,Masah Channel,https://elcinema.com/en/tvguide/1401/,elcinema.1401,Masah Channel,9
-1404,One Movies Channel,https://elcinema.com/en/tvguide/1404/,elcinema.1404,One Movies Channel,2
+1404,One Movies Channel,https://elcinema.com/en/tvguide/1404/,elcinema.1404,One Movies Channel,11
 1405,One Drama Channel,https://elcinema.com/en/tvguide/1405/,elcinema.1405,One Drama Channel,58
