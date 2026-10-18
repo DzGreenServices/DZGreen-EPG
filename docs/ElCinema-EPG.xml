@@ -52,7 +52,7 @@
     <display-name lang="en">Nile Drama Channel</display-name>
   </channel>
   <channel id="elcinema.1159">
-    <display-name lang="en">1159</display-name>
+    <display-name lang="en">Nile Life Channel</display-name>
   </channel>
   <channel id="elcinema.1168">
     <display-name lang="en">LBCI Channel</display-name>
@@ -85,7 +85,7 @@
     <display-name lang="en">CBC Channel</display-name>
   </channel>
   <channel id="elcinema.1199">
-    <display-name lang="en">1199</display-name>
+    <display-name lang="en">CBC Drama Channel</display-name>
   </channel>
   <channel id="elcinema.1203">
     <display-name lang="en">ON E Channel</display-name>
@@ -151,7 +151,7 @@
     <display-name lang="en">Al Dafrah Channel</display-name>
   </channel>
   <channel id="elcinema.1269">
-    <display-name lang="en">1269</display-name>
+    <display-name lang="en">AlSharqiya Channel</display-name>
   </channel>
   <channel id="elcinema.1278">
     <display-name lang="en">MBC MASR 2 Channel</display-name>
@@ -318,12 +318,6 @@
   <channel id="elcinema.1405">
     <display-name lang="en">One Drama Channel</display-name>
   </channel>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1101">
-    <title lang="en">Falling in Sabe' Well</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1101">
-    <title lang="en">Altaasiea</title>
-  </programme>
   <programme start="20261017230000 +0100" stop="20261018020000 +0100" channel="elcinema.1101">
     <title lang="en">Sabah El Khair Ya Masr</title>
   </programme>
@@ -372,11 +366,14 @@
   <programme start="20261019130000 +0100" stop="20261019140000 +0100" channel="elcinema.1101">
     <title lang="en">Altaasiea</title>
   </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1119">
-    <title lang="en">Falling in Sabe' Well</title>
+  <programme start="20261019230000 +0100" stop="20261020020000 +0100" channel="elcinema.1101">
+    <title lang="en">Sabah El Khair Ya Masr</title>
   </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1119">
-    <title lang="en">Altaasiea</title>
+  <programme start="20261020020000 +0100" stop="20261020030000 +0100" channel="elcinema.1101">
+    <title lang="en">Al Kabir Awy 1</title>
+  </programme>
+  <programme start="20261020030000 +0100" stop="20261020040000 +0100" channel="elcinema.1101">
+    <title lang="en">Harb Al-Jawasis</title>
   </programme>
   <programme start="20261017230000 +0100" stop="20261018020000 +0100" channel="elcinema.1119">
     <title lang="en">Sabah El Khair Ya Masr</title>
@@ -426,17 +423,14 @@
   <programme start="20261019130000 +0100" stop="20261019140000 +0100" channel="elcinema.1119">
     <title lang="en">Altaasiea</title>
   </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1127">
-    <title lang="en">Al Leqaa Men Al Sefr</title>
+  <programme start="20261019230000 +0100" stop="20261020020000 +0100" channel="elcinema.1119">
+    <title lang="en">Sabah El Khair Ya Masr</title>
   </programme>
-  <programme start="20261017130000 +0100" stop="20261017133000 +0100" channel="elcinema.1127">
-    <title lang="en">Akhbar MBC</title>
+  <programme start="20261020020000 +0100" stop="20261020030000 +0100" channel="elcinema.1119">
+    <title lang="en">Al Kabir Awy 1</title>
   </programme>
-  <programme start="20261017133000 +0100" stop="20261017140000 +0100" channel="elcinema.1127">
-    <title lang="en">'Ahlaa ma tash</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1127">
-    <title lang="en">Taht Al Daght</title>
+  <programme start="20261020030000 +0100" stop="20261020040000 +0100" channel="elcinema.1119">
+    <title lang="en">Harb Al-Jawasis</title>
   </programme>
   <programme start="20261018000000 +0100" stop="20261018010000 +0100" channel="elcinema.1127">
     <title lang="en">Taht Al Daght</title>
@@ -468,26 +462,11 @@
   <programme start="20261018071500 +0100" stop="20261018080000 +0100" channel="elcinema.1127">
     <title lang="en">Ahla Naseib</title>
   </programme>
-  <programme start="20261018173000 +0100" stop="20261018183000 +0100" channel="elcinema.1127">
-    <title lang="en">Men Deira Le Deira</title>
-  </programme>
-  <programme start="20261018183000 +0100" stop="20261018193000 +0100" channel="elcinema.1127">
-    <title lang="en">Men ... Elaa</title>
-  </programme>
   <programme start="20261018193000 +0100" stop="20261018210000 +0100" channel="elcinema.1127">
     <title lang="en">Kalam Nawaem</title>
   </programme>
   <programme start="20261018210000 +0100" stop="20261018223000 +0100" channel="elcinema.1127">
     <title lang="en">Big Time Podcast</title>
-  </programme>
-  <programme start="20261017123000 +0100" stop="20261017130000 +0100" channel="elcinema.1128">
-    <title lang="en">Films &amp; Stars</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017150000 +0100" channel="elcinema.1128">
-    <title lang="en">Overboard</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017170000 +0100" channel="elcinema.1128">
-    <title lang="en">Ticket to Paradise</title>
   </programme>
   <programme start="20261017223500 +0100" stop="20261017230000 +0100" channel="elcinema.1128">
     <title lang="en">Action Zone</title>
@@ -522,20 +501,11 @@
   <programme start="20261018154500 +0100" stop="20261018160000 +0100" channel="elcinema.1128">
     <title lang="en">Scoop Maa Raya</title>
   </programme>
-  <programme start="20261018170000 +0100" stop="20261018183500 +0100" channel="elcinema.1128">
-    <title lang="en">We're the Millers</title>
-  </programme>
   <programme start="20261018190000 +0100" stop="20261018210000 +0100" channel="elcinema.1128">
     <title lang="en">The Beekeeper</title>
   </programme>
   <programme start="20261018210000 +0100" stop="20261018223500 +0100" channel="elcinema.1128">
     <title lang="en">Blacklight</title>
-  </programme>
-  <programme start="20261017115500 +0100" stop="20261017143000 +0100" channel="elcinema.1129">
-    <title lang="en">Only 17 Years Old</title>
-  </programme>
-  <programme start="20261017143000 +0100" stop="20261017170000 +0100" channel="elcinema.1129">
-    <title lang="en">You Are the One I Love</title>
   </programme>
   <programme start="20261018001500 +0100" stop="20261018010000 +0100" channel="elcinema.1129">
     <title lang="en">Wust El Balad</title>
@@ -567,23 +537,11 @@
   <programme start="20261018075000 +0100" stop="20261018082000 +0100" channel="elcinema.1129">
     <title lang="en">Sins and Roses</title>
   </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1129">
-    <title lang="en">Ala Nesbet Moshahda</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1129">
-    <title lang="en">Wain Al Heen</title>
-  </programme>
   <programme start="20261018190000 +0100" stop="20261018213000 +0100" channel="elcinema.1129">
     <title lang="en">You Are the One I Love</title>
   </programme>
   <programme start="20261018213000 +0100" stop="20261019001500 +0100" channel="elcinema.1129">
     <title lang="en">Ala Nesbet Moshahda</title>
-  </programme>
-  <programme start="20261017133000 +0100" stop="20261017140000 +0100" channel="elcinema.1130">
-    <title lang="en">Kingdom</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017153000 +0100" channel="elcinema.1130">
-    <title lang="en">Kingdom</title>
   </programme>
   <programme start="20261018010000 +0100" stop="20261018020500 +0100" channel="elcinema.1130">
     <title lang="en">Kingdom</title>
@@ -599,9 +557,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018153000 +0100" channel="elcinema.1130">
     <title lang="en">Kingdom</title>
-  </programme>
-  <programme start="20261018182000 +0100" stop="20261018185000 +0100" channel="elcinema.1130">
-    <title lang="en">Ridiculousness</title>
   </programme>
   <programme start="20261019001000 +0100" stop="20261019010000 +0100" channel="elcinema.1130">
     <title lang="en">Ridiculousness</title>
@@ -621,17 +576,14 @@
   <programme start="20261019213000 +0100" stop="20261019223000 +0100" channel="elcinema.1130">
     <title lang="en">Kingdom</title>
   </programme>
+  <programme start="20261020010000 +0100" stop="20261020020000 +0100" channel="elcinema.1130">
+    <title lang="en">Kingdom</title>
+  </programme>
   <programme start="20261020160000 +0100" stop="20261020170000 +0100" channel="elcinema.1130">
     <title lang="en">Kingdom</title>
   </programme>
   <programme start="20261020213000 +0100" stop="20261020223000 +0100" channel="elcinema.1130">
     <title lang="en">Kingdom</title>
-  </programme>
-  <programme start="20261017125300 +0100" stop="20261017153300 +0100" channel="elcinema.1131">
-    <title lang="en">Amr Ikhlaa</title>
-  </programme>
-  <programme start="20261017153300 +0100" stop="20261017191100 +0100" channel="elcinema.1131">
-    <title lang="en">Parineetii</title>
   </programme>
   <programme start="20261017222100 +0100" stop="20261018000000 +0100" channel="elcinema.1131">
     <title lang="en">El Leaba 2: Level El Wahsh</title>
@@ -650,12 +602,6 @@
   </programme>
   <programme start="20261018191100 +0100" stop="20261018222100 +0100" channel="elcinema.1131">
     <title lang="en">Min Haqiy Ahib</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017140000 +0100" channel="elcinema.1132">
-    <title lang="en">Rock of Ages</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017163000 +0100" channel="elcinema.1132">
-    <title lang="en">Jersey Boys</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017233000 +0100" channel="elcinema.1132">
     <title lang="en">Hotel Transylvania 3: Summer Vacation</title>
@@ -687,9 +633,6 @@
   <programme start="20261018153500 +0100" stop="20261018160000 +0100" channel="elcinema.1132">
     <title lang="en">Hollywood Buzz</title>
   </programme>
-  <programme start="20261018163000 +0100" stop="20261018183000 +0100" channel="elcinema.1132">
-    <title lang="en">8 Mile</title>
-  </programme>
   <programme start="20261018183000 +0100" stop="20261018200000 +0100" channel="elcinema.1132">
     <title lang="en">Journey to the Center of the Earth</title>
   </programme>
@@ -698,18 +641,6 @@
   </programme>
   <programme start="20261018213000 +0100" stop="20261018220000 +0100" channel="elcinema.1132">
     <title lang="en">Hollywood Buzz</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1134">
-    <title lang="en">Hagma Mortadda</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1134">
-    <title lang="en">Nassibi w Esmetek 4</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1134">
-    <title lang="en">El Kebeer Awy 8</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1134">
-    <title lang="en">El Kebeer Awy 8</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1134">
     <title lang="en">El Kebeer Awy 8</title>
@@ -765,15 +696,6 @@
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1134">
     <title lang="en">El Kebeer Awy 8</title>
   </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1134">
-    <title lang="en">Abu El Aroussa 3</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1134">
-    <title lang="en">Isma'il Yassin (Abu Dehka Genan)</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1134">
-    <title lang="en">Leaba W Alabet Begad</title>
-  </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1134">
     <title lang="en">Hagma Mortadda</title>
   </programme>
@@ -782,15 +704,6 @@
   </programme>
   <programme start="20261018210000 +0100" stop="20261018220000 +0100" channel="elcinema.1134">
     <title lang="en">Isma'il Yassin (Abu Dehka Genan)</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1135">
-    <title lang="en">El Bakht</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1135">
-    <title lang="en">Gawdar - Alf Leyla w Leyla 2</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1135">
-    <title lang="en">Al Darba</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017223000 +0100" channel="elcinema.1135">
     <title lang="en">Ammuna Al Mazyouna</title>
@@ -836,12 +749,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1135">
     <title lang="en">Al Darba</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1135">
-    <title lang="en">Al Boum 2</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1135">
-    <title lang="en">Lahazat Masruqa</title>
   </programme>
   <programme start="20261018210000 +0100" stop="20261018220000 +0100" channel="elcinema.1135">
     <title lang="en">El Bakht</title>
@@ -900,6 +807,21 @@
   <programme start="20261019220000 +0100" stop="20261019223000 +0100" channel="elcinema.1135">
     <title lang="en">Ammuna Al Mazyouna</title>
   </programme>
+  <programme start="20261019223000 +0100" stop="20261019233000 +0100" channel="elcinema.1135">
+    <title lang="en">Gawdar - Alf Leyla w Leyla 2</title>
+  </programme>
+  <programme start="20261020003000 +0100" stop="20261020010000 +0100" channel="elcinema.1135">
+    <title lang="en">Al Baa' Tahtahu Nuqta 2</title>
+  </programme>
+  <programme start="20261020020000 +0100" stop="20261020030000 +0100" channel="elcinema.1135">
+    <title lang="en">Al Boum 2</title>
+  </programme>
+  <programme start="20261020040000 +0100" stop="20261020050000 +0100" channel="elcinema.1135">
+    <title lang="en">Gawdar - Alf Leyla w Leyla 2</title>
+  </programme>
+  <programme start="20261020050000 +0100" stop="20261020060000 +0100" channel="elcinema.1135">
+    <title lang="en">Al Darba</title>
+  </programme>
   <programme start="20261020170000 +0100" stop="20261020180000 +0100" channel="elcinema.1135">
     <title lang="en">Al Boum 2</title>
   </programme>
@@ -921,9 +843,6 @@
   <programme start="20261018080000 +0100" stop="20261018090000 +0100" channel="elcinema.1136">
     <title lang="en">Ali Klay</title>
   </programme>
-  <programme start="20261018183000 +0100" stop="20261018193000 +0100" channel="elcinema.1136">
-    <title lang="en">Ali Klay</title>
-  </programme>
   <programme start="20261018000000 +0100" stop="20261018013000 +0100" channel="elcinema.1137">
     <title lang="en">Sharie Sherif 4</title>
   </programme>
@@ -934,6 +853,9 @@
     <title lang="en">Sharie Sherif 4</title>
   </programme>
   <programme start="20261019080000 +0100" stop="20261019100000 +0100" channel="elcinema.1137">
+    <title lang="en">Sharie Sherif 4</title>
+  </programme>
+  <programme start="20261020000000 +0100" stop="20261020020000 +0100" channel="elcinema.1137">
     <title lang="en">Sharie Sherif 4</title>
   </programme>
   <programme start="20261018020000 +0100" stop="20261018030000 +0100" channel="elcinema.1145">
@@ -977,18 +899,6 @@
   </programme>
   <programme start="20261019210000 +0100" stop="20261019230000 +0100" channel="elcinema.1145">
     <title lang="en">90 Daqiqa</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1147">
-    <title lang="en">The Phoenix</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1147">
-    <title lang="en">Saadaet Al Magnoun</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1147">
-    <title lang="en">Fadda</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1147">
-    <title lang="en">Zolm El Mastaba</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1147">
     <title lang="en">Zolm El Mastaba</title>
@@ -1043,15 +953,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1147">
     <title lang="en">Zolm El Mastaba</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1147">
-    <title lang="en">Ahl El Khataya</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1147">
-    <title lang="en">The Phoenix</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1147">
-    <title lang="en">Al Mohafaza 15</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1147">
     <title lang="en">Fadda</title>
@@ -1137,6 +1038,27 @@
   <programme start="20261019220000 +0100" stop="20261019230000 +0100" channel="elcinema.1147">
     <title lang="en">Zolm El Mastaba</title>
   </programme>
+  <programme start="20261019230000 +0100" stop="20261020000000 +0100" channel="elcinema.1147">
+    <title lang="en">Ahl El Khataya</title>
+  </programme>
+  <programme start="20261020000000 +0100" stop="20261020010000 +0100" channel="elcinema.1147">
+    <title lang="en">The Phoenix</title>
+  </programme>
+  <programme start="20261020010000 +0100" stop="20261020020000 +0100" channel="elcinema.1147">
+    <title lang="en">Saadaet Al Magnoun</title>
+  </programme>
+  <programme start="20261020020000 +0100" stop="20261020030000 +0100" channel="elcinema.1147">
+    <title lang="en">Fadda</title>
+  </programme>
+  <programme start="20261020030000 +0100" stop="20261020040000 +0100" channel="elcinema.1147">
+    <title lang="en">Al Mohafaza 15</title>
+  </programme>
+  <programme start="20261020040000 +0100" stop="20261020050000 +0100" channel="elcinema.1147">
+    <title lang="en">Loubat Al Saaada</title>
+  </programme>
+  <programme start="20261020050000 +0100" stop="20261020060000 +0100" channel="elcinema.1147">
+    <title lang="en">Zolm El Mastaba</title>
+  </programme>
   <programme start="20261020160000 +0100" stop="20261020170000 +0100" channel="elcinema.1147">
     <title lang="en">Ahl El Khataya</title>
   </programme>
@@ -1154,9 +1076,6 @@
   </programme>
   <programme start="20261020210000 +0100" stop="20261020220000 +0100" channel="elcinema.1147">
     <title lang="en">Loubat Al Saaada</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017150000 +0100" channel="elcinema.1149">
-    <title lang="en">Al Serb</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261018000000 +0100" channel="elcinema.1149">
     <title lang="en">Al Serb</title>
@@ -1187,12 +1106,6 @@
   </programme>
   <programme start="20261018110000 +0100" stop="20261018120000 +0100" channel="elcinema.1149">
     <title lang="en">Hayah La Toshbihni</title>
-  </programme>
-  <programme start="20261018163000 +0100" stop="20261018170000 +0100" channel="elcinema.1149">
-    <title lang="en">Romeo wa Ya Layt</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1149">
-    <title lang="en">Darb Al Thahab</title>
   </programme>
   <programme start="20261018203000 +0100" stop="20261018210000 +0100" channel="elcinema.1149">
     <title lang="en">Romeo wa Ya Layt</title>
@@ -1242,6 +1155,21 @@
   <programme start="20261019220000 +0100" stop="20261019230000 +0100" channel="elcinema.1149">
     <title lang="en">Wuhoosh</title>
   </programme>
+  <programme start="20261020000000 +0100" stop="20261020010000 +0100" channel="elcinema.1149">
+    <title lang="en">Bi Kams Arwah</title>
+  </programme>
+  <programme start="20261020010000 +0100" stop="20261020020000 +0100" channel="elcinema.1149">
+    <title lang="en">Darb Al Thahab</title>
+  </programme>
+  <programme start="20261020030000 +0100" stop="20261020040000 +0100" channel="elcinema.1149">
+    <title lang="en">Hayah La Toshbihni</title>
+  </programme>
+  <programme start="20261020040000 +0100" stop="20261020050000 +0100" channel="elcinema.1149">
+    <title lang="en">Bi Kams Arwah</title>
+  </programme>
+  <programme start="20261020050000 +0100" stop="20261020060000 +0100" channel="elcinema.1149">
+    <title lang="en">Wuhoosh</title>
+  </programme>
   <programme start="20261020163000 +0100" stop="20261020170000 +0100" channel="elcinema.1149">
     <title lang="en">Romeo wa Ya Layt</title>
   </programme>
@@ -1253,15 +1181,6 @@
   </programme>
   <programme start="20261020210000 +0100" stop="20261020220000 +0100" channel="elcinema.1149">
     <title lang="en">Hayah La Toshbihni</title>
-  </programme>
-  <programme start="20261017123000 +0100" stop="20261017140000 +0100" channel="elcinema.1156">
-    <title lang="en">Masaa Alfan</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1156">
-    <title lang="en">El Shak</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1156">
-    <title lang="en">Be 100 Ragel</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1156">
     <title lang="en">Be 100 Ragel</title>
@@ -1316,15 +1235,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1156">
     <title lang="en">Be 100 Ragel</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1156">
-    <title lang="en">Nelly W Sherihan</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1156">
-    <title lang="en">Dmoo' fe eyon Wkha</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1156">
-    <title lang="en">Raafat Al Haggan 2</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1156">
     <title lang="en">Ragul wa Imratan</title>
@@ -1404,6 +1314,57 @@
   <programme start="20261019210000 +0100" stop="20261019220000 +0100" channel="elcinema.1156">
     <title lang="en">El Shak</title>
   </programme>
+  <programme start="20261018010000 +0100" stop="20261018030000 +0100" channel="elcinema.1159">
+    <title lang="en">Naharuk Saeid</title>
+  </programme>
+  <programme start="20261018040000 +0100" stop="20261018043000 +0100" channel="elcinema.1159">
+    <title lang="en">Half for Me &amp; Half for Him</title>
+  </programme>
+  <programme start="20261018053000 +0100" stop="20261018060000 +0100" channel="elcinema.1159">
+    <title lang="en">Bassant and Diyasty S1</title>
+  </programme>
+  <programme start="20261018113000 +0100" stop="20261018120000 +0100" channel="elcinema.1159">
+    <title lang="en">Half for Me &amp; Half for Him</title>
+  </programme>
+  <programme start="20261018133000 +0100" stop="20261018140000 +0100" channel="elcinema.1159">
+    <title lang="en">Bassant and Diyasty S1</title>
+  </programme>
+  <programme start="20261018180000 +0100" stop="20261018200000 +0100" channel="elcinema.1159">
+    <title lang="en">Naharuk Saeid</title>
+  </programme>
+  <programme start="20261019010000 +0100" stop="20261019030000 +0100" channel="elcinema.1159">
+    <title lang="en">Naharuk Saeid</title>
+  </programme>
+  <programme start="20261019040000 +0100" stop="20261019043000 +0100" channel="elcinema.1159">
+    <title lang="en">Half for Me &amp; Half for Him</title>
+  </programme>
+  <programme start="20261019053000 +0100" stop="20261019054500 +0100" channel="elcinema.1159">
+    <title lang="en">Eh Alakhbar?</title>
+  </programme>
+  <programme start="20261019054500 +0100" stop="20261019060000 +0100" channel="elcinema.1159">
+    <title lang="en">Bassant and Diyasty S1</title>
+  </programme>
+  <programme start="20261019113000 +0100" stop="20261019120000 +0100" channel="elcinema.1159">
+    <title lang="en">Half for Me &amp; Half for Him</title>
+  </programme>
+  <programme start="20261019133000 +0100" stop="20261019134500 +0100" channel="elcinema.1159">
+    <title lang="en">Eh Alakhbar?</title>
+  </programme>
+  <programme start="20261019134500 +0100" stop="20261019140000 +0100" channel="elcinema.1159">
+    <title lang="en">Bassant and Diyasty S1</title>
+  </programme>
+  <programme start="20261019180000 +0100" stop="20261019200000 +0100" channel="elcinema.1159">
+    <title lang="en">Naharuk Saeid</title>
+  </programme>
+  <programme start="20261020010000 +0100" stop="20261020030000 +0100" channel="elcinema.1159">
+    <title lang="en">Naharuk Saeid</title>
+  </programme>
+  <programme start="20261020040000 +0100" stop="20261020043000 +0100" channel="elcinema.1159">
+    <title lang="en">Half for Me &amp; Half for Him</title>
+  </programme>
+  <programme start="20261020180000 +0100" stop="20261020190000 +0100" channel="elcinema.1159">
+    <title lang="en">Naharuk Saeid</title>
+  </programme>
   <programme start="20261017232000 +0100" stop="20261018000000 +0100" channel="elcinema.1168">
     <title lang="en">Al Saher</title>
   </programme>
@@ -1415,12 +1376,6 @@
   </programme>
   <programme start="20261018110000 +0100" stop="20261018114500 +0100" channel="elcinema.1168">
     <title lang="en">Al Ain Bil Ain</title>
-  </programme>
-  <programme start="20261018173000 +0100" stop="20261018183000 +0100" channel="elcinema.1168">
-    <title lang="en">Al Ain Bil Ain</title>
-  </programme>
-  <programme start="20261018183000 +0100" stop="20261018191500 +0100" channel="elcinema.1168">
-    <title lang="en">Noktit Hob</title>
   </programme>
   <programme start="20261018191500 +0100" stop="20261018200000 +0100" channel="elcinema.1168">
     <title lang="en">Ealaqat khasa</title>
@@ -1455,6 +1410,15 @@
   <programme start="20261019191500 +0100" stop="20261019200000 +0100" channel="elcinema.1168">
     <title lang="en">Ealaqat khasa</title>
   </programme>
+  <programme start="20261019232000 +0100" stop="20261020000000 +0100" channel="elcinema.1168">
+    <title lang="en">Al Saher</title>
+  </programme>
+  <programme start="20261020000000 +0100" stop="20261020010000 +0100" channel="elcinema.1168">
+    <title lang="en">Beirut 303</title>
+  </programme>
+  <programme start="20261020030000 +0100" stop="20261020043000 +0100" channel="elcinema.1168">
+    <title lang="en">Naharukum Saeid</title>
+  </programme>
   <programme start="20261020163000 +0100" stop="20261020173000 +0100" channel="elcinema.1168">
     <title lang="en">Beirut 303</title>
   </programme>
@@ -1472,9 +1436,6 @@
   </programme>
   <programme start="20261020213000 +0100" stop="20261020230000 +0100" channel="elcinema.1168">
     <title lang="en">Thwani</title>
-  </programme>
-  <programme start="20261017153000 +0100" stop="20261017163000 +0100" channel="elcinema.1169">
-    <title lang="en">Grapes of Love</title>
   </programme>
   <programme start="20261018000000 +0100" stop="20261018010000 +0100" channel="elcinema.1169">
     <title lang="en">Grapes of Love</title>
@@ -1508,12 +1469,6 @@
   </programme>
   <programme start="20261018153000 +0100" stop="20261018163000 +0100" channel="elcinema.1169">
     <title lang="en">Grapes of Love</title>
-  </programme>
-  <programme start="20261018163000 +0100" stop="20261018173000 +0100" channel="elcinema.1169">
-    <title lang="en">Rise of the Raven</title>
-  </programme>
-  <programme start="20261018173000 +0100" stop="20261018183000 +0100" channel="elcinema.1169">
-    <title lang="en">Farawla</title>
   </programme>
   <programme start="20261018233000 +0100" stop="20261019003000 +0100" channel="elcinema.1169">
     <title lang="en">Grapes of Love</title>
@@ -1563,6 +1518,18 @@
   <programme start="20261019213000 +0100" stop="20261019223000 +0100" channel="elcinema.1169">
     <title lang="en">Karma</title>
   </programme>
+  <programme start="20261019233000 +0100" stop="20261020003000 +0100" channel="elcinema.1169">
+    <title lang="en">Grapes of Love</title>
+  </programme>
+  <programme start="20261020003000 +0100" stop="20261020013000 +0100" channel="elcinema.1169">
+    <title lang="en">Mehmed: Sultan of Conquests S3</title>
+  </programme>
+  <programme start="20261020030000 +0100" stop="20261020040000 +0100" channel="elcinema.1169">
+    <title lang="en">Awlad Al-Rai</title>
+  </programme>
+  <programme start="20261020040000 +0100" stop="20261020050000 +0100" channel="elcinema.1169">
+    <title lang="en">Karma</title>
+  </programme>
   <programme start="20261020163000 +0100" stop="20261020173000 +0100" channel="elcinema.1169">
     <title lang="en">Karma</title>
   </programme>
@@ -1574,12 +1541,6 @@
   </programme>
   <programme start="20261020213000 +0100" stop="20261020223000 +0100" channel="elcinema.1169">
     <title lang="en">Karma</title>
-  </programme>
-  <programme start="20261017123000 +0100" stop="20261017133000 +0100" channel="elcinema.1173">
-    <title lang="en">Little Disasters</title>
-  </programme>
-  <programme start="20261017153000 +0100" stop="20261017173000 +0100" channel="elcinema.1173">
-    <title lang="en">Monte Carlo</title>
   </programme>
   <programme start="20261018003000 +0100" stop="20261018023000 +0100" channel="elcinema.1173">
     <title lang="en">The Transporter Refueled</title>
@@ -1602,17 +1563,8 @@
   <programme start="20261018143000 +0100" stop="20261018163000 +0100" channel="elcinema.1173">
     <title lang="en">Official Secrets</title>
   </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1173">
-    <title lang="en">Little Disasters</title>
-  </programme>
   <programme start="20261018210000 +0100" stop="20261018230000 +0100" channel="elcinema.1173">
     <title lang="en">10 Lives</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1174">
-    <title lang="en">Telt El Talata</title>
-  </programme>
-  <programme start="20261017152500 +0100" stop="20261017162900 +0100" channel="elcinema.1174">
-    <title lang="en">Zell</title>
   </programme>
   <programme start="20261017230000 +0100" stop="20261018000000 +0100" channel="elcinema.1174">
     <title lang="en">Zell</title>
@@ -1637,9 +1589,6 @@
   </programme>
   <programme start="20261018153000 +0100" stop="20261018163000 +0100" channel="elcinema.1174">
     <title lang="en">Zell</title>
-  </programme>
-  <programme start="20261018162900 +0100" stop="20261018173000 +0100" channel="elcinema.1174">
-    <title lang="en">Telt El Talata</title>
   </programme>
   <programme start="20261018230000 +0100" stop="20261019000000 +0100" channel="elcinema.1174">
     <title lang="en">Zell</title>
@@ -1674,12 +1623,6 @@
   <programme start="20261019203000 +0100" stop="20261019210000 +0100" channel="elcinema.1174">
     <title lang="en">Al Kamira Al Khafia</title>
   </programme>
-  <programme start="20261017120000 +0100" stop="20261017140000 +0100" channel="elcinema.1176">
-    <title lang="en">Al Maslaha</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017160000 +0100" channel="elcinema.1176">
-    <title lang="en">Ahlan Bel Hob</title>
-  </programme>
   <programme start="20261017220000 +0100" stop="20261018000000 +0100" channel="elcinema.1176">
     <title lang="en">Al ashqia</title>
   </programme>
@@ -1706,9 +1649,6 @@
   </programme>
   <programme start="20261018140000 +0100" stop="20261018160000 +0100" channel="elcinema.1176">
     <title lang="en">Aihtaras Easabat Alnisa</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018180000 +0100" channel="elcinema.1176">
-    <title lang="en">Al-Salakhana</title>
   </programme>
   <programme start="20261018180000 +0100" stop="20261018200000 +0100" channel="elcinema.1176">
     <title lang="en">A Planned Marriage</title>
@@ -1755,6 +1695,15 @@
   <programme start="20261019220000 +0100" stop="20261020000000 +0100" channel="elcinema.1176">
     <title lang="en">Ealaa hamish almadina</title>
   </programme>
+  <programme start="20261020000000 +0100" stop="20261020020000 +0100" channel="elcinema.1176">
+    <title lang="en">Safaah karmuz</title>
+  </programme>
+  <programme start="20261020020000 +0100" stop="20261020040000 +0100" channel="elcinema.1176">
+    <title lang="en">Shaeban hadhih al'ayaam</title>
+  </programme>
+  <programme start="20261020040000 +0100" stop="20261020060000 +0100" channel="elcinema.1176">
+    <title lang="en">Ayam Al Ghadab</title>
+  </programme>
   <programme start="20261020160000 +0100" stop="20261020180000 +0100" channel="elcinema.1176">
     <title lang="en">Shaeban hadhih al'ayaam</title>
   </programme>
@@ -1763,9 +1712,6 @@
   </programme>
   <programme start="20261020200000 +0100" stop="20261020220000 +0100" channel="elcinema.1176">
     <title lang="en">Rahmat min alsama'</title>
-  </programme>
-  <programme start="20261017133000 +0100" stop="20261017143000 +0100" channel="elcinema.1177">
-    <title lang="en">Aziz Al Rouh</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1177">
     <title lang="en">Aziz Al Rouh</title>
@@ -1791,17 +1737,11 @@
   <programme start="20261018143000 +0100" stop="20261018153000 +0100" channel="elcinema.1177">
     <title lang="en">Sabea Abwab</title>
   </programme>
-  <programme start="20261018163000 +0100" stop="20261018173000 +0100" channel="elcinema.1177">
-    <title lang="en">La Musiqaa Fi Al'ahmadi</title>
-  </programme>
   <programme start="20261018193000 +0100" stop="20261018203000 +0100" channel="elcinema.1177">
     <title lang="en">Hayah La Toshbihni</title>
   </programme>
   <programme start="20261018210000 +0100" stop="20261018220000 +0100" channel="elcinema.1177">
     <title lang="en">Hassan w Nour Al Sana</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017143500 +0100" channel="elcinema.1188">
-    <title lang="en">Al Qafer</title>
   </programme>
   <programme start="20261017224500 +0100" stop="20261017231500 +0100" channel="elcinema.1188">
     <title lang="en">Qalae Al Hajar</title>
@@ -1817,9 +1757,6 @@
   </programme>
   <programme start="20261018140000 +0100" stop="20261018143500 +0100" channel="elcinema.1188">
     <title lang="en">Al Qafer</title>
-  </programme>
-  <programme start="20261018174000 +0100" stop="20261018181500 +0100" channel="elcinema.1188">
-    <title lang="en">Shams El Aseel</title>
   </programme>
   <programme start="20261018224500 +0100" stop="20261018231500 +0100" channel="elcinema.1188">
     <title lang="en">Qalae Al Hajar</title>
@@ -1839,9 +1776,6 @@
   <programme start="20261019174000 +0100" stop="20261019181500 +0100" channel="elcinema.1188">
     <title lang="en">Shams El Aseel</title>
   </programme>
-  <programme start="20261017113000 +0100" stop="20261017130000 +0100" channel="elcinema.1193">
-    <title lang="en">Akhir Al Nahar</title>
-  </programme>
   <programme start="20261018040000 +0100" stop="20261018050000 +0100" channel="elcinema.1193">
     <title lang="en">Falling in Sabe' Well</title>
   </programme>
@@ -1855,12 +1789,6 @@
     <title lang="en">Al Souq Al Hurra</title>
   </programme>
   <programme start="20261018113000 +0100" stop="20261018130000 +0100" channel="elcinema.1193">
-    <title lang="en">Akhir Al Nahar</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1193">
-    <title lang="en">Al Souq Al Hurra</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018183000 +0100" channel="elcinema.1193">
     <title lang="en">Akhir Al Nahar</title>
   </programme>
   <programme start="20261019040000 +0100" stop="20261019050000 +0100" channel="elcinema.1193">
@@ -1887,6 +1815,9 @@
   <programme start="20261019180000 +0100" stop="20261019183000 +0100" channel="elcinema.1193">
     <title lang="en">Isaal Mae Doaa</title>
   </programme>
+  <programme start="20261020040000 +0100" stop="20261020050000 +0100" channel="elcinema.1193">
+    <title lang="en">Falling in Sabe' Well</title>
+  </programme>
   <programme start="20261020160000 +0100" stop="20261020170000 +0100" channel="elcinema.1193">
     <title lang="en">Al Souq Al Hurra</title>
   </programme>
@@ -1895,18 +1826,6 @@
   </programme>
   <programme start="20261020180000 +0100" stop="20261020183000 +0100" channel="elcinema.1193">
     <title lang="en">Isaal Mae Doaa</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1194">
-    <title lang="en">The Pit S4</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1194">
-    <title lang="en">Abo Malayeen</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1194">
-    <title lang="en">Lost in Someone's Love</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1194">
-    <title lang="en">Al Maddah 4: Ostorat Al Awda</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1194">
     <title lang="en">Lost in Someone's Love</title>
@@ -1961,15 +1880,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1194">
     <title lang="en">Al Maddah 4: Ostorat Al Awda</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1194">
-    <title lang="en">Bab Al-Hara 3</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1194">
-    <title lang="en">Three Kingdoms</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1194">
-    <title lang="en">Abo Malayeen</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1194">
     <title lang="en">The Pit S4</title>
@@ -2055,6 +1965,27 @@
   <programme start="20261019220000 +0100" stop="20261019230000 +0100" channel="elcinema.1194">
     <title lang="en">Lost in Someone's Love</title>
   </programme>
+  <programme start="20261019230000 +0100" stop="20261020000000 +0100" channel="elcinema.1194">
+    <title lang="en">Leabet Newton</title>
+  </programme>
+  <programme start="20261020000000 +0100" stop="20261020010000 +0100" channel="elcinema.1194">
+    <title lang="en">Majarih</title>
+  </programme>
+  <programme start="20261020010000 +0100" stop="20261020020000 +0100" channel="elcinema.1194">
+    <title lang="en">Bab Al-Hara 3</title>
+  </programme>
+  <programme start="20261020020000 +0100" stop="20261020030000 +0100" channel="elcinema.1194">
+    <title lang="en">Al Maddah 4: Ostorat Al Awda</title>
+  </programme>
+  <programme start="20261020030000 +0100" stop="20261020040000 +0100" channel="elcinema.1194">
+    <title lang="en">The Pit S4</title>
+  </programme>
+  <programme start="20261020040000 +0100" stop="20261020050000 +0100" channel="elcinema.1194">
+    <title lang="en">Leabet Newton</title>
+  </programme>
+  <programme start="20261020050000 +0100" stop="20261020060000 +0100" channel="elcinema.1194">
+    <title lang="en">Three Kingdoms</title>
+  </programme>
   <programme start="20261020160000 +0100" stop="20261020170000 +0100" channel="elcinema.1194">
     <title lang="en">Bab Al-Hara 3</title>
   </programme>
@@ -2072,9 +2003,6 @@
   </programme>
   <programme start="20261020210000 +0100" stop="20261020220000 +0100" channel="elcinema.1194">
     <title lang="en">Al Maddah 4: Ostorat Al Awda</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1198">
-    <title lang="en">Watar Hassas 2</title>
   </programme>
   <programme start="20261017230000 +0100" stop="20261018000000 +0100" channel="elcinema.1198">
     <title lang="en">Watar Hassas 2</title>
@@ -2103,17 +2031,68 @@
   <programme start="20261018130000 +0100" stop="20261018143000 +0100" channel="elcinema.1198">
     <title lang="en">'Amin washarakah</title>
   </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1198">
-    <title lang="en">Awlad Al-Rai</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1198">
+  <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1199">
     <title lang="en">Watar Hassas 2</title>
   </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1203">
-    <title lang="en">Mourad's House</title>
+  <programme start="20261017230000 +0100" stop="20261018000000 +0100" channel="elcinema.1199">
+    <title lang="en">Farah Laila</title>
   </programme>
-  <programme start="20261017130000 +0100" stop="20261017143000 +0100" channel="elcinema.1203">
-    <title lang="en">Kalima Akhera</title>
+  <programme start="20261018000000 +0100" stop="20261018010000 +0100" channel="elcinema.1199">
+    <title lang="en">One Block Behind</title>
+  </programme>
+  <programme start="20261018010000 +0100" stop="20261018020000 +0100" channel="elcinema.1199">
+    <title lang="en">Rijalat Al Bayt</title>
+  </programme>
+  <programme start="20261018020000 +0100" stop="20261018030000 +0100" channel="elcinema.1199">
+    <title lang="en">Talqet Haz</title>
+  </programme>
+  <programme start="20261018030000 +0100" stop="20261018040000 +0100" channel="elcinema.1199">
+    <title lang="en">Settohom</title>
+  </programme>
+  <programme start="20261018040000 +0100" stop="20261018050000 +0100" channel="elcinema.1199">
+    <title lang="en">Awlad Al-Rai</title>
+  </programme>
+  <programme start="20261018050000 +0100" stop="20261018060000 +0100" channel="elcinema.1199">
+    <title lang="en">Watar Hassas 2</title>
+  </programme>
+  <programme start="20261018060000 +0100" stop="20261018070000 +0100" channel="elcinema.1199">
+    <title lang="en">Farah Laila</title>
+  </programme>
+  <programme start="20261018070000 +0100" stop="20261018080000 +0100" channel="elcinema.1199">
+    <title lang="en">One Block Behind</title>
+  </programme>
+  <programme start="20261018080000 +0100" stop="20261018090000 +0100" channel="elcinema.1199">
+    <title lang="en">Rijalat Al Bayt</title>
+  </programme>
+  <programme start="20261018090000 +0100" stop="20261018100000 +0100" channel="elcinema.1199">
+    <title lang="en">Farah Laila</title>
+  </programme>
+  <programme start="20261018100000 +0100" stop="20261018110000 +0100" channel="elcinema.1199">
+    <title lang="en">One Block Behind</title>
+  </programme>
+  <programme start="20261018110000 +0100" stop="20261018120000 +0100" channel="elcinema.1199">
+    <title lang="en">Rijalat Al Bayt</title>
+  </programme>
+  <programme start="20261018120000 +0100" stop="20261018130000 +0100" channel="elcinema.1199">
+    <title lang="en">Talqet Haz</title>
+  </programme>
+  <programme start="20261018130000 +0100" stop="20261018140000 +0100" channel="elcinema.1199">
+    <title lang="en">Settohom</title>
+  </programme>
+  <programme start="20261018140000 +0100" stop="20261018150000 +0100" channel="elcinema.1199">
+    <title lang="en">Awlad Al-Rai</title>
+  </programme>
+  <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1199">
+    <title lang="en">Watar Hassas 2</title>
+  </programme>
+  <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1199">
+    <title lang="en">Farah Laila</title>
+  </programme>
+  <programme start="20261018200000 +0100" stop="20261018210000 +0100" channel="elcinema.1199">
+    <title lang="en">Settohom</title>
+  </programme>
+  <programme start="20261018210000 +0100" stop="20261018220000 +0100" channel="elcinema.1199">
+    <title lang="en">Awlad Al-Rai</title>
   </programme>
   <programme start="20261018013000 +0100" stop="20261018023000 +0100" channel="elcinema.1203">
     <title lang="en">Mourad's House</title>
@@ -2135,15 +2114,6 @@
   </programme>
   <programme start="20261018200000 +0100" stop="20261018220000 +0100" channel="elcinema.1203">
     <title lang="en">Fan Al Harb</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1204">
-    <title lang="en">Hojr Ebn-e Adi</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1204">
-    <title lang="en">Scream Noiselessly</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017160000 +0100" channel="elcinema.1204">
-    <title lang="en">A Golden Diet</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1204">
     <title lang="en">Char Khooneh</title>
@@ -2192,15 +2162,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1204">
     <title lang="en">Rain</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1204">
-    <title lang="en">Char Khooneh</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1204">
-    <title lang="en">Sound of Rain</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1204">
-    <title lang="en">Hojr Ebn-e Adi</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1204">
     <title lang="en">Scream Noiselessly</title>
@@ -2280,18 +2241,6 @@
   <programme start="20261019210000 +0100" stop="20261019220000 +0100" channel="elcinema.1204">
     <title lang="en">Rain</title>
   </programme>
-  <programme start="20261017124500 +0100" stop="20261017133500 +0100" channel="elcinema.1205">
-    <title lang="en">Omour Eayilia</title>
-  </programme>
-  <programme start="20261017133500 +0100" stop="20261017142000 +0100" channel="elcinema.1205">
-    <title lang="en">Omour Eayilia</title>
-  </programme>
-  <programme start="20261017142000 +0100" stop="20261017151500 +0100" channel="elcinema.1205">
-    <title lang="en">Omour Eayilia</title>
-  </programme>
-  <programme start="20261017151500 +0100" stop="20261017160000 +0100" channel="elcinema.1205">
-    <title lang="en">Majarih</title>
-  </programme>
   <programme start="20261017221500 +0100" stop="20261017231000 +0100" channel="elcinema.1205">
     <title lang="en">Aber Sabeel</title>
   </programme>
@@ -2360,21 +2309,6 @@
   </programme>
   <programme start="20261018155500 +0100" stop="20261018164500 +0100" channel="elcinema.1205">
     <title lang="en">Ela Al Talaq</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018163500 +0100" channel="elcinema.1205">
-    <title lang="en">Majarih</title>
-  </programme>
-  <programme start="20261018163500 +0100" stop="20261018172000 +0100" channel="elcinema.1205">
-    <title lang="en">Majarih</title>
-  </programme>
-  <programme start="20261018172000 +0100" stop="20261018181000 +0100" channel="elcinema.1205">
-    <title lang="en">Majarih</title>
-  </programme>
-  <programme start="20261018181000 +0100" stop="20261018190000 +0100" channel="elcinema.1205">
-    <title lang="en">Aber Sabeel</title>
-  </programme>
-  <programme start="20261018190000 +0100" stop="20261018195000 +0100" channel="elcinema.1205">
-    <title lang="en">Wa Baynaa Miead</title>
   </programme>
   <programme start="20261018195000 +0100" stop="20261018204000 +0100" channel="elcinema.1205">
     <title lang="en">Al Board</title>
@@ -2475,6 +2409,30 @@
   <programme start="20261019222000 +0100" stop="20261019231000 +0100" channel="elcinema.1205">
     <title lang="en">Aber Sabeel</title>
   </programme>
+  <programme start="20261019231000 +0100" stop="20261020000000 +0100" channel="elcinema.1205">
+    <title lang="en">Omour Eayilia</title>
+  </programme>
+  <programme start="20261020000000 +0100" stop="20261020004000 +0100" channel="elcinema.1205">
+    <title lang="en">Al Nisyan</title>
+  </programme>
+  <programme start="20261020004000 +0100" stop="20261020012500 +0100" channel="elcinema.1205">
+    <title lang="en">Wa Baynaa Miead</title>
+  </programme>
+  <programme start="20261020012500 +0100" stop="20261020023000 +0100" channel="elcinema.1205">
+    <title lang="en">Al Board</title>
+  </programme>
+  <programme start="20261020023000 +0100" stop="20261020031000 +0100" channel="elcinema.1205">
+    <title lang="en">Al-Kabir Awy 7</title>
+  </programme>
+  <programme start="20261020031000 +0100" stop="20261020035500 +0100" channel="elcinema.1205">
+    <title lang="en">Ela Al Talaq</title>
+  </programme>
+  <programme start="20261020035500 +0100" stop="20261020044500 +0100" channel="elcinema.1205">
+    <title lang="en">Aber Sabeel</title>
+  </programme>
+  <programme start="20261020044500 +0100" stop="20261020053500 +0100" channel="elcinema.1205">
+    <title lang="en">Omour Eayilia</title>
+  </programme>
   <programme start="20261020160000 +0100" stop="20261020164500 +0100" channel="elcinema.1205">
     <title lang="en">Ela Al Talaq</title>
   </programme>
@@ -2498,15 +2456,6 @@
   </programme>
   <programme start="20261020213000 +0100" stop="20261020222000 +0100" channel="elcinema.1205">
     <title lang="en">Ela Al Talaq</title>
-  </programme>
-  <programme start="20261017104500 +0100" stop="20261017130000 +0100" channel="elcinema.1211">
-    <title lang="en">Ready Player One</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017150500 +0100" channel="elcinema.1211">
-    <title lang="en">Body of Lies</title>
-  </programme>
-  <programme start="20261017150500 +0100" stop="20261017173500 +0100" channel="elcinema.1211">
-    <title lang="en">The Dark Knight</title>
   </programme>
   <programme start="20261018000000 +0100" stop="20261018022500 +0100" channel="elcinema.1211">
     <title lang="en">Tenet</title>
@@ -2571,15 +2520,6 @@
   <programme start="20261019204000 +0100" stop="20261019230000 +0100" channel="elcinema.1211">
     <title lang="en">Aquaman</title>
   </programme>
-  <programme start="20261017105500 +0100" stop="20261017130000 +0100" channel="elcinema.1213">
-    <title lang="en">Superman</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017151500 +0100" channel="elcinema.1213">
-    <title lang="en">Sinners</title>
-  </programme>
-  <programme start="20261017151500 +0100" stop="20261017171000 +0100" channel="elcinema.1213">
-    <title lang="en">Mother Mary</title>
-  </programme>
   <programme start="20261017230000 +0100" stop="20261018004500 +0100" channel="elcinema.1213">
     <title lang="en">Day of Reckoning</title>
   </programme>
@@ -2606,9 +2546,6 @@
   </programme>
   <programme start="20261018143000 +0100" stop="20261018164500 +0100" channel="elcinema.1213">
     <title lang="en">Sinners</title>
-  </programme>
-  <programme start="20261018171000 +0100" stop="20261018190500 +0100" channel="elcinema.1213">
-    <title lang="en">May December</title>
   </programme>
   <programme start="20261018190500 +0100" stop="20261018212000 +0100" channel="elcinema.1213">
     <title lang="en">Sinners</title>
@@ -2676,9 +2613,6 @@
   <programme start="20261019143000 +0100" stop="20261019153000 +0100" channel="elcinema.1216">
     <title lang="en">Mafroom Feeky</title>
   </programme>
-  <programme start="20261017123000 +0100" stop="20261017143000 +0100" channel="elcinema.1217">
-    <title lang="en">Si Omar</title>
-  </programme>
   <programme start="20261017220000 +0100" stop="20261018000000 +0100" channel="elcinema.1217">
     <title lang="en">Musagal Khatar</title>
   </programme>
@@ -2699,9 +2633,6 @@
   </programme>
   <programme start="20261018123000 +0100" stop="20261018143000 +0100" channel="elcinema.1217">
     <title lang="en">Hayati Inta</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018183000 +0100" channel="elcinema.1217">
-    <title lang="en">El Kitkat</title>
   </programme>
   <programme start="20261018200000 +0100" stop="20261018220000 +0100" channel="elcinema.1217">
     <title lang="en">Maa Al Zikrayat</title>
@@ -2736,23 +2667,17 @@
   <programme start="20261019220000 +0100" stop="20261020000000 +0100" channel="elcinema.1217">
     <title lang="en">Hayati Inta</title>
   </programme>
+  <programme start="20261020010000 +0100" stop="20261020030000 +0100" channel="elcinema.1217">
+    <title lang="en">Al-Afarit</title>
+  </programme>
+  <programme start="20261020030000 +0100" stop="20261020053000 +0100" channel="elcinema.1217">
+    <title lang="en">Thawrat almadina</title>
+  </programme>
   <programme start="20261020160000 +0100" stop="20261020183000 +0100" channel="elcinema.1217">
     <title lang="en">Thawrat almadina</title>
   </programme>
   <programme start="20261020200000 +0100" stop="20261020220000 +0100" channel="elcinema.1217">
     <title lang="en">El mady el maghool</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1223">
-    <title lang="en">Kalabsh 2</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1223">
-    <title lang="en">Abu Al-Aroussa 2</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1223">
-    <title lang="en">Falling in Sabe' Well</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1223">
-    <title lang="en">Al Souq Al Hurra</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1223">
     <title lang="en">Yawmiyat Zoga Mafrusa Awy 3</title>
@@ -2808,15 +2733,6 @@
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1223">
     <title lang="en">Al Souq Al Hurra</title>
   </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1223">
-    <title lang="en">Yawmiyat Zoga Mafrusa Awy 3</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1223">
-    <title lang="en">Hadf bahr</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1223">
-    <title lang="en">Hadf bahr</title>
-  </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1223">
     <title lang="en">Abu Al-Aroussa 2</title>
   </programme>
@@ -2825,9 +2741,6 @@
   </programme>
   <programme start="20261018210000 +0100" stop="20261018220000 +0100" channel="elcinema.1223">
     <title lang="en">Kalabsh 2</title>
-  </programme>
-  <programme start="20261017133000 +0100" stop="20261017153000 +0100" channel="elcinema.1226">
-    <title lang="en">Be 100 Ragel</title>
   </programme>
   <programme start="20261018000000 +0100" stop="20261018020000 +0100" channel="elcinema.1226">
     <title lang="en">Sabah Albalad</title>
@@ -2846,9 +2759,6 @@
   </programme>
   <programme start="20261018133000 +0100" stop="20261018153000 +0100" channel="elcinema.1226">
     <title lang="en">Be 100 Ragel</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1226">
-    <title lang="en">Rayya Wi Sekinnah</title>
   </programme>
   <programme start="20261019000000 +0100" stop="20261019020000 +0100" channel="elcinema.1226">
     <title lang="en">Sabah Albalad</title>
@@ -2871,20 +2781,14 @@
   <programme start="20261019170000 +0100" stop="20261019180000 +0100" channel="elcinema.1226">
     <title lang="en">Rayya Wi Sekinnah</title>
   </programme>
-  <programme start="20261020170000 +0100" stop="20261020180000 +0100" channel="elcinema.1226">
-    <title lang="en">Rayya Wi Sekinnah</title>
+  <programme start="20261020000000 +0100" stop="20261020020000 +0100" channel="elcinema.1226">
+    <title lang="en">Sabah Albalad</title>
   </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1227">
-    <title lang="en">Be 100 Ragel</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1227">
-    <title lang="en">Donya Tanya</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1227">
+  <programme start="20261020050000 +0100" stop="20261020060000 +0100" channel="elcinema.1226">
     <title lang="en">Qalae Al Hajar</title>
   </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1227">
-    <title lang="en">Al Ahed</title>
+  <programme start="20261020170000 +0100" stop="20261020180000 +0100" channel="elcinema.1226">
+    <title lang="en">Rayya Wi Sekinnah</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1227">
     <title lang="en">Rayya Wi Sekinnah</title>
@@ -2939,15 +2843,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1227">
     <title lang="en">Al Ahed</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1227">
-    <title lang="en">Rayya Wi Sekinnah</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1227">
-    <title lang="en">Wojooh</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1227">
-    <title lang="en">Be 100 Ragel</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1227">
     <title lang="en">Donya Tanya</title>
@@ -3030,15 +2925,6 @@
   <programme start="20261019210000 +0100" stop="20261019220000 +0100" channel="elcinema.1227">
     <title lang="en">Al Ahed</title>
   </programme>
-  <programme start="20261017110000 +0100" stop="20261017130500 +0100" channel="elcinema.1231">
-    <title lang="en">Sherlock Holmes: A Game of Shadows</title>
-  </programme>
-  <programme start="20261017130500 +0100" stop="20261017144000 +0100" channel="elcinema.1231">
-    <title lang="en">Starter for 10</title>
-  </programme>
-  <programme start="20261017144000 +0100" stop="20261017162000 +0100" channel="elcinema.1231">
-    <title lang="en">Switched</title>
-  </programme>
   <programme start="20261017233000 +0100" stop="20261018005000 +0100" channel="elcinema.1231">
     <title lang="en">Frequently Asked Questions About Time Travel</title>
   </programme>
@@ -3069,35 +2955,11 @@
   <programme start="20261018144000 +0100" stop="20261018163000 +0100" channel="elcinema.1231">
     <title lang="en">Beyond the Likes</title>
   </programme>
-  <programme start="20261018162000 +0100" stop="20261018180000 +0100" channel="elcinema.1231">
-    <title lang="en">Weapons of Mass Distraction</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018193500 +0100" channel="elcinema.1231">
-    <title lang="en">Loving Couples</title>
-  </programme>
   <programme start="20261018193500 +0100" stop="20261018213500 +0100" channel="elcinema.1231">
     <title lang="en">Dinner with Friends</title>
   </programme>
   <programme start="20261018213500 +0100" stop="20261018233000 +0100" channel="elcinema.1231">
     <title lang="en">For Richer or Poorer</title>
-  </programme>
-  <programme start="20261017120500 +0100" stop="20261017131500 +0100" channel="elcinema.1232">
-    <title lang="en">Matt Hatter Chronicles S2</title>
-  </programme>
-  <programme start="20261017131500 +0100" stop="20261017140000 +0100" channel="elcinema.1232">
-    <title lang="en">Team Hot Wheels: The Skills to Thrill</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017142000 +0100" channel="elcinema.1232">
-    <title lang="en">Lego Marvel Spider-Man: Vexed by Venom</title>
-  </programme>
-  <programme start="20261017142000 +0100" stop="20261017152000 +0100" channel="elcinema.1232">
-    <title lang="en">Charlie and Lola S2</title>
-  </programme>
-  <programme start="20261017152000 +0100" stop="20261017155000 +0100" channel="elcinema.1232">
-    <title lang="en">Lego Duplo Adventures</title>
-  </programme>
-  <programme start="20261017155000 +0100" stop="20261017161500 +0100" channel="elcinema.1232">
-    <title lang="en">Enchantimals: Tales from Everwilde</title>
   </programme>
   <programme start="20261017223500 +0100" stop="20261017234000 +0100" channel="elcinema.1232">
     <title lang="en">LEGO Friends S3</title>
@@ -3165,21 +3027,6 @@
   <programme start="20261018154000 +0100" stop="20261018160500 +0100" channel="elcinema.1232">
     <title lang="en">LEGO Friends S4</title>
   </programme>
-  <programme start="20261018161500 +0100" stop="20261018170000 +0100" channel="elcinema.1232">
-    <title lang="en">Enchantimals: Tales from Everwilde</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018174700 +0100" channel="elcinema.1232">
-    <title lang="en">Team Hot Wheels: The Skills to Thrill</title>
-  </programme>
-  <programme start="20261018174700 +0100" stop="20261018181000 +0100" channel="elcinema.1232">
-    <title lang="en">Lego Marvel Spider-Man: Vexed by Venom</title>
-  </programme>
-  <programme start="20261018181000 +0100" stop="20261018185000 +0100" channel="elcinema.1232">
-    <title lang="en">Tee and Mo</title>
-  </programme>
-  <programme start="20261018185000 +0100" stop="20261018195500 +0100" channel="elcinema.1232">
-    <title lang="en">LEGO Friends S3</title>
-  </programme>
   <programme start="20261018195500 +0100" stop="20261018200000 +0100" channel="elcinema.1232">
     <title lang="en">Adam Wa Mishmish</title>
   </programme>
@@ -3197,12 +3044,6 @@
   </programme>
   <programme start="20261018213500 +0100" stop="20261018223500 +0100" channel="elcinema.1232">
     <title lang="en">Get Well Soon Hospital</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017140000 +0100" channel="elcinema.1239">
-    <title lang="en">200 Geneh</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017163000 +0100" channel="elcinema.1239">
-    <title lang="en">Alhikaya mae Amr Adib</title>
   </programme>
   <programme start="20261017233000 +0100" stop="20261018000000 +0100" channel="elcinema.1239">
     <title lang="en">Broadcast Maa Hassan Assiri</title>
@@ -3228,35 +3069,8 @@
   <programme start="20261018100000 +0100" stop="20261018105600 +0100" channel="elcinema.1239">
     <title lang="en">Kalam Al Nas</title>
   </programme>
-  <programme start="20261018170000 +0100" stop="20261018173000 +0100" channel="elcinema.1239">
-    <title lang="en">Broadcast Maa Hassan Assiri</title>
-  </programme>
-  <programme start="20261018173000 +0100" stop="20261018192300 +0100" channel="elcinema.1239">
-    <title lang="en">200 Geneh</title>
-  </programme>
   <programme start="20261018192300 +0100" stop="20261018233000 +0100" channel="elcinema.1239">
     <title lang="en">Parineetii</title>
-  </programme>
-  <programme start="20261017123000 +0100" stop="20261017130000 +0100" channel="elcinema.1241">
-    <title lang="en">Yu-Gi-Oh! Sevens</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017133000 +0100" channel="elcinema.1241">
-    <title lang="en">Masha and the Bear</title>
-  </programme>
-  <programme start="20261017133000 +0100" stop="20261017140000 +0100" channel="elcinema.1241">
-    <title lang="en">Kamp Koral: SpongeBob's Under Years</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017143000 +0100" channel="elcinema.1241">
-    <title lang="en">Alvinnn!!! And the Chipmunks</title>
-  </programme>
-  <programme start="20261017143000 +0100" stop="20261017150000 +0100" channel="elcinema.1241">
-    <title lang="en">Maya the Bee</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017153000 +0100" channel="elcinema.1241">
-    <title lang="en">Jamie's Got Tentacles</title>
-  </programme>
-  <programme start="20261017153000 +0100" stop="20261017160000 +0100" channel="elcinema.1241">
-    <title lang="en">Yu-Gi-Oh! Sevens</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017223000 +0100" channel="elcinema.1241">
     <title lang="en">The Muscleteers</title>
@@ -3279,27 +3093,6 @@
   <programme start="20261018010000 +0100" stop="20261018013000 +0100" channel="elcinema.1241">
     <title lang="en">PAW Patrol</title>
   </programme>
-  <programme start="20261018160000 +0100" stop="20261018163000 +0100" channel="elcinema.1241">
-    <title lang="en">100% Wolf: Legend of the Moonstone</title>
-  </programme>
-  <programme start="20261018163000 +0100" stop="20261018170000 +0100" channel="elcinema.1241">
-    <title lang="en">Supertrons</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018173000 +0100" channel="elcinema.1241">
-    <title lang="en">The Muscleteers</title>
-  </programme>
-  <programme start="20261018173000 +0100" stop="20261018180000 +0100" channel="elcinema.1241">
-    <title lang="en">Atomic Puppet</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018183000 +0100" channel="elcinema.1241">
-    <title lang="en">Transformers: Earthspark</title>
-  </programme>
-  <programme start="20261018183000 +0100" stop="20261018190000 +0100" channel="elcinema.1241">
-    <title lang="en">Space Nova</title>
-  </programme>
-  <programme start="20261018190000 +0100" stop="20261018193000 +0100" channel="elcinema.1241">
-    <title lang="en">Masha and the Bear</title>
-  </programme>
   <programme start="20261018193000 +0100" stop="20261018200000 +0100" channel="elcinema.1241">
     <title lang="en">Bubble's Hotel</title>
   </programme>
@@ -3314,15 +3107,6 @@
   </programme>
   <programme start="20261018213000 +0100" stop="20261018220000 +0100" channel="elcinema.1241">
     <title lang="en">The Loud House</title>
-  </programme>
-  <programme start="20261017110000 +0100" stop="20261017130000 +0100" channel="elcinema.1242">
-    <title lang="en">Roll No. 21</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017150000 +0100" channel="elcinema.1242">
-    <title lang="en">The Powerpuff Girls</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1242">
-    <title lang="en">The Tom and Jerry Show S5</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1242">
     <title lang="en">Roll No. 21</title>
@@ -3378,15 +3162,6 @@
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1242">
     <title lang="en">The Tom and Jerry Show S5</title>
   </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1242">
-    <title lang="en">Ekans - Snakes Awake</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1242">
-    <title lang="en">Uncle Grandpa</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1242">
-    <title lang="en">Regular Show S1</title>
-  </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1242">
     <title lang="en">Adventure Time with Finn &amp; Jake</title>
   </programme>
@@ -3410,12 +3185,6 @@
   </programme>
   <programme start="20261018110000 +0100" stop="20261018114500 +0100" channel="elcinema.1246">
     <title lang="en">Al Ain Bil Ain</title>
-  </programme>
-  <programme start="20261018173000 +0100" stop="20261018183000 +0100" channel="elcinema.1246">
-    <title lang="en">Al Ain Bil Ain</title>
-  </programme>
-  <programme start="20261018183000 +0100" stop="20261018191500 +0100" channel="elcinema.1246">
-    <title lang="en">Noktit Hob</title>
   </programme>
   <programme start="20261018191500 +0100" stop="20261018200000 +0100" channel="elcinema.1246">
     <title lang="en">Ealaqat khasa</title>
@@ -3450,6 +3219,15 @@
   <programme start="20261019191500 +0100" stop="20261019200000 +0100" channel="elcinema.1246">
     <title lang="en">Ealaqat khasa</title>
   </programme>
+  <programme start="20261019232000 +0100" stop="20261020000000 +0100" channel="elcinema.1246">
+    <title lang="en">Al Saher</title>
+  </programme>
+  <programme start="20261020000000 +0100" stop="20261020010000 +0100" channel="elcinema.1246">
+    <title lang="en">Beirut 303</title>
+  </programme>
+  <programme start="20261020030000 +0100" stop="20261020043000 +0100" channel="elcinema.1246">
+    <title lang="en">Naharukum Saeid</title>
+  </programme>
   <programme start="20261020163000 +0100" stop="20261020173000 +0100" channel="elcinema.1246">
     <title lang="en">Beirut 303</title>
   </programme>
@@ -3467,15 +3245,6 @@
   </programme>
   <programme start="20261020213000 +0100" stop="20261020230000 +0100" channel="elcinema.1246">
     <title lang="en">Thwani</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1252">
-    <title lang="en">Zell</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1252">
-    <title lang="en">Telt El Talata</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017170000 +0100" channel="elcinema.1252">
-    <title lang="en">Al Nas Al Hulwa</title>
   </programme>
   <programme start="20261018010000 +0100" stop="20261018030000 +0100" channel="elcinema.1252">
     <title lang="en">Al Nas Al Hulwa</title>
@@ -3548,30 +3317,6 @@
   </programme>
   <programme start="20261019210000 +0100" stop="20261019220000 +0100" channel="elcinema.1252">
     <title lang="en">Telt El Talata</title>
-  </programme>
-  <programme start="20261017125600 +0100" stop="20261017132100 +0100" channel="elcinema.1257">
-    <title lang="en">Friends</title>
-  </programme>
-  <programme start="20261017132100 +0100" stop="20261017134400 +0100" channel="elcinema.1257">
-    <title lang="en">Friends</title>
-  </programme>
-  <programme start="20261017134400 +0100" stop="20261017140700 +0100" channel="elcinema.1257">
-    <title lang="en">Friends</title>
-  </programme>
-  <programme start="20261017140700 +0100" stop="20261017143000 +0100" channel="elcinema.1257">
-    <title lang="en">Friends</title>
-  </programme>
-  <programme start="20261017143000 +0100" stop="20261017145700 +0100" channel="elcinema.1257">
-    <title lang="en">The Big Bang Theory S7</title>
-  </programme>
-  <programme start="20261017145700 +0100" stop="20261017151800 +0100" channel="elcinema.1257">
-    <title lang="en">The Big Bang Theory S7</title>
-  </programme>
-  <programme start="20261017151800 +0100" stop="20261017154200 +0100" channel="elcinema.1257">
-    <title lang="en">The Big Bang Theory S7</title>
-  </programme>
-  <programme start="20261017154200 +0100" stop="20261017160300 +0100" channel="elcinema.1257">
-    <title lang="en">The Big Bang Theory S7</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017222500 +0100" channel="elcinema.1257">
     <title lang="en">Friends</title>
@@ -3694,33 +3439,6 @@
     <title lang="en">Eastbound &amp; Down S3</title>
   </programme>
   <programme start="20261018152500 +0100" stop="20261018160000 +0100" channel="elcinema.1257">
-    <title lang="en">Curb Your Enthusiasm S6</title>
-  </programme>
-  <programme start="20261018160300 +0100" stop="20261018162000 +0100" channel="elcinema.1257">
-    <title lang="en">The Big Bang Theory S7</title>
-  </programme>
-  <programme start="20261018162000 +0100" stop="20261018164400 +0100" channel="elcinema.1257">
-    <title lang="en">The Big Bang Theory S7</title>
-  </programme>
-  <programme start="20261018164400 +0100" stop="20261018170600 +0100" channel="elcinema.1257">
-    <title lang="en">St. Denis Medical</title>
-  </programme>
-  <programme start="20261018170600 +0100" stop="20261018173000 +0100" channel="elcinema.1257">
-    <title lang="en">St. Denis Medical</title>
-  </programme>
-  <programme start="20261018173000 +0100" stop="20261018175300 +0100" channel="elcinema.1257">
-    <title lang="en">St. Denis Medical</title>
-  </programme>
-  <programme start="20261018175300 +0100" stop="20261018181500 +0100" channel="elcinema.1257">
-    <title lang="en">St. Denis Medical</title>
-  </programme>
-  <programme start="20261018181500 +0100" stop="20261018183800 +0100" channel="elcinema.1257">
-    <title lang="en">St. Denis Medical</title>
-  </programme>
-  <programme start="20261018183800 +0100" stop="20261018190000 +0100" channel="elcinema.1257">
-    <title lang="en">St. Denis Medical</title>
-  </programme>
-  <programme start="20261018190000 +0100" stop="20261018193000 +0100" channel="elcinema.1257">
     <title lang="en">Curb Your Enthusiasm S6</title>
   </programme>
   <programme start="20261018193000 +0100" stop="20261018200000 +0100" channel="elcinema.1257">
@@ -3912,6 +3630,54 @@
   <programme start="20261019222500 +0100" stop="20261019224500 +0100" channel="elcinema.1257">
     <title lang="en">St. Denis Medical</title>
   </programme>
+  <programme start="20261019224500 +0100" stop="20261019230500 +0100" channel="elcinema.1257">
+    <title lang="en">St. Denis Medical</title>
+  </programme>
+  <programme start="20261019230500 +0100" stop="20261019233000 +0100" channel="elcinema.1257">
+    <title lang="en">Everyone Else Burns</title>
+  </programme>
+  <programme start="20261019233000 +0100" stop="20261019235500 +0100" channel="elcinema.1257">
+    <title lang="en">Everyone Else Burns</title>
+  </programme>
+  <programme start="20261019235500 +0100" stop="20261020002500 +0100" channel="elcinema.1257">
+    <title lang="en">Curb Your Enthusiasm S6</title>
+  </programme>
+  <programme start="20261020002500 +0100" stop="20261020005500 +0100" channel="elcinema.1257">
+    <title lang="en">Curb Your Enthusiasm S6</title>
+  </programme>
+  <programme start="20261020005500 +0100" stop="20261020013000 +0100" channel="elcinema.1257">
+    <title lang="en">Veep S6</title>
+  </programme>
+  <programme start="20261020013000 +0100" stop="20261020014500 +0100" channel="elcinema.1257">
+    <title lang="en">The Middle S2</title>
+  </programme>
+  <programme start="20261020014500 +0100" stop="20261020020500 +0100" channel="elcinema.1257">
+    <title lang="en">The Middle S2</title>
+  </programme>
+  <programme start="20261020020500 +0100" stop="20261020022500 +0100" channel="elcinema.1257">
+    <title lang="en">Friends</title>
+  </programme>
+  <programme start="20261020022500 +0100" stop="20261020025000 +0100" channel="elcinema.1257">
+    <title lang="en">Friends</title>
+  </programme>
+  <programme start="20261020025000 +0100" stop="20261020032000 +0100" channel="elcinema.1257">
+    <title lang="en">Friends</title>
+  </programme>
+  <programme start="20261020032000 +0100" stop="20261020034500 +0100" channel="elcinema.1257">
+    <title lang="en">St. Denis Medical</title>
+  </programme>
+  <programme start="20261020034500 +0100" stop="20261020040000 +0100" channel="elcinema.1257">
+    <title lang="en">St. Denis Medical</title>
+  </programme>
+  <programme start="20261020040000 +0100" stop="20261020043000 +0100" channel="elcinema.1257">
+    <title lang="en">Everyone Else Burns</title>
+  </programme>
+  <programme start="20261020043000 +0100" stop="20261020045000 +0100" channel="elcinema.1257">
+    <title lang="en">Everyone Else Burns</title>
+  </programme>
+  <programme start="20261020045000 +0100" stop="20261020053000 +0100" channel="elcinema.1257">
+    <title lang="en">Curb Your Enthusiasm S6</title>
+  </programme>
   <programme start="20261020160000 +0100" stop="20261020163000 +0100" channel="elcinema.1257">
     <title lang="en">Veep S6</title>
   </programme>
@@ -3954,12 +3720,6 @@
   <programme start="20261020214000 +0100" stop="20261020220500 +0100" channel="elcinema.1257">
     <title lang="en">Friends</title>
   </programme>
-  <programme start="20261017113000 +0100" stop="20261017140000 +0100" channel="elcinema.1259">
-    <title lang="en">Baaghi 2</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017163000 +0100" channel="elcinema.1259">
-    <title lang="en">Sukhee</title>
-  </programme>
   <programme start="20261018003000 +0100" stop="20261018020000 +0100" channel="elcinema.1259">
     <title lang="en">Parineetii</title>
   </programme>
@@ -3995,9 +3755,6 @@
   </programme>
   <programme start="20261018140000 +0100" stop="20261018162000 +0100" channel="elcinema.1259">
     <title lang="en">Satyameva Jayate</title>
-  </programme>
-  <programme start="20261018163000 +0100" stop="20261018190000 +0100" channel="elcinema.1259">
-    <title lang="en">Article 15</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261019003000 +0100" channel="elcinema.1259">
     <title lang="en">Bas Tera Saath Ho</title>
@@ -4059,6 +3816,21 @@
   <programme start="20261019221500 +0100" stop="20261020010500 +0100" channel="elcinema.1259">
     <title lang="en">Maidaan</title>
   </programme>
+  <programme start="20261020010500 +0100" stop="20261020023500 +0100" channel="elcinema.1259">
+    <title lang="en">Parineetii</title>
+  </programme>
+  <programme start="20261020023500 +0100" stop="20261020032500 +0100" channel="elcinema.1259">
+    <title lang="en">Mannat: Harr Khushi Paane Ki</title>
+  </programme>
+  <programme start="20261020032500 +0100" stop="20261020040500 +0100" channel="elcinema.1259">
+    <title lang="en">Bas Tera Saath Ho</title>
+  </programme>
+  <programme start="20261020040500 +0100" stop="20261020045000 +0100" channel="elcinema.1259">
+    <title lang="en">جاناك</title>
+  </programme>
+  <programme start="20261020045000 +0100" stop="20261020054500 +0100" channel="elcinema.1259">
+    <title lang="en">Yeh Rishta Kya Kehlata Hai</title>
+  </programme>
   <programme start="20261020173300 +0100" stop="20261020181500 +0100" channel="elcinema.1259">
     <title lang="en">Parineetii</title>
   </programme>
@@ -4070,18 +3842,6 @@
   </programme>
   <programme start="20261020194500 +0100" stop="20261020221500 +0100" channel="elcinema.1259">
     <title lang="en">Once Upon a Time in Mumbaai Dobara</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1261">
-    <title lang="en">Kyunki... Saas Maa Bahu Beti Hoti Hai</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1261">
-    <title lang="en">Ali Klay</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1261">
-    <title lang="en">Jamai No. 1</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1261">
-    <title lang="en">Kundali Bhagya</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1261">
     <title lang="en">Kundali Bhagya</title>
@@ -4136,15 +3896,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1261">
     <title lang="en">Kundali Bhagya</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1261">
-    <title lang="en">The Stickman</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1261">
-    <title lang="en">The Trusted</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1261">
-    <title lang="en">Lakshmi's Lucky Destiny</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1261">
     <title lang="en">Kyunki... Saas Maa Bahu Beti Hoti Hai</title>
@@ -4227,18 +3978,6 @@
   <programme start="20261019210000 +0100" stop="20261019220000 +0100" channel="elcinema.1261">
     <title lang="en">Jamai No. 1</title>
   </programme>
-  <programme start="20261017123000 +0100" stop="20261017133000 +0100" channel="elcinema.1264">
-    <title lang="en">Zemen el Barghout</title>
-  </programme>
-  <programme start="20261017133000 +0100" stop="20261017140000 +0100" channel="elcinema.1264">
-    <title lang="en">Crazy Taxi</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1264">
-    <title lang="en">Drama Queen</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1264">
-    <title lang="en">Ras Al Afaa</title>
-  </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1264">
     <title lang="en">Sumum Al Qayz</title>
   </programme>
@@ -4277,15 +4016,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1264">
     <title lang="en">Ras Al Afaa</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1264">
-    <title lang="en">Darsh</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1264">
-    <title lang="en">Sumum Al Qayz</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1264">
-    <title lang="en">Al Yateem</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1264">
     <title lang="en">Drama Queen</title>
@@ -4356,6 +4086,21 @@
   <programme start="20261019220000 +0100" stop="20261019230000 +0100" channel="elcinema.1264">
     <title lang="en">Sumum Al Qayz</title>
   </programme>
+  <programme start="20261019230000 +0100" stop="20261020000000 +0100" channel="elcinema.1264">
+    <title lang="en">Al Yateem</title>
+  </programme>
+  <programme start="20261020010000 +0100" stop="20261020020000 +0100" channel="elcinema.1264">
+    <title lang="en">Ras Al Afaa</title>
+  </programme>
+  <programme start="20261020020000 +0100" stop="20261020030000 +0100" channel="elcinema.1264">
+    <title lang="en">Adalat Al Sahara</title>
+  </programme>
+  <programme start="20261020040000 +0100" stop="20261020050000 +0100" channel="elcinema.1264">
+    <title lang="en">Drama Queen</title>
+  </programme>
+  <programme start="20261020050000 +0100" stop="20261020060000 +0100" channel="elcinema.1264">
+    <title lang="en">Al Yateem</title>
+  </programme>
   <programme start="20261020160000 +0100" stop="20261020170000 +0100" channel="elcinema.1264">
     <title lang="en">Darsh</title>
   </programme>
@@ -4374,11 +4119,83 @@
   <programme start="20261020210000 +0100" stop="20261020220000 +0100" channel="elcinema.1264">
     <title lang="en">Darsh</title>
   </programme>
-  <programme start="20261017111500 +0100" stop="20261017141500 +0100" channel="elcinema.1278">
-    <title lang="en">Qasr El Nil</title>
+  <programme start="20261017230000 +0100" stop="20261018000000 +0100" channel="elcinema.1269">
+    <title lang="en">Sabah Al Sharqiya</title>
   </programme>
-  <programme start="20261017141500 +0100" stop="20261017150000 +0100" channel="elcinema.1278">
-    <title lang="en">Wanesny</title>
+  <programme start="20261018010000 +0100" stop="20261018020000 +0100" channel="elcinema.1269">
+    <title lang="en">Al Qeddeesa</title>
+  </programme>
+  <programme start="20261018020000 +0100" stop="20261018030000 +0100" channel="elcinema.1269">
+    <title lang="en">El Kandoush</title>
+  </programme>
+  <programme start="20261018030000 +0100" stop="20261018043000 +0100" channel="elcinema.1269">
+    <title lang="en">Sabah Al Sharqiya</title>
+  </programme>
+  <programme start="20261018043000 +0100" stop="20261018051500 +0100" channel="elcinema.1269">
+    <title lang="en">Muhtawa Khabit</title>
+  </programme>
+  <programme start="20261018071500 +0100" stop="20261018080000 +0100" channel="elcinema.1269">
+    <title lang="en">El Kandoush</title>
+  </programme>
+  <programme start="20261018081500 +0100" stop="20261018084500 +0100" channel="elcinema.1269">
+    <title lang="en">Muhtawa Khabit</title>
+  </programme>
+  <programme start="20261018090000 +0100" stop="20261018100000 +0100" channel="elcinema.1269">
+    <title lang="en">Al Qeddeesa</title>
+  </programme>
+  <programme start="20261018111500 +0100" stop="20261018121000 +0100" channel="elcinema.1269">
+    <title lang="en">Badal Talef</title>
+  </programme>
+  <programme start="20261018121000 +0100" stop="20261018130000 +0100" channel="elcinema.1269">
+    <title lang="en">Al Qeddeesa</title>
+  </programme>
+  <programme start="20261018193000 +0100" stop="20261018200000 +0100" channel="elcinema.1269">
+    <title lang="en">El Kandoush</title>
+  </programme>
+  <programme start="20261018230000 +0100" stop="20261019000000 +0100" channel="elcinema.1269">
+    <title lang="en">Sabah Al Sharqiya</title>
+  </programme>
+  <programme start="20261019010000 +0100" stop="20261019020000 +0100" channel="elcinema.1269">
+    <title lang="en">Al Qeddeesa</title>
+  </programme>
+  <programme start="20261019020000 +0100" stop="20261019030000 +0100" channel="elcinema.1269">
+    <title lang="en">El Kandoush</title>
+  </programme>
+  <programme start="20261019030000 +0100" stop="20261019043000 +0100" channel="elcinema.1269">
+    <title lang="en">Sabah Al Sharqiya</title>
+  </programme>
+  <programme start="20261019043000 +0100" stop="20261019051500 +0100" channel="elcinema.1269">
+    <title lang="en">Muhtawa Khabit</title>
+  </programme>
+  <programme start="20261019051500 +0100" stop="20261019054500 +0100" channel="elcinema.1269">
+    <title lang="en">Ahl El Madina</title>
+  </programme>
+  <programme start="20261019071500 +0100" stop="20261019080000 +0100" channel="elcinema.1269">
+    <title lang="en">El Kandoush</title>
+  </programme>
+  <programme start="20261019081500 +0100" stop="20261019084500 +0100" channel="elcinema.1269">
+    <title lang="en">Muhtawa Khabit</title>
+  </programme>
+  <programme start="20261019090000 +0100" stop="20261019100000 +0100" channel="elcinema.1269">
+    <title lang="en">Al Qeddeesa</title>
+  </programme>
+  <programme start="20261019111500 +0100" stop="20261019120000 +0100" channel="elcinema.1269">
+    <title lang="en">Badal Talef</title>
+  </programme>
+  <programme start="20261019120000 +0100" stop="20261019130000 +0100" channel="elcinema.1269">
+    <title lang="en">Al Qeddeesa</title>
+  </programme>
+  <programme start="20261019160000 +0100" stop="20261019170000 +0100" channel="elcinema.1269">
+    <title lang="en">Sabah Al Sharqiya</title>
+  </programme>
+  <programme start="20261019170000 +0100" stop="20261019173000 +0100" channel="elcinema.1269">
+    <title lang="en">Muhtawa Khabit</title>
+  </programme>
+  <programme start="20261019180000 +0100" stop="20261019193000 +0100" channel="elcinema.1269">
+    <title lang="en">Al Qeddeesa</title>
+  </programme>
+  <programme start="20261019193000 +0100" stop="20261019200000 +0100" channel="elcinema.1269">
+    <title lang="en">El Kandoush</title>
   </programme>
   <programme start="20261017224000 +0100" stop="20261018010000 +0100" channel="elcinema.1278">
     <title lang="en">Wanesny</title>
@@ -4407,9 +4224,6 @@
   <programme start="20261018100000 +0100" stop="20261018110000 +0100" channel="elcinema.1278">
     <title lang="en">Bade Achhe Lagte Hain 4</title>
   </programme>
-  <programme start="20261018163000 +0100" stop="20261018171000 +0100" channel="elcinema.1278">
-    <title lang="en">Bade Achhe Lagte Hain 4</title>
-  </programme>
   <programme start="20261018171000 +0100" stop="20261018203500 +0100" channel="elcinema.1278">
     <title lang="en">Al Thaman</title>
   </programme>
@@ -4425,8 +4239,8 @@
   <programme start="20261019030000 +0100" stop="20261019040000 +0100" channel="elcinema.1279">
     <title lang="en">Sabah Albalad</title>
   </programme>
-  <programme start="20261017120000 +0100" stop="20261017133000 +0100" channel="elcinema.1280">
-    <title lang="en">Bel Waraqa wel Qalam</title>
+  <programme start="20261020020000 +0100" stop="20261020040000 +0100" channel="elcinema.1279">
+    <title lang="en">Sabah Albalad</title>
   </programme>
   <programme start="20261018023000 +0100" stop="20261018040000 +0100" channel="elcinema.1280">
     <title lang="en">Bel Waraqa wel Qalam</title>
@@ -4439,9 +4253,6 @@
   </programme>
   <programme start="20261018120000 +0100" stop="20261018133000 +0100" channel="elcinema.1280">
     <title lang="en">Bel Waraqa wel Qalam</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1280">
-    <title lang="en">Welad Nas</title>
   </programme>
   <programme start="20261019023000 +0100" stop="20261019040000 +0100" channel="elcinema.1280">
     <title lang="en">Bel Waraqa wel Qalam</title>
@@ -4464,14 +4275,17 @@
   <programme start="20261019190000 +0100" stop="20261019200000 +0100" channel="elcinema.1280">
     <title lang="en">Rayya Wi Sekinnah</title>
   </programme>
+  <programme start="20261020023000 +0100" stop="20261020040000 +0100" channel="elcinema.1280">
+    <title lang="en">Bel Waraqa wel Qalam</title>
+  </programme>
+  <programme start="20261020041000 +0100" stop="20261020050000 +0100" channel="elcinema.1280">
+    <title lang="en">Rayya Wi Sekinnah</title>
+  </programme>
   <programme start="20261020160000 +0100" stop="20261020170000 +0100" channel="elcinema.1280">
     <title lang="en">Welad Nas</title>
   </programme>
   <programme start="20261020190000 +0100" stop="20261020200000 +0100" channel="elcinema.1280">
     <title lang="en">Rayya Wi Sekinnah</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1283">
-    <title lang="en">Aljawarih</title>
   </programme>
   <programme start="20261018040000 +0100" stop="20261018050000 +0100" channel="elcinema.1283">
     <title lang="en">Seen Jeem</title>
@@ -4490,21 +4304,6 @@
   </programme>
   <programme start="20261018123000 +0100" stop="20261018130000 +0100" channel="elcinema.1283">
     <title lang="en">Seen Jeem</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1283">
-    <title lang="en">Hazawi Al Daar</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1283">
-    <title lang="en">Layaly Al-Helmiya 5</title>
-  </programme>
-  <programme start="20261017110500 +0100" stop="20261017131000 +0100" channel="elcinema.1285">
-    <title lang="en">El Ens W El Nems</title>
-  </programme>
-  <programme start="20261017131000 +0100" stop="20261017151500 +0100" channel="elcinema.1285">
-    <title lang="en">Hawjen</title>
-  </programme>
-  <programme start="20261017151500 +0100" stop="20261017165000 +0100" channel="elcinema.1285">
-    <title lang="en">Ya Boadoh</title>
   </programme>
   <programme start="20261017220500 +0100" stop="20261017234000 +0100" channel="elcinema.1285">
     <title lang="en">Yom W Leila</title>
@@ -4541,9 +4340,6 @@
   </programme>
   <programme start="20261018152000 +0100" stop="20261018164000 +0100" channel="elcinema.1285">
     <title lang="en">What's My Name: Muhammad Ali</title>
-  </programme>
-  <programme start="20261018165000 +0100" stop="20261018182500 +0100" channel="elcinema.1285">
-    <title lang="en">Hazr Tagaoul</title>
   </programme>
   <programme start="20261018182500 +0100" stop="20261018200500 +0100" channel="elcinema.1285">
     <title lang="en">Wa Hala La Wein</title>
@@ -4596,6 +4392,24 @@
   <programme start="20261019213500 +0100" stop="20261019232000 +0100" channel="elcinema.1285">
     <title lang="en">Maaly Mama</title>
   </programme>
+  <programme start="20261019231000 +0100" stop="20261020004500 +0100" channel="elcinema.1285">
+    <title lang="en">Hazr Tagaoul</title>
+  </programme>
+  <programme start="20261020004500 +0100" stop="20261020010500 +0100" channel="elcinema.1285">
+    <title lang="en">Qest Shorty</title>
+  </programme>
+  <programme start="20261020010500 +0100" stop="20261020020500 +0100" channel="elcinema.1285">
+    <title lang="en">I Love You, Now Die</title>
+  </programme>
+  <programme start="20261020020500 +0100" stop="20261020032500 +0100" channel="elcinema.1285">
+    <title lang="en">I Love You, Now Die</title>
+  </programme>
+  <programme start="20261020032500 +0100" stop="20261020044500 +0100" channel="elcinema.1285">
+    <title lang="en">What's My Name: Muhammad Ali</title>
+  </programme>
+  <programme start="20261020044500 +0100" stop="20261020060500 +0100" channel="elcinema.1285">
+    <title lang="en">What's My Name: Muhammad Ali</title>
+  </programme>
   <programme start="20261020161000 +0100" stop="20261020180500 +0100" channel="elcinema.1285">
     <title lang="en">The Inventor: Out for Blood in Silicon Valley</title>
   </programme>
@@ -4607,12 +4421,6 @@
   </programme>
   <programme start="20261020213500 +0100" stop="20261020231000 +0100" channel="elcinema.1285">
     <title lang="en">Ya Boadoh</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017140000 +0100" channel="elcinema.1289">
-    <title lang="en">Shantet Hamza</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017160000 +0100" channel="elcinema.1289">
-    <title lang="en">El-Hareth</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261018000000 +0100" channel="elcinema.1289">
     <title lang="en">Mohema Mesh Mohema</title>
@@ -4640,9 +4448,6 @@
   </programme>
   <programme start="20261018140000 +0100" stop="20261018160000 +0100" channel="elcinema.1289">
     <title lang="en">Ammar</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018180000 +0100" channel="elcinema.1289">
-    <title lang="en">Muhtaram Iila Rubue</title>
   </programme>
   <programme start="20261018180000 +0100" stop="20261018200000 +0100" channel="elcinema.1289">
     <title lang="en">El-Darb El-Ahmar</title>
@@ -4692,6 +4497,18 @@
   <programme start="20261019220000 +0100" stop="20261020000000 +0100" channel="elcinema.1289">
     <title lang="en">Ammar</title>
   </programme>
+  <programme start="20261020000000 +0100" stop="20261020020000 +0100" channel="elcinema.1289">
+    <title lang="en">Banat Sanawy</title>
+  </programme>
+  <programme start="20261020020000 +0100" stop="20261020033000 +0100" channel="elcinema.1289">
+    <title lang="en">Syd aleatifi</title>
+  </programme>
+  <programme start="20261020033000 +0100" stop="20261020050000 +0100" channel="elcinema.1289">
+    <title lang="en">Al-Insan Yaaish Mara Waheda</title>
+  </programme>
+  <programme start="20261020050000 +0100" stop="20261020060000 +0100" channel="elcinema.1289">
+    <title lang="en">Arab Wood</title>
+  </programme>
   <programme start="20261020160000 +0100" stop="20261020180000 +0100" channel="elcinema.1289">
     <title lang="en">Farhaan Melaazem Adam</title>
   </programme>
@@ -4700,12 +4517,6 @@
   </programme>
   <programme start="20261020200000 +0100" stop="20261020220000 +0100" channel="elcinema.1289">
     <title lang="en">Elly Baly Balak</title>
-  </programme>
-  <programme start="20261017111500 +0100" stop="20261017130000 +0100" channel="elcinema.1290">
-    <title lang="en">Qesmat El Adl</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1290">
-    <title lang="en">Hikayat Latifa</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1290">
     <title lang="en">Laealahum Yafqahun</title>
@@ -4733,24 +4544,6 @@
   </programme>
   <programme start="20261018140000 +0100" stop="20261018163000 +0100" channel="elcinema.1290">
     <title lang="en">Sahbet Al Saada</title>
-  </programme>
-  <programme start="20261018163000 +0100" stop="20261018180000 +0100" channel="elcinema.1290">
-    <title lang="en">Bedon Sabeq Enthar</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018193000 +0100" channel="elcinema.1290">
-    <title lang="en">Qesmat El Adl</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1292">
-    <title lang="en">Fi Betna Robot</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1292">
-    <title lang="en">Qaed A'aely</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1292">
-    <title lang="en">Bedon Sabeq Enthar</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017170000 +0100" channel="elcinema.1292">
-    <title lang="en">Qesmat El Adl</title>
   </programme>
   <programme start="20261017230000 +0100" stop="20261018000000 +0100" channel="elcinema.1292">
     <title lang="en">Yatarabaa Fi Ezzou</title>
@@ -4800,12 +4593,6 @@
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1292">
     <title lang="en">Qesmat El Adl</title>
   </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1292">
-    <title lang="en">Al Aaedoun</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1292">
-    <title lang="en">Al-Bakheel w Ana</title>
-  </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1292">
     <title lang="en">Fi Betna Robot</title>
   </programme>
@@ -4823,9 +4610,6 @@
   </programme>
   <programme start="20261018100000 +0100" stop="20261018114500 +0100" channel="elcinema.1296">
     <title lang="en">بهو الست لميا</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1297">
-    <title lang="en">Esaal Rouhak</title>
   </programme>
   <programme start="20261017230000 +0100" stop="20261018000000 +0100" channel="elcinema.1297">
     <title lang="en">Elet Al Malek</title>
@@ -4865,12 +4649,6 @@
   </programme>
   <programme start="20261018140000 +0100" stop="20261018150000 +0100" channel="elcinema.1297">
     <title lang="en">Esaal Rouhak</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1297">
-    <title lang="en">Orchidia</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1297">
-    <title lang="en">Al Souq Al Hurra</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1297">
     <title lang="en">Wolid Li Yamout</title>
@@ -4941,15 +4719,6 @@
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1298">
     <title lang="en">Hadith almaraya (maraya 2002)</title>
   </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1298">
-    <title lang="en">Hadith almaraya (maraya 2002)</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1298">
-    <title lang="en">Hadith almaraya (maraya 2002)</title>
-  </programme>
-  <programme start="20261017123000 +0100" stop="20261017133000 +0100" channel="elcinema.1299">
-    <title lang="en">Nabd Al Balad</title>
-  </programme>
   <programme start="20261018000000 +0100" stop="20261018030000 +0100" channel="elcinema.1299">
     <title lang="en">Donya Ya Donya</title>
   </programme>
@@ -4982,9 +4751,6 @@
   </programme>
   <programme start="20261018153000 +0100" stop="20261018163000 +0100" channel="elcinema.1299">
     <title lang="en">Hakim Basha</title>
-  </programme>
-  <programme start="20261018163000 +0100" stop="20261018173000 +0100" channel="elcinema.1299">
-    <title lang="en">Nabd Al Balad</title>
   </programme>
   <programme start="20261018173000 +0100" stop="20261018203000 +0100" channel="elcinema.1299">
     <title lang="en">Donya Ya Donya</title>
@@ -5033,6 +4799,15 @@
   </programme>
   <programme start="20261019203000 +0100" stop="20261019220000 +0100" channel="elcinema.1299">
     <title lang="en">Matbakh Roya</title>
+  </programme>
+  <programme start="20261020000000 +0100" stop="20261020030000 +0100" channel="elcinema.1299">
+    <title lang="en">Donya Ya Donya</title>
+  </programme>
+  <programme start="20261020030000 +0100" stop="20261020043000 +0100" channel="elcinema.1299">
+    <title lang="en">Matbakh Roya</title>
+  </programme>
+  <programme start="20261020043000 +0100" stop="20261020053000 +0100" channel="elcinema.1299">
+    <title lang="en">Caravan</title>
   </programme>
   <programme start="20261020163000 +0100" stop="20261020173000 +0100" channel="elcinema.1299">
     <title lang="en">Nabd Al Balad</title>
@@ -5091,9 +4866,6 @@
   <programme start="20261019210000 +0100" stop="20261019220000 +0100" channel="elcinema.1301">
     <title lang="en">W Teqabel Habib</title>
   </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1302">
-    <title lang="en">Shabab Emraa</title>
-  </programme>
   <programme start="20261017230000 +0100" stop="20261018000000 +0100" channel="elcinema.1302">
     <title lang="en">Shabab Emraa</title>
   </programme>
@@ -5121,18 +4893,6 @@
   <programme start="20261018200000 +0100" stop="20261018210000 +0100" channel="elcinema.1302">
     <title lang="en">Mataha</title>
   </programme>
-  <programme start="20261017124500 +0100" stop="20261017131500 +0100" channel="elcinema.1304">
-    <title lang="en">Meryem</title>
-  </programme>
-  <programme start="20261017142000 +0100" stop="20261017150000 +0100" channel="elcinema.1304">
-    <title lang="en">Nasibaty Al-Aziza 6</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017154500 +0100" channel="elcinema.1304">
-    <title lang="en">Cranberry Sorbet</title>
-  </programme>
-  <programme start="20261017154500 +0100" stop="20261017163000 +0100" channel="elcinema.1304">
-    <title lang="en">My Home My Destiny</title>
-  </programme>
   <programme start="20261018000000 +0100" stop="20261018004000 +0100" channel="elcinema.1304">
     <title lang="en">Meryem</title>
   </programme>
@@ -5152,9 +4912,6 @@
     <title lang="en">Cranberry Sorbet</title>
   </programme>
   <programme start="20261018154500 +0100" stop="20261018163000 +0100" channel="elcinema.1304">
-    <title lang="en">My Home My Destiny</title>
-  </programme>
-  <programme start="20261018171500 +0100" stop="20261018174500 +0100" channel="elcinema.1304">
     <title lang="en">My Home My Destiny</title>
   </programme>
   <programme start="20261018213000 +0100" stop="20261018220000 +0100" channel="elcinema.1304">
@@ -5187,6 +4944,12 @@
   <programme start="20261019213000 +0100" stop="20261019220000 +0100" channel="elcinema.1304">
     <title lang="en">Meryem</title>
   </programme>
+  <programme start="20261020000000 +0100" stop="20261020004000 +0100" channel="elcinema.1304">
+    <title lang="en">Meryem</title>
+  </programme>
+  <programme start="20261020005000 +0100" stop="20261020013000 +0100" channel="elcinema.1304">
+    <title lang="en">My Home My Destiny</title>
+  </programme>
   <programme start="20261020171500 +0100" stop="20261020174500 +0100" channel="elcinema.1304">
     <title lang="en">My Home My Destiny</title>
   </programme>
@@ -5198,18 +4961,6 @@
   </programme>
   <programme start="20261019092000 +0100" stop="20261019100000 +0100" channel="elcinema.1306">
     <title lang="en">The Tom and Jerry Show</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1309">
-    <title lang="en">El Qatel Allazy Ahabany</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1309">
-    <title lang="en">El Qatel Allazy Ahabany</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1309">
-    <title lang="en">El Qatel Allazy Ahabany</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1309">
-    <title lang="en">Darb Al Thahab</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1309">
     <title lang="en">Matbakh Al Madinah</title>
@@ -5264,15 +5015,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1309">
     <title lang="en">Dukkan Suliman</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1309">
-    <title lang="en">Darb Al Thahab</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1309">
-    <title lang="en">Dukkan Suliman</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1309">
-    <title lang="en">Afkar Oumy</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1309">
     <title lang="en">Afkar Oumy</title>
@@ -5355,9 +5097,6 @@
   <programme start="20261019210000 +0100" stop="20261019220000 +0100" channel="elcinema.1309">
     <title lang="en">Ab Wa Laken</title>
   </programme>
-  <programme start="20261017131000 +0100" stop="20261017143000 +0100" channel="elcinema.1312">
-    <title lang="en">El Hajj Taher</title>
-  </programme>
   <programme start="20261018040000 +0100" stop="20261018050000 +0100" channel="elcinema.1312">
     <title lang="en">Kayna Dorouf</title>
   </programme>
@@ -5373,9 +5112,6 @@
   <programme start="20261018133000 +0100" stop="20261018143000 +0100" channel="elcinema.1312">
     <title lang="en">Black and white</title>
   </programme>
-  <programme start="20261018175000 +0100" stop="20261018183000 +0100" channel="elcinema.1312">
-    <title lang="en">Nisf Kamar</title>
-  </programme>
   <programme start="20261018200000 +0100" stop="20261018210000 +0100" channel="elcinema.1312">
     <title lang="en">Kayna Dorouf</title>
   </programme>
@@ -5387,15 +5123,6 @@
   </programme>
   <programme start="20261019210000 +0100" stop="20261019220000 +0100" channel="elcinema.1312">
     <title lang="en">Kayna Dorouf</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1313">
-    <title lang="en">Al Sabea</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1313">
-    <title lang="en">Sharie' Chicago</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1313">
-    <title lang="en">Arees Taht Al Talab</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1313">
     <title lang="en">Nesaaa Men Hatha Al-Zaman</title>
@@ -5438,12 +5165,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1313">
     <title lang="en">Arees Taht Al Talab</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1313">
-    <title lang="en">Bayt Ahly</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1313">
-    <title lang="en">Aetr Al-Sham 2</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1313">
     <title lang="en">Sharie' Chicago</title>
@@ -5511,15 +5232,6 @@
   <programme start="20261019210000 +0100" stop="20261019220000 +0100" channel="elcinema.1313">
     <title lang="en">Ya Ana Ya Heya</title>
   </programme>
-  <programme start="20261017130000 +0100" stop="20261017134000 +0100" channel="elcinema.1314">
-    <title lang="en">Akbad Al Mohajera</title>
-  </programme>
-  <programme start="20261017134000 +0100" stop="20261017140000 +0100" channel="elcinema.1314">
-    <title lang="en">Zaal Wa Khedra Trend 2025</title>
-  </programme>
-  <programme start="20261017150500 +0100" stop="20261017160000 +0100" channel="elcinema.1314">
-    <title lang="en">Dayman Amer</title>
-  </programme>
   <programme start="20261018080000 +0100" stop="20261018090000 +0100" channel="elcinema.1314">
     <title lang="en">Determination</title>
   </programme>
@@ -5532,17 +5244,8 @@
   <programme start="20261018150500 +0100" stop="20261018160000 +0100" channel="elcinema.1314">
     <title lang="en">Dayman Amer</title>
   </programme>
-  <programme start="20261018170000 +0100" stop="20261018174000 +0100" channel="elcinema.1314">
-    <title lang="en">Akbad Al Mohajera</title>
-  </programme>
-  <programme start="20261018174000 +0100" stop="20261018180000 +0100" channel="elcinema.1314">
-    <title lang="en">Zaal Wa Khedra Trend 2025</title>
-  </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1314">
     <title lang="en">Dayman Amer</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1315">
-    <title lang="en">Deep in Love</title>
   </programme>
   <programme start="20261018043000 +0100" stop="20261018044500 +0100" channel="elcinema.1315">
     <title lang="en">Dakyous w Makyous 4</title>
@@ -5561,9 +5264,6 @@
   </programme>
   <programme start="20261018141500 +0100" stop="20261018152000 +0100" channel="elcinema.1315">
     <title lang="en">A.B.I.</title>
-  </programme>
-  <programme start="20261018173000 +0100" stop="20261018183000 +0100" channel="elcinema.1315">
-    <title lang="en">Alti Ustu Istanbul</title>
   </programme>
   <programme start="20261019043000 +0100" stop="20261019044500 +0100" channel="elcinema.1315">
     <title lang="en">Dakyous w Makyous 4</title>
@@ -5586,14 +5286,11 @@
   <programme start="20261019173000 +0100" stop="20261019183000 +0100" channel="elcinema.1315">
     <title lang="en">Alti Ustu Istanbul</title>
   </programme>
+  <programme start="20261020043000 +0100" stop="20261020044500 +0100" channel="elcinema.1315">
+    <title lang="en">Dakyous w Makyous 4</title>
+  </programme>
   <programme start="20261020173000 +0100" stop="20261020183000 +0100" channel="elcinema.1315">
     <title lang="en">Alti Ustu Istanbul</title>
-  </programme>
-  <programme start="20261017142000 +0100" stop="20261017150000 +0100" channel="elcinema.1317">
-    <title lang="en">Al Waqeed</title>
-  </programme>
-  <programme start="20261017151500 +0100" stop="20261017160000 +0100" channel="elcinema.1317">
-    <title lang="en">Hudson and Rex S3</title>
   </programme>
   <programme start="20261017220500 +0100" stop="20261017222500 +0100" channel="elcinema.1317">
     <title lang="en">Pondemonium</title>
@@ -5636,12 +5333,6 @@
   </programme>
   <programme start="20261018151500 +0100" stop="20261018160000 +0100" channel="elcinema.1317">
     <title lang="en">Hudson and Rex S3</title>
-  </programme>
-  <programme start="20261018172500 +0100" stop="20261018181000 +0100" channel="elcinema.1317">
-    <title lang="en">Darsh</title>
-  </programme>
-  <programme start="20261018190500 +0100" stop="20261018195000 +0100" channel="elcinema.1317">
-    <title lang="en">Fadda</title>
   </programme>
   <programme start="20261018205000 +0100" stop="20261018210000 +0100" channel="elcinema.1317">
     <title lang="en">Hudson and Rex S3</title>
@@ -5715,6 +5406,15 @@
   <programme start="20261019222500 +0100" stop="20261019224500 +0100" channel="elcinema.1317">
     <title lang="en">The Travels of the Young Marco Polo</title>
   </programme>
+  <programme start="20261019224500 +0100" stop="20261019230000 +0100" channel="elcinema.1317">
+    <title lang="en">The Mighty Team</title>
+  </programme>
+  <programme start="20261019230000 +0100" stop="20261019234000 +0100" channel="elcinema.1317">
+    <title lang="en">Fadda</title>
+  </programme>
+  <programme start="20261020023500 +0100" stop="20261020031700 +0100" channel="elcinema.1317">
+    <title lang="en">Al Waqeed</title>
+  </programme>
   <programme start="20261020172500 +0100" stop="20261020181000 +0100" channel="elcinema.1317">
     <title lang="en">Darsh</title>
   </programme>
@@ -5729,15 +5429,6 @@
   </programme>
   <programme start="20261020214500 +0100" stop="20261020220500 +0100" channel="elcinema.1317">
     <title lang="en">Nesaa Hawl Al Anbyaa</title>
-  </programme>
-  <programme start="20261017111500 +0100" stop="20261017130000 +0100" channel="elcinema.1322">
-    <title lang="en">Breathe</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017144500 +0100" channel="elcinema.1322">
-    <title lang="en">A Big Bold Beautiful Journey</title>
-  </programme>
-  <programme start="20261017144500 +0100" stop="20261017163000 +0100" channel="elcinema.1322">
-    <title lang="en">Friendship</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261018003000 +0100" channel="elcinema.1322">
     <title lang="en">Merrily We Roll Along</title>
@@ -5769,20 +5460,11 @@
   <programme start="20261018150000 +0100" stop="20261018170000 +0100" channel="elcinema.1322">
     <title lang="en">Good Fortune</title>
   </programme>
-  <programme start="20261018163000 +0100" stop="20261018181500 +0100" channel="elcinema.1322">
-    <title lang="en">The Gunslingers</title>
-  </programme>
   <programme start="20261018181500 +0100" stop="20261018200000 +0100" channel="elcinema.1322">
     <title lang="en">Longlegs</title>
   </programme>
   <programme start="20261018200000 +0100" stop="20261018220000 +0100" channel="elcinema.1322">
     <title lang="en">Day of the Fight</title>
-  </programme>
-  <programme start="20261017121500 +0100" stop="20261017140000 +0100" channel="elcinema.1323">
-    <title lang="en">After Earth</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017161500 +0100" channel="elcinema.1323">
-    <title lang="en">Captain Phillips</title>
   </programme>
   <programme start="20261017221500 +0100" stop="20261018000000 +0100" channel="elcinema.1323">
     <title lang="en">Bring Him to Me</title>
@@ -5811,23 +5493,11 @@
   <programme start="20261018140000 +0100" stop="20261018160000 +0100" channel="elcinema.1323">
     <title lang="en">Star Trek Beyond</title>
   </programme>
-  <programme start="20261018161500 +0100" stop="20261018181500 +0100" channel="elcinema.1323">
-    <title lang="en">Jumanji: Welcome to the Jungle</title>
-  </programme>
   <programme start="20261018181500 +0100" stop="20261018201500 +0100" channel="elcinema.1323">
     <title lang="en">Final Cut</title>
   </programme>
   <programme start="20261018201500 +0100" stop="20261018221500 +0100" channel="elcinema.1323">
     <title lang="en">The Shade</title>
-  </programme>
-  <programme start="20261017111500 +0100" stop="20261017133000 +0100" channel="elcinema.1324">
-    <title lang="en">Philadelphia</title>
-  </programme>
-  <programme start="20261017133000 +0100" stop="20261017151500 +0100" channel="elcinema.1324">
-    <title lang="en">Maid in Manhattan</title>
-  </programme>
-  <programme start="20261017151500 +0100" stop="20261017171500 +0100" channel="elcinema.1324">
-    <title lang="en">Isabel's Garden</title>
   </programme>
   <programme start="20261017221500 +0100" stop="20261018000000 +0100" channel="elcinema.1324">
     <title lang="en">Float</title>
@@ -5859,20 +5529,11 @@
   <programme start="20261018150000 +0100" stop="20261018170000 +0100" channel="elcinema.1324">
     <title lang="en">The Good Shepherd</title>
   </programme>
-  <programme start="20261018171500 +0100" stop="20261018184500 +0100" channel="elcinema.1324">
-    <title lang="en">Oh, Hi!</title>
-  </programme>
   <programme start="20261018184500 +0100" stop="20261018203000 +0100" channel="elcinema.1324">
     <title lang="en">Christmas Eve In Miller's Point</title>
   </programme>
   <programme start="20261018203000 +0100" stop="20261018221500 +0100" channel="elcinema.1324">
     <title lang="en">Sky Peals</title>
-  </programme>
-  <programme start="20261017123000 +0100" stop="20261017141500 +0100" channel="elcinema.1325">
-    <title lang="en">The Spiderwick Chronicles</title>
-  </programme>
-  <programme start="20261017141500 +0100" stop="20261017161500 +0100" channel="elcinema.1325">
-    <title lang="en">Little Women</title>
   </programme>
   <programme start="20261017221500 +0100" stop="20261017234500 +0100" channel="elcinema.1325">
     <title lang="en">Living Large</title>
@@ -5907,29 +5568,11 @@
   <programme start="20261018154500 +0100" stop="20261018174500 +0100" channel="elcinema.1325">
     <title lang="en">Peter Rabbit</title>
   </programme>
-  <programme start="20261018161500 +0100" stop="20261018173000 +0100" channel="elcinema.1325">
-    <title lang="en">The Swan Princess: Escape from Castle Mountain</title>
-  </programme>
-  <programme start="20261018173000 +0100" stop="20261018191500 +0100" channel="elcinema.1325">
-    <title lang="en">Lyle, Lyle, Crocodile</title>
-  </programme>
   <programme start="20261018191500 +0100" stop="20261018204500 +0100" channel="elcinema.1325">
     <title lang="en">The Pirates! Band of Misfits</title>
   </programme>
   <programme start="20261018204500 +0100" stop="20261018221500 +0100" channel="elcinema.1325">
     <title lang="en">The Swan Princess</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1327">
-    <title lang="en">The Other Bennet Sister</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1327">
-    <title lang="en">The Miniature Wife</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1327">
-    <title lang="en">Shark Tank</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1327">
-    <title lang="en">Marble Hall Murders</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1327">
     <title lang="en">The Good Doctor S2</title>
@@ -5984,15 +5627,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1327">
     <title lang="en">The Miniature Wife</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1327">
-    <title lang="en">Yellowjackets S2</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1327">
-    <title lang="en">Yellowjackets S2</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1327">
-    <title lang="en">Yellowjackets S2</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1327">
     <title lang="en">Yellowjackets S2</title>
@@ -6102,18 +5736,6 @@
   <programme start="20261019210000 +0100" stop="20261019220000 +0100" channel="elcinema.1327">
     <title lang="en">The Good Doctor S2</title>
   </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1328">
-    <title lang="en">NCIS S24</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1328">
-    <title lang="en">S.W.A.T. Exiles</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1328">
-    <title lang="en">American Hostage</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1328">
-    <title lang="en">The Agency: Central Intelligence</title>
-  </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1328">
     <title lang="en">Rabbit Hole</title>
   </programme>
@@ -6167,15 +5789,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1328">
     <title lang="en">Tulsa King S3</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1328">
-    <title lang="en">Justified S1</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1328">
-    <title lang="en">Justified S1</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1328">
-    <title lang="en">Justified S1</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1328">
     <title lang="en">Justified S1</title>
@@ -6270,15 +5883,6 @@
   <programme start="20261019210000 +0100" stop="20261019220000 +0100" channel="elcinema.1328">
     <title lang="en">The Agency: Central Intelligence</title>
   </programme>
-  <programme start="20261017123000 +0100" stop="20261017130000 +0100" channel="elcinema.1336">
-    <title lang="en">Alf Layla wa Layla: Ali Baba wa El Arbaein Harami</title>
-  </programme>
-  <programme start="20261017131500 +0100" stop="20261017140000 +0100" channel="elcinema.1336">
-    <title lang="en">Yawmiat Wanis 2</title>
-  </programme>
-  <programme start="20261017151500 +0100" stop="20261017160000 +0100" channel="elcinema.1336">
-    <title lang="en">Hayat Al-Gohary</title>
-  </programme>
   <programme start="20261017221500 +0100" stop="20261017230000 +0100" channel="elcinema.1336">
     <title lang="en">Yawmiat Wanis 2</title>
   </programme>
@@ -6329,12 +5933,6 @@
   </programme>
   <programme start="20261018151500 +0100" stop="20261018160000 +0100" channel="elcinema.1336">
     <title lang="en">Hayat Al-Gohary</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1336">
-    <title lang="en">La 'iilah 'iilaa allah 4</title>
-  </programme>
-  <programme start="20261018190000 +0100" stop="20261018193000 +0100" channel="elcinema.1336">
-    <title lang="en">Gedo Abdo Zaraa Ardoh</title>
   </programme>
   <programme start="20261018193000 +0100" stop="20261018200000 +0100" channel="elcinema.1336">
     <title lang="en">Alf Layla wa Layla: Ali Baba wa El Arbaein Harami</title>
@@ -6414,6 +6012,21 @@
   <programme start="20261019221500 +0100" stop="20261019230000 +0100" channel="elcinema.1336">
     <title lang="en">Yawmiat Wanis 2</title>
   </programme>
+  <programme start="20261020010000 +0100" stop="20261020020000 +0100" channel="elcinema.1336">
+    <title lang="en">Hayat Al-Gohary</title>
+  </programme>
+  <programme start="20261020020000 +0100" stop="20261020023000 +0100" channel="elcinema.1336">
+    <title lang="en">Zuhur Min Nour</title>
+  </programme>
+  <programme start="20261020023000 +0100" stop="20261020030000 +0100" channel="elcinema.1336">
+    <title lang="en">Min Qisas Al Anbia</title>
+  </programme>
+  <programme start="20261020030000 +0100" stop="20261020040000 +0100" channel="elcinema.1336">
+    <title lang="en">Falling in Sabe' Well</title>
+  </programme>
+  <programme start="20261020050000 +0100" stop="20261020060000 +0100" channel="elcinema.1336">
+    <title lang="en">La 'iilah 'iilaa allah 4</title>
+  </programme>
   <programme start="20261020180000 +0100" stop="20261020190000 +0100" channel="elcinema.1336">
     <title lang="en">La 'iilah 'iilaa allah 4</title>
   </programme>
@@ -6428,9 +6041,6 @@
   </programme>
   <programme start="20261020213000 +0100" stop="20261020221500 +0100" channel="elcinema.1336">
     <title lang="en">Gawlit Al Kamera</title>
-  </programme>
-  <programme start="20261017131000 +0100" stop="20261017140000 +0100" channel="elcinema.1339">
-    <title lang="en">Durub Al Marjala 3</title>
   </programme>
   <programme start="20261018023000 +0100" stop="20261018030000 +0100" channel="elcinema.1339">
     <title lang="en">Tom Sawyer</title>
@@ -6480,17 +6090,17 @@
   <programme start="20261019131000 +0100" stop="20261019140000 +0100" channel="elcinema.1339">
     <title lang="en">Durub Al Marjala 3</title>
   </programme>
-  <programme start="20261017120000 +0100" stop="20261017133000 +0100" channel="elcinema.1340">
-    <title lang="en">Kalam Nawaem</title>
+  <programme start="20261020023000 +0100" stop="20261020030000 +0100" channel="elcinema.1339">
+    <title lang="en">Tom Sawyer</title>
   </programme>
-  <programme start="20261017133000 +0100" stop="20261017143000 +0100" channel="elcinema.1340">
-    <title lang="en">Taht Al Daght</title>
+  <programme start="20261020032500 +0100" stop="20261020043000 +0100" channel="elcinema.1339">
+    <title lang="en">Qadyet Safia</title>
   </programme>
-  <programme start="20261017143000 +0100" stop="20261017150000 +0100" channel="elcinema.1340">
-    <title lang="en">Hammed Helw 2</title>
+  <programme start="20261020043000 +0100" stop="20261020050000 +0100" channel="elcinema.1339">
+    <title lang="en">Durub Al Marjala 3</title>
   </programme>
-  <programme start="20261017150000 +0100" stop="20261017170000 +0100" channel="elcinema.1340">
-    <title lang="en">Blacklight</title>
+  <programme start="20261020050000 +0100" stop="20261020060000 +0100" channel="elcinema.1339">
+    <title lang="en">Litle Bride 2</title>
   </programme>
   <programme start="20261017225500 +0100" stop="20261018010600 +0100" channel="elcinema.1340">
     <title lang="en">Awdat Khalati</title>
@@ -6528,20 +6138,11 @@
   <programme start="20261018100000 +0100" stop="20261018110000 +0100" channel="elcinema.1340">
     <title lang="en">Awdat Khalati</title>
   </programme>
-  <programme start="20261018170000 +0100" stop="20261018191500 +0100" channel="elcinema.1340">
-    <title lang="en">Taiba</title>
-  </programme>
   <programme start="20261018191500 +0100" stop="20261018204000 +0100" channel="elcinema.1340">
     <title lang="en">Al Nwaylati</title>
   </programme>
   <programme start="20261018204000 +0100" stop="20261018225500 +0100" channel="elcinema.1340">
     <title lang="en">Mawlana</title>
-  </programme>
-  <programme start="20261017110000 +0100" stop="20261017130000 +0100" channel="elcinema.1341">
-    <title lang="en">Farq Khebra</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017170000 +0100" channel="elcinema.1341">
-    <title lang="en">Boshkash</title>
   </programme>
   <programme start="20261017230000 +0100" stop="20261018010000 +0100" channel="elcinema.1341">
     <title lang="en">Boshkash</title>
@@ -6575,12 +6176,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018170000 +0100" channel="elcinema.1341">
     <title lang="en">Ritsa</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1341">
-    <title lang="en">Ala Ad El Hob</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1341">
-    <title lang="en">Noqta Entaha</title>
   </programme>
   <programme start="20261018210000 +0100" stop="20261018230000 +0100" channel="elcinema.1341">
     <title lang="en">Farq Khebra</title>
@@ -6645,6 +6240,24 @@
   <programme start="20261019220000 +0100" stop="20261019230000 +0100" channel="elcinema.1341">
     <title lang="en">Shams El Aseel</title>
   </programme>
+  <programme start="20261019230000 +0100" stop="20261020010000 +0100" channel="elcinema.1341">
+    <title lang="en">Ahmed Noterdame</title>
+  </programme>
+  <programme start="20261020010000 +0100" stop="20261020020000 +0100" channel="elcinema.1341">
+    <title lang="en">Ala Ad El Hob</title>
+  </programme>
+  <programme start="20261020020000 +0100" stop="20261020030000 +0100" channel="elcinema.1341">
+    <title lang="en">Noqta Entaha</title>
+  </programme>
+  <programme start="20261020030000 +0100" stop="20261020040000 +0100" channel="elcinema.1341">
+    <title lang="en">Shams El Aseel</title>
+  </programme>
+  <programme start="20261020040000 +0100" stop="20261020050000 +0100" channel="elcinema.1341">
+    <title lang="en">Shams El Aseel</title>
+  </programme>
+  <programme start="20261020050000 +0100" stop="20261020060000 +0100" channel="elcinema.1341">
+    <title lang="en">Arab Wood</title>
+  </programme>
   <programme start="20261020170000 +0100" stop="20261020180000 +0100" channel="elcinema.1341">
     <title lang="en">Ala Ad El Hob</title>
   </programme>
@@ -6659,9 +6272,6 @@
   </programme>
   <programme start="20261020210000 +0100" stop="20261020220000 +0100" channel="elcinema.1341">
     <title lang="en">Shams El Aseel</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1349">
-    <title lang="en">Yaqout</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1349">
     <title lang="en">Yaqout</title>
@@ -6684,14 +6294,8 @@
   <programme start="20261018140000 +0100" stop="20261018150000 +0100" channel="elcinema.1349">
     <title lang="en">Yaqout</title>
   </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1349">
-    <title lang="en">Bayt Ahly</title>
-  </programme>
   <programme start="20261018210000 +0100" stop="20261018220000 +0100" channel="elcinema.1349">
     <title lang="en">Reprehensible Character Traits</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1352">
-    <title lang="en">Qurat Aynek</title>
   </programme>
   <programme start="20261017224000 +0100" stop="20261017233000 +0100" channel="elcinema.1352">
     <title lang="en">Qurat Aynek</title>
@@ -6735,9 +6339,6 @@
   <programme start="20261018140000 +0100" stop="20261018150000 +0100" channel="elcinema.1352">
     <title lang="en">Qurat Aynek</title>
   </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1352">
-    <title lang="en">Alf Mile</title>
-  </programme>
   <programme start="20261018224000 +0100" stop="20261018233000 +0100" channel="elcinema.1352">
     <title lang="en">Qurat Aynek</title>
   </programme>
@@ -6780,20 +6381,29 @@
   <programme start="20261019203000 +0100" stop="20261019210000 +0100" channel="elcinema.1352">
     <title lang="en">Al Ayyam Al Khaliya 5</title>
   </programme>
+  <programme start="20261019224000 +0100" stop="20261019233000 +0100" channel="elcinema.1352">
+    <title lang="en">Qurat Aynek</title>
+  </programme>
+  <programme start="20261019233000 +0100" stop="20261020002500 +0100" channel="elcinema.1352">
+    <title lang="en">Deyrtna</title>
+  </programme>
+  <programme start="20261020002500 +0100" stop="20261020010000 +0100" channel="elcinema.1352">
+    <title lang="en">Eulum Al Awalin 5</title>
+  </programme>
+  <programme start="20261020013000 +0100" stop="20261020020000 +0100" channel="elcinema.1352">
+    <title lang="en">Nakhwa 2</title>
+  </programme>
+  <programme start="20261020020000 +0100" stop="20261020040000 +0100" channel="elcinema.1352">
+    <title lang="en">Sabah Al Saudia</title>
+  </programme>
+  <programme start="20261020040000 +0100" stop="20261020050000 +0100" channel="elcinema.1352">
+    <title lang="en">Qurat Aynek</title>
+  </programme>
   <programme start="20261020164500 +0100" stop="20261020172000 +0100" channel="elcinema.1352">
     <title lang="en">Deyrtna</title>
   </programme>
   <programme start="20261020175000 +0100" stop="20261020190000 +0100" channel="elcinema.1352">
     <title lang="en">Al Share' Al Saudi</title>
-  </programme>
-  <programme start="20261017112500 +0100" stop="20261017143000 +0100" channel="elcinema.1354">
-    <title lang="en">Hayat</title>
-  </programme>
-  <programme start="20261017143000 +0100" stop="20261017151500 +0100" channel="elcinema.1354">
-    <title lang="en">Yalla Neghani</title>
-  </programme>
-  <programme start="20261017151500 +0100" stop="20261017170000 +0100" channel="elcinema.1354">
-    <title lang="en">Taht Sabe' Ard</title>
   </programme>
   <programme start="20261017223000 +0100" stop="20261017231500 +0100" channel="elcinema.1354">
     <title lang="en">Yalla Neghani</title>
@@ -6822,20 +6432,11 @@
   <programme start="20261018102700 +0100" stop="20261018122800 +0100" channel="elcinema.1354">
     <title lang="en">Chahadat Milad 2</title>
   </programme>
-  <programme start="20261018170000 +0100" stop="20261018184500 +0100" channel="elcinema.1354">
-    <title lang="en">200 Geneh</title>
-  </programme>
   <programme start="20261018184500 +0100" stop="20261018214500 +0100" channel="elcinema.1354">
     <title lang="en">Hayat</title>
   </programme>
   <programme start="20261018214500 +0100" stop="20261018223000 +0100" channel="elcinema.1354">
     <title lang="en">Vanshaj</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017140000 +0100" channel="elcinema.1358">
-    <title lang="en">Tom wa Jimmy</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017160000 +0100" channel="elcinema.1358">
-    <title lang="en">Fasel Wa Naeud</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261018000000 +0100" channel="elcinema.1358">
     <title lang="en">Fasel Wa Naeud</title>
@@ -6863,9 +6464,6 @@
   </programme>
   <programme start="20261018140000 +0100" stop="20261018160000 +0100" channel="elcinema.1358">
     <title lang="en">Tita Rahiba</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018180000 +0100" channel="elcinema.1358">
-    <title lang="en">Fa'el Kheir</title>
   </programme>
   <programme start="20261018180000 +0100" stop="20261018200000 +0100" channel="elcinema.1358">
     <title lang="en">Alhilal yaksib</title>
@@ -6912,6 +6510,15 @@
   <programme start="20261019220000 +0100" stop="20261020000000 +0100" channel="elcinema.1358">
     <title lang="en">Al-Anissa Mamy</title>
   </programme>
+  <programme start="20261020000000 +0100" stop="20261020020000 +0100" channel="elcinema.1358">
+    <title lang="en">Agaza Bil Afeya</title>
+  </programme>
+  <programme start="20261020020000 +0100" stop="20261020040000 +0100" channel="elcinema.1358">
+    <title lang="en">Abou Kartoona</title>
+  </programme>
+  <programme start="20261020040000 +0100" stop="20261020060000 +0100" channel="elcinema.1358">
+    <title lang="en">Be Aware</title>
+  </programme>
   <programme start="20261020160000 +0100" stop="20261020180000 +0100" channel="elcinema.1358">
     <title lang="en">Agaza Bil Afeya</title>
   </programme>
@@ -6920,15 +6527,6 @@
   </programme>
   <programme start="20261020200000 +0100" stop="20261020220000 +0100" channel="elcinema.1358">
     <title lang="en">Be Aware</title>
-  </programme>
-  <programme start="20261017123000 +0100" stop="20261017130000 +0100" channel="elcinema.1366">
-    <title lang="en">Minkum Wa Elaykum Wal Salam Alaykum</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017134500 +0100" channel="elcinema.1366">
-    <title lang="en">The Knight</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1366">
-    <title lang="en">Al Laaebon Bel Nar</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017223000 +0100" channel="elcinema.1366">
     <title lang="en">Minkum Wa Elaykum Wal Salam Alaykum</title>
@@ -6986,15 +6584,6 @@
   </programme>
   <programme start="20261018140000 +0100" stop="20261018150000 +0100" channel="elcinema.1366">
     <title lang="en">Al Laaebon Bel Nar</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1366">
-    <title lang="en">Zarie Al Sharr</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1366">
-    <title lang="en">Uqba ibn Nafi</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1366">
-    <title lang="en">The Knight</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1366">
     <title lang="en">Ajaj Abu Aleel</title>
@@ -7071,12 +6660,6 @@
   <programme start="20261019213000 +0100" stop="20261019220000 +0100" channel="elcinema.1366">
     <title lang="en">The Legends of Treasure Island</title>
   </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1367">
-    <title lang="en">Tawabea</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1367">
-    <title lang="en">Mashaeir</title>
-  </programme>
   <programme start="20261018003000 +0100" stop="20261018011500 +0100" channel="elcinema.1367">
     <title lang="en">Shehadat Moamlet Atfal</title>
   </programme>
@@ -7094,12 +6677,6 @@
   </programme>
   <programme start="20261018140000 +0100" stop="20261018150000 +0100" channel="elcinema.1367">
     <title lang="en">Mashaeir</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1367">
-    <title lang="en">Saadaet Al Magnoun</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018173000 +0100" channel="elcinema.1367">
-    <title lang="en">The Web</title>
   </programme>
   <programme start="20261018210000 +0100" stop="20261018220000 +0100" channel="elcinema.1367">
     <title lang="en">Saadaet Al Magnoun</title>
@@ -7127,18 +6704,6 @@
   </programme>
   <programme start="20261019210000 +0100" stop="20261019220000 +0100" channel="elcinema.1367">
     <title lang="en">Saadaet Al Magnoun</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1371">
-    <title lang="en">What Is Fatmagul's Fault? S2</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1371">
-    <title lang="en">A Miracle S2</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1371">
-    <title lang="en">Erkenci Kus</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1371">
-    <title lang="en">Falling Leaves S3</title>
   </programme>
   <programme start="20261017230000 +0100" stop="20261018000000 +0100" channel="elcinema.1371">
     <title lang="en">A Miracle S2</title>
@@ -7187,9 +6752,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1371">
     <title lang="en">Falling Leaves S3</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1371">
-    <title lang="en">Forbidden Apple S5</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1371">
     <title lang="en">Gabal Al Halal</title>
@@ -7260,15 +6822,6 @@
   <programme start="20261019210000 +0100" stop="20261019220000 +0100" channel="elcinema.1371">
     <title lang="en">What Is Fatmagul's Fault? S2</title>
   </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1373">
-    <title lang="en">Sen Anlat Karadeniz</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1373">
-    <title lang="en">Wounded Birds</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1373">
-    <title lang="en">Establishment: Osman S2</title>
-  </programme>
   <programme start="20261017230000 +0100" stop="20261018000000 +0100" channel="elcinema.1373">
     <title lang="en">Wounded Birds</title>
   </programme>
@@ -7310,9 +6863,6 @@
   </programme>
   <programme start="20261018140000 +0100" stop="20261018150000 +0100" channel="elcinema.1373">
     <title lang="en">Establishment: Osman S2</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1373">
-    <title lang="en">Heartbeat</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1373">
     <title lang="en">Saraswatichandra</title>
@@ -7377,9 +6927,6 @@
   <programme start="20261019210000 +0100" stop="20261019220000 +0100" channel="elcinema.1373">
     <title lang="en">Amrad Nesaa</title>
   </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1374">
-    <title lang="en">Mabruk Jalak Qalaq</title>
-  </programme>
   <programme start="20261018000000 +0100" stop="20261018003000 +0100" channel="elcinema.1374">
     <title lang="en">Belle and Sebastian</title>
   </programme>
@@ -7391,9 +6938,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1374">
     <title lang="en">Mabruk Jalak Qalaq</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1374">
-    <title lang="en">Riah Al Simom</title>
   </programme>
   <programme start="20261018070000 +0100" stop="20261018090000 +0100" channel="elcinema.1382">
     <title lang="en">Oyoon El-Hramya</title>
@@ -7416,26 +6960,8 @@
   <programme start="20261018003000 +0100" stop="20261018010000 +0100" channel="elcinema.1383">
     <title lang="en">One Piece</title>
   </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1383">
-    <title lang="en">Zell</title>
-  </programme>
   <programme start="20261019160000 +0100" stop="20261019170000 +0100" channel="elcinema.1383">
     <title lang="en">Zell</title>
-  </programme>
-  <programme start="20261017122000 +0100" stop="20261017131000 +0100" channel="elcinema.1390">
-    <title lang="en">Deep in Love</title>
-  </programme>
-  <programme start="20261017131000 +0100" stop="20261017140000 +0100" channel="elcinema.1390">
-    <title lang="en">Deep in Love</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017145000 +0100" channel="elcinema.1390">
-    <title lang="en">Deep in Love</title>
-  </programme>
-  <programme start="20261017145000 +0100" stop="20261017154000 +0100" channel="elcinema.1390">
-    <title lang="en">Kizil Goncalar S2</title>
-  </programme>
-  <programme start="20261017154000 +0100" stop="20261017163000 +0100" channel="elcinema.1390">
-    <title lang="en">Kizil Goncalar S2</title>
   </programme>
   <programme start="20261017223000 +0100" stop="20261017232500 +0100" channel="elcinema.1390">
     <title lang="en">My Siblings S4</title>
@@ -7498,15 +7024,6 @@
     <title lang="en">My Siblings S4</title>
   </programme>
   <programme start="20261018154000 +0100" stop="20261018163000 +0100" channel="elcinema.1390">
-    <title lang="en">Kizil Goncalar S2</title>
-  </programme>
-  <programme start="20261018163000 +0100" stop="20261018171500 +0100" channel="elcinema.1390">
-    <title lang="en">Kizil Goncalar S2</title>
-  </programme>
-  <programme start="20261018171500 +0100" stop="20261018181000 +0100" channel="elcinema.1390">
-    <title lang="en">Kizil Goncalar S2</title>
-  </programme>
-  <programme start="20261018181000 +0100" stop="20261018190000 +0100" channel="elcinema.1390">
     <title lang="en">Kizil Goncalar S2</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1390">
@@ -7605,6 +7122,33 @@
   <programme start="20261019213500 +0100" stop="20261019223000 +0100" channel="elcinema.1390">
     <title lang="en">Deep in Love</title>
   </programme>
+  <programme start="20261019223000 +0100" stop="20261019232500 +0100" channel="elcinema.1390">
+    <title lang="en">My Siblings S4</title>
+  </programme>
+  <programme start="20261019232500 +0100" stop="20261020001000 +0100" channel="elcinema.1390">
+    <title lang="en">Kizil Goncalar S2</title>
+  </programme>
+  <programme start="20261020001000 +0100" stop="20261020010000 +0100" channel="elcinema.1390">
+    <title lang="en">Kizil Goncalar S2</title>
+  </programme>
+  <programme start="20261020010000 +0100" stop="20261020015000 +0100" channel="elcinema.1390">
+    <title lang="en">Deep in Love</title>
+  </programme>
+  <programme start="20261020015000 +0100" stop="20261020025000 +0100" channel="elcinema.1390">
+    <title lang="en">Cranberry Sorbet S2</title>
+  </programme>
+  <programme start="20261020025000 +0100" stop="20261020032500 +0100" channel="elcinema.1390">
+    <title lang="en">My Siblings S4</title>
+  </programme>
+  <programme start="20261020032500 +0100" stop="20261020041500 +0100" channel="elcinema.1390">
+    <title lang="en">Forbidden Apple S5</title>
+  </programme>
+  <programme start="20261020041500 +0100" stop="20261020050000 +0100" channel="elcinema.1390">
+    <title lang="en">Kizil Goncalar S2</title>
+  </programme>
+  <programme start="20261020050000 +0100" stop="20261020060000 +0100" channel="elcinema.1390">
+    <title lang="en">Cranberry Sorbet S2</title>
+  </programme>
   <programme start="20261020163000 +0100" stop="20261020172000 +0100" channel="elcinema.1390">
     <title lang="en">Deep in Love</title>
   </programme>
@@ -7625,15 +7169,6 @@
   </programme>
   <programme start="20261020214000 +0100" stop="20261020223000 +0100" channel="elcinema.1390">
     <title lang="en">Deep in Love</title>
-  </programme>
-  <programme start="20261017105500 +0100" stop="20261017130000 +0100" channel="elcinema.1391">
-    <title lang="en">Superman II</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017143000 +0100" channel="elcinema.1391">
-    <title lang="en">Never Goin' Back</title>
-  </programme>
-  <programme start="20261017143000 +0100" stop="20261017165500 +0100" channel="elcinema.1391">
-    <title lang="en">Man on Fire</title>
   </programme>
   <programme start="20261017231000 +0100" stop="20261018011500 +0100" channel="elcinema.1391">
     <title lang="en">Superman II</title>
@@ -7661,9 +7196,6 @@
   </programme>
   <programme start="20261018144500 +0100" stop="20261018161500 +0100" channel="elcinema.1391">
     <title lang="en">Never Goin' Back</title>
-  </programme>
-  <programme start="20261018165500 +0100" stop="20261018190000 +0100" channel="elcinema.1391">
-    <title lang="en">Room</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018203000 +0100" channel="elcinema.1391">
     <title lang="en">Never Goin' Back</title>
@@ -7710,15 +7242,6 @@
   <programme start="20261019211500 +0100" stop="20261019225500 +0100" channel="elcinema.1391">
     <title lang="en">Daredevil</title>
   </programme>
-  <programme start="20261017125000 +0100" stop="20261017142000 +0100" channel="elcinema.1392">
-    <title lang="en">Penguins of Madagascar</title>
-  </programme>
-  <programme start="20261017142000 +0100" stop="20261017153500 +0100" channel="elcinema.1392">
-    <title lang="en">The Powerpuff Girls Movie</title>
-  </programme>
-  <programme start="20261017153500 +0100" stop="20261017170000 +0100" channel="elcinema.1392">
-    <title lang="en">Teen Titans Go! To the Movies</title>
-  </programme>
   <programme start="20261017223000 +0100" stop="20261017235500 +0100" channel="elcinema.1392">
     <title lang="en">The Secret Life of Pets 2</title>
   </programme>
@@ -7757,12 +7280,6 @@
   </programme>
   <programme start="20261018155000 +0100" stop="20261018172000 +0100" channel="elcinema.1392">
     <title lang="en">An American Girl: Chrissa Stands Strong</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018182500 +0100" channel="elcinema.1392">
-    <title lang="en">Storks</title>
-  </programme>
-  <programme start="20261018182500 +0100" stop="20261018191000 +0100" channel="elcinema.1392">
-    <title lang="en">Enchantimals: Spring Into Harvest Hills</title>
   </programme>
   <programme start="20261018191000 +0100" stop="20261018210500 +0100" channel="elcinema.1392">
     <title lang="en">The Croods</title>
@@ -7814,24 +7331,6 @@
   </programme>
   <programme start="20261019205500 +0100" stop="20261019221000 +0100" channel="elcinema.1392">
     <title lang="en">The Powerpuff Girls Movie</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1393">
-    <title lang="en">Superman &amp; Lois S4</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017135500 +0100" channel="elcinema.1393">
-    <title lang="en">The Couple Next Door</title>
-  </programme>
-  <programme start="20261017135500 +0100" stop="20261017145000 +0100" channel="elcinema.1393">
-    <title lang="en">The Pitt</title>
-  </programme>
-  <programme start="20261017145000 +0100" stop="20261017153500 +0100" channel="elcinema.1393">
-    <title lang="en">The Pitt</title>
-  </programme>
-  <programme start="20261017153500 +0100" stop="20261017154500 +0100" channel="elcinema.1393">
-    <title lang="en">The Unserious Race</title>
-  </programme>
-  <programme start="20261017154500 +0100" stop="20261017165500 +0100" channel="elcinema.1393">
-    <title lang="en">Tokyo Vice S2</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017232500 +0100" channel="elcinema.1393">
     <title lang="en">Alvin and the Chipmunks: Chipwrecked</title>
@@ -7898,18 +7397,6 @@
   </programme>
   <programme start="20261018152500 +0100" stop="20261018160000 +0100" channel="elcinema.1393">
     <title lang="en">Entitled</title>
-  </programme>
-  <programme start="20261018165500 +0100" stop="20261018175000 +0100" channel="elcinema.1393">
-    <title lang="en">Unbelievable Moments Caught on Camera S6</title>
-  </programme>
-  <programme start="20261018175000 +0100" stop="20261018183500 +0100" channel="elcinema.1393">
-    <title lang="en">The Couple Next Door</title>
-  </programme>
-  <programme start="20261018183500 +0100" stop="20261018185000 +0100" channel="elcinema.1393">
-    <title lang="en">Red Bull Driftbrothers</title>
-  </programme>
-  <programme start="20261018185000 +0100" stop="20261018190000 +0100" channel="elcinema.1393">
-    <title lang="en">The Unserious Race</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1393">
     <title lang="en">Tokyo Vice S2</title>
@@ -8013,6 +7500,21 @@
   <programme start="20261019220500 +0100" stop="20261019222000 +0100" channel="elcinema.1393">
     <title lang="en">Red Bull Driftbrothers</title>
   </programme>
+  <programme start="20261020012500 +0100" stop="20261020014500 +0100" channel="elcinema.1393">
+    <title lang="en">Night Court S2</title>
+  </programme>
+  <programme start="20261020014500 +0100" stop="20261020021500 +0100" channel="elcinema.1393">
+    <title lang="en">Night Court S2</title>
+  </programme>
+  <programme start="20261020021500 +0100" stop="20261020023500 +0100" channel="elcinema.1393">
+    <title lang="en">Night Court S2</title>
+  </programme>
+  <programme start="20261020023500 +0100" stop="20261020030500 +0100" channel="elcinema.1393">
+    <title lang="en">Night Court S2</title>
+  </programme>
+  <programme start="20261020030500 +0100" stop="20261020040000 +0100" channel="elcinema.1393">
+    <title lang="en">Trigger Point S2</title>
+  </programme>
   <programme start="20261020164500 +0100" stop="20261020174500 +0100" channel="elcinema.1393">
     <title lang="en">Billions S4</title>
   </programme>
@@ -8030,18 +7532,6 @@
   </programme>
   <programme start="20261020210500 +0100" stop="20261020220500 +0100" channel="elcinema.1393">
     <title lang="en">Red Bull Signature Series S3</title>
-  </programme>
-  <programme start="20261017123000 +0100" stop="20261017130000 +0100" channel="elcinema.1394">
-    <title lang="en">Room 104 S2</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017143500 +0100" channel="elcinema.1394">
-    <title lang="en">Bored to Death</title>
-  </programme>
-  <programme start="20261017143500 +0100" stop="20261017150000 +0100" channel="elcinema.1394">
-    <title lang="en">Bored to Death</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1394">
-    <title lang="en">And Just Like That…</title>
   </programme>
   <programme start="20261017222500 +0100" stop="20261017232500 +0100" channel="elcinema.1394">
     <title lang="en">Treme S2</title>
@@ -8133,21 +7623,6 @@
   <programme start="20261018153000 +0100" stop="20261018160000 +0100" channel="elcinema.1394">
     <title lang="en">How to with John Wilson</title>
   </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1394">
-    <title lang="en">Winning Time: The Rise of the Lakers Dynasty</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1394">
-    <title lang="en">Yvonne Orji: A Whole Me</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018183000 +0100" channel="elcinema.1394">
-    <title lang="en">Bored to Death</title>
-  </programme>
-  <programme start="20261018183000 +0100" stop="20261018190000 +0100" channel="elcinema.1394">
-    <title lang="en">Bored to Death</title>
-  </programme>
-  <programme start="20261018190000 +0100" stop="20261018195000 +0100" channel="elcinema.1394">
-    <title lang="en">Mosaic</title>
-  </programme>
   <programme start="20261018195000 +0100" stop="20261018204000 +0100" channel="elcinema.1394">
     <title lang="en">Mosaic</title>
   </programme>
@@ -8156,18 +7631,6 @@
   </programme>
   <programme start="20261018213500 +0100" stop="20261018222500 +0100" channel="elcinema.1394">
     <title lang="en">Mosaic</title>
-  </programme>
-  <programme start="20261017121500 +0100" stop="20261017130500 +0100" channel="elcinema.1395">
-    <title lang="en">My Wife, My Abuser: The Secret Footage</title>
-  </programme>
-  <programme start="20261017130500 +0100" stop="20261017135500 +0100" channel="elcinema.1395">
-    <title lang="en">Black Widow</title>
-  </programme>
-  <programme start="20261017135500 +0100" stop="20261017150500 +0100" channel="elcinema.1395">
-    <title lang="en">Who Killed Robert Wone?</title>
-  </programme>
-  <programme start="20261017150500 +0100" stop="20261017160500 +0100" channel="elcinema.1395">
-    <title lang="en">Oz S4</title>
   </programme>
   <programme start="20261017223500 +0100" stop="20261017232500 +0100" channel="elcinema.1395">
     <title lang="en">Blindspot S2</title>
@@ -8237,15 +7700,6 @@
   </programme>
   <programme start="20261018155000 +0100" stop="20261018163500 +0100" channel="elcinema.1395">
     <title lang="en">The Mentalist S1</title>
-  </programme>
-  <programme start="20261018160500 +0100" stop="20261018170500 +0100" channel="elcinema.1395">
-    <title lang="en">Oz S4</title>
-  </programme>
-  <programme start="20261018170500 +0100" stop="20261018180500 +0100" channel="elcinema.1395">
-    <title lang="en">Oz S4</title>
-  </programme>
-  <programme start="20261018180500 +0100" stop="20261018190000 +0100" channel="elcinema.1395">
-    <title lang="en">Who Killed Robert Wone?</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1395">
     <title lang="en">Major Crimes S4</title>
@@ -8349,6 +7803,33 @@
   <programme start="20261019215000 +0100" stop="20261019223500 +0100" channel="elcinema.1395">
     <title lang="en">Blindspot S2</title>
   </programme>
+  <programme start="20261019224000 +0100" stop="20261019232500 +0100" channel="elcinema.1395">
+    <title lang="en">Blindspot S2</title>
+  </programme>
+  <programme start="20261019232500 +0100" stop="20261020001500 +0100" channel="elcinema.1395">
+    <title lang="en">Major Crimes S4</title>
+  </programme>
+  <programme start="20261020001500 +0100" stop="20261020003500 +0100" channel="elcinema.1395">
+    <title lang="en">911 Crisis Center</title>
+  </programme>
+  <programme start="20261020003500 +0100" stop="20261020013500 +0100" channel="elcinema.1395">
+    <title lang="en">The Blame</title>
+  </programme>
+  <programme start="20261020013500 +0100" stop="20261020022000 +0100" channel="elcinema.1395">
+    <title lang="en">Blindspot S2</title>
+  </programme>
+  <programme start="20261020022000 +0100" stop="20261020031000 +0100" channel="elcinema.1395">
+    <title lang="en">Blindspot S2</title>
+  </programme>
+  <programme start="20261020031000 +0100" stop="20261020035500 +0100" channel="elcinema.1395">
+    <title lang="en">Chicago Med S11</title>
+  </programme>
+  <programme start="20261020035500 +0100" stop="20261020044500 +0100" channel="elcinema.1395">
+    <title lang="en">The Blame</title>
+  </programme>
+  <programme start="20261020044500 +0100" stop="20261020053500 +0100" channel="elcinema.1395">
+    <title lang="en">Major Crimes S4</title>
+  </programme>
   <programme start="20261020163500 +0100" stop="20261020172500 +0100" channel="elcinema.1395">
     <title lang="en">The Blame</title>
   </programme>
@@ -8369,24 +7850,6 @@
   </programme>
   <programme start="20261020215000 +0100" stop="20261020224000 +0100" channel="elcinema.1395">
     <title lang="en">Blindspot S2</title>
-  </programme>
-  <programme start="20261017121500 +0100" stop="20261017131000 +0100" channel="elcinema.1396">
-    <title lang="en">Mayfair Witches</title>
-  </programme>
-  <programme start="20261017131000 +0100" stop="20261017132500 +0100" channel="elcinema.1396">
-    <title lang="en">We Are Lady Parts</title>
-  </programme>
-  <programme start="20261017132500 +0100" stop="20261017135500 +0100" channel="elcinema.1396">
-    <title lang="en">We Are Lady Parts</title>
-  </programme>
-  <programme start="20261017135500 +0100" stop="20261017142500 +0100" channel="elcinema.1396">
-    <title lang="en">Betty S2</title>
-  </programme>
-  <programme start="20261017142500 +0100" stop="20261017150500 +0100" channel="elcinema.1396">
-    <title lang="en">Betty S2</title>
-  </programme>
-  <programme start="20261017150500 +0100" stop="20261017160000 +0100" channel="elcinema.1396">
-    <title lang="en">Lovecraft Country</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017222000 +0100" channel="elcinema.1396">
     <title lang="en">Red Bull Driftbrothers</title>
@@ -8471,21 +7934,6 @@
   </programme>
   <programme start="20261018150500 +0100" stop="20261018160000 +0100" channel="elcinema.1396">
     <title lang="en">Lovecraft Country</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018170500 +0100" channel="elcinema.1396">
-    <title lang="en">The Affair</title>
-  </programme>
-  <programme start="20261018170500 +0100" stop="20261018173000 +0100" channel="elcinema.1396">
-    <title lang="en">We Are Lady Parts</title>
-  </programme>
-  <programme start="20261018173000 +0100" stop="20261018180000 +0100" channel="elcinema.1396">
-    <title lang="en">We Are Lady Parts</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018183000 +0100" channel="elcinema.1396">
-    <title lang="en">Betty S2</title>
-  </programme>
-  <programme start="20261018183000 +0100" stop="20261018190000 +0100" channel="elcinema.1396">
-    <title lang="en">Betty S2</title>
   </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1396">
     <title lang="en">Lovecraft Country</title>
@@ -8616,6 +8064,36 @@
   <programme start="20261019222000 +0100" stop="20261019224500 +0100" channel="elcinema.1396">
     <title lang="en">Divorce</title>
   </programme>
+  <programme start="20261019224500 +0100" stop="20261019232000 +0100" channel="elcinema.1396">
+    <title lang="en">Divorce</title>
+  </programme>
+  <programme start="20261019232000 +0100" stop="20261019234500 +0100" channel="elcinema.1396">
+    <title lang="en">Ultimate Rush S2</title>
+  </programme>
+  <programme start="20261019234500 +0100" stop="20261020004500 +0100" channel="elcinema.1396">
+    <title lang="en">Red Bull Signature Series S3</title>
+  </programme>
+  <programme start="20261020004500 +0100" stop="20261020013500 +0100" channel="elcinema.1396">
+    <title lang="en">Mayfair Witches</title>
+  </programme>
+  <programme start="20261020013500 +0100" stop="20261020023000 +0100" channel="elcinema.1396">
+    <title lang="en">CryptoKnights</title>
+  </programme>
+  <programme start="20261020023000 +0100" stop="20261020033000 +0100" channel="elcinema.1396">
+    <title lang="en">The Newsroom S2</title>
+  </programme>
+  <programme start="20261020033000 +0100" stop="20261020035500 +0100" channel="elcinema.1396">
+    <title lang="en">Lucky Louie</title>
+  </programme>
+  <programme start="20261020035500 +0100" stop="20261020042500 +0100" channel="elcinema.1396">
+    <title lang="en">Lucky Louie</title>
+  </programme>
+  <programme start="20261020042500 +0100" stop="20261020051000 +0100" channel="elcinema.1396">
+    <title lang="en">Mayfair Witches</title>
+  </programme>
+  <programme start="20261020051000 +0100" stop="20261020054000 +0100" channel="elcinema.1396">
+    <title lang="en">Divorce</title>
+  </programme>
   <programme start="20261020160000 +0100" stop="20261020170500 +0100" channel="elcinema.1396">
     <title lang="en">The Affair</title>
   </programme>
@@ -8642,15 +8120,6 @@
   </programme>
   <programme start="20261020213000 +0100" stop="20261020220000 +0100" channel="elcinema.1396">
     <title lang="en">Betty S2</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1398">
-    <title lang="en">Baba</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1398">
-    <title lang="en">Mashaeir</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1398">
-    <title lang="en">Ma Ekhtalafna 2</title>
   </programme>
   <programme start="20261017220000 +0100" stop="20261017230000 +0100" channel="elcinema.1398">
     <title lang="en">Maraya 2003</title>
@@ -8685,15 +8154,6 @@
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1398">
     <title lang="en">Tareeq</title>
   </programme>
-  <programme start="20261018160000 +0100" stop="20261018170000 +0100" channel="elcinema.1398">
-    <title lang="en">Rabee' Qortoba</title>
-  </programme>
-  <programme start="20261018170000 +0100" stop="20261018180000 +0100" channel="elcinema.1398">
-    <title lang="en">Ashwak Naaeima</title>
-  </programme>
-  <programme start="20261018180000 +0100" stop="20261018190000 +0100" channel="elcinema.1398">
-    <title lang="en">Aetr Al-Sham 4</title>
-  </programme>
   <programme start="20261018190000 +0100" stop="20261018200000 +0100" channel="elcinema.1398">
     <title lang="en">Baba</title>
   </programme>
@@ -8702,18 +8162,6 @@
   </programme>
   <programme start="20261018210000 +0100" stop="20261018220000 +0100" channel="elcinema.1398">
     <title lang="en">Mashaeir</title>
-  </programme>
-  <programme start="20261017120000 +0100" stop="20261017130000 +0100" channel="elcinema.1399">
-    <title lang="en">Stiletto</title>
-  </programme>
-  <programme start="20261017130000 +0100" stop="20261017140000 +0100" channel="elcinema.1399">
-    <title lang="en">Weld El-Ghalaba</title>
-  </programme>
-  <programme start="20261017140000 +0100" stop="20261017150000 +0100" channel="elcinema.1399">
-    <title lang="en">Khali Balek Men Zizi</title>
-  </programme>
-  <programme start="20261017150000 +0100" stop="20261017160000 +0100" channel="elcinema.1399">
-    <title lang="en">Afrah Ebles 3</title>
   </programme>
   <programme start="20261017221000 +0100" stop="20261017230000 +0100" channel="elcinema.1399">
     <title lang="en">Stiletto</title>
@@ -8777,18 +8225,6 @@
   </programme>
   <programme start="20261018150000 +0100" stop="20261018160000 +0100" channel="elcinema.1399">
     <title lang="en">Afrah Ebles 3</title>
-  </programme>
-  <programme start="20261018160000 +0100" stop="20261018164500 +0100" channel="elcinema.1399">
-    <title lang="en">Bahar</title>
-  </programme>
-  <programme start="20261018164500 +0100" stop="20261018173000 +0100" channel="elcinema.1399">
-    <title lang="en">Rania We Sekina</title>
-  </programme>
-  <programme start="20261018173000 +0100" stop="20261018182500 +0100" channel="elcinema.1399">
-    <title lang="en">Stiletto</title>
-  </programme>
-  <programme start="20261018182500 +0100" stop="20261018191000 +0100" channel="elcinema.1399">
-    <title lang="en">Weld El-Ghalaba</title>
   </programme>
   <programme start="20261018191000 +0100" stop="20261018200000 +0100" channel="elcinema.1399">
     <title lang="en">Khali Balek Men Zizi</title>
@@ -8892,6 +8328,30 @@
   <programme start="20261019221000 +0100" stop="20261019230000 +0100" channel="elcinema.1399">
     <title lang="en">Stiletto</title>
   </programme>
+  <programme start="20261019230000 +0100" stop="20261020000000 +0100" channel="elcinema.1399">
+    <title lang="en">Weld El-Ghalaba</title>
+  </programme>
+  <programme start="20261020000000 +0100" stop="20261020010000 +0100" channel="elcinema.1399">
+    <title lang="en">Afrah Ebles 3</title>
+  </programme>
+  <programme start="20261020010000 +0100" stop="20261020013500 +0100" channel="elcinema.1399">
+    <title lang="en">Bahar</title>
+  </programme>
+  <programme start="20261020013500 +0100" stop="20261020022000 +0100" channel="elcinema.1399">
+    <title lang="en">Rania We Sekina</title>
+  </programme>
+  <programme start="20261020022000 +0100" stop="20261020030000 +0100" channel="elcinema.1399">
+    <title lang="en">Stiletto</title>
+  </programme>
+  <programme start="20261020030000 +0100" stop="20261020041000 +0100" channel="elcinema.1399">
+    <title lang="en">Weld El-Ghalaba</title>
+  </programme>
+  <programme start="20261020041000 +0100" stop="20261020045000 +0100" channel="elcinema.1399">
+    <title lang="en">Khali Balek Men Zizi</title>
+  </programme>
+  <programme start="20261020045000 +0100" stop="20261020053000 +0100" channel="elcinema.1399">
+    <title lang="en">Afrah Ebles 3</title>
+  </programme>
   <programme start="20261020160000 +0100" stop="20261020164500 +0100" channel="elcinema.1399">
     <title lang="en">Bahar</title>
   </programme>
@@ -8918,18 +8378,6 @@
   </programme>
   <programme start="20261018033000 +0100" stop="20261018041000 +0100" channel="elcinema.1401">
     <title lang="en">Tay Al Nisyan</title>
-  </programme>
-  <programme start="20261017123000 +0100" stop="20261017133000 +0100" channel="elcinema.1405">
-    <title lang="en">Aşk Laftan Anlamaz</title>
-  </programme>
-  <programme start="20261017133000 +0100" stop="20261017143000 +0100" channel="elcinema.1405">
-    <title lang="en">Establishment: Osman S1</title>
-  </programme>
-  <programme start="20261017143000 +0100" stop="20261017153000 +0100" channel="elcinema.1405">
-    <title lang="en">Ezel S1</title>
-  </programme>
-  <programme start="20261017153000 +0100" stop="20261017163000 +0100" channel="elcinema.1405">
-    <title lang="en">Cherry Season</title>
   </programme>
   <programme start="20261017223000 +0100" stop="20261017233000 +0100" channel="elcinema.1405">
     <title lang="en">Mother</title>
@@ -8984,15 +8432,6 @@
   </programme>
   <programme start="20261018153000 +0100" stop="20261018163000 +0100" channel="elcinema.1405">
     <title lang="en">Cherry Season</title>
-  </programme>
-  <programme start="20261018163000 +0100" stop="20261018173000 +0100" channel="elcinema.1405">
-    <title lang="en">My Siblings</title>
-  </programme>
-  <programme start="20261018173000 +0100" stop="20261018183000 +0100" channel="elcinema.1405">
-    <title lang="en">Ezel S1</title>
-  </programme>
-  <programme start="20261018183000 +0100" stop="20261018193000 +0100" channel="elcinema.1405">
-    <title lang="en">Aşk Laftan Anlamaz</title>
   </programme>
   <programme start="20261018193000 +0100" stop="20261018203000 +0100" channel="elcinema.1405">
     <title lang="en">Establishment: Osman S1</title>
